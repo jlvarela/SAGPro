@@ -10,5 +10,5 @@
         <property name="URL" value="jdbc:mysql://localhost:3306/sagpro_db?zeroDateTimeBehavior=convertToNull"/>
         <property name="driverClass" value="com.mysql.jdbc.Driver"/>
     </jdbc-connection-pool>
-    <jdbc-resource enabled="true" jndi-name="SAGPro" object-type="user" pool-name="mysql_sagpro_db_sagpro_userPool"/>
+    <jdbc-resource enabled="true" jndi-name="jdbc/SAGPro" object-type="user" pool-name="mysql_sagpro_db_sagpro_userPool"/>
 </resources>
