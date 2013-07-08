@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+    <head>
+        <title>SAGPro</title>
+    </head>
+    <h:body>
+        <p:panel header="Login From">
+            <form method="POST" action="j_security_check">
+                Username: <input type="text" name="j_username" />
+                Password: <input type="password" name="j_password" />
+                <input type="submit" value="Login" />
+                <input type="reset" value="Reset" />
+            </form>
+        </p:panel>
+    </h:body>
+</html>
