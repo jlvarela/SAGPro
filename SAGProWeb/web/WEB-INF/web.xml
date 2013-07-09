@@ -38,7 +38,7 @@
         <realm-name>jdbc-realm</realm-name>
         <form-login-config>
             <form-login-page>/login.xhtml</form-login-page>
-            <form-error-page>/Errors/bad_login.xhtml</form-error-page>
+            <form-error-page>/errors/bad_login.xhtml</form-error-page>
         </form-login-config>
     </login-config>
     <security-role>
