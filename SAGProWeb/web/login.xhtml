@@ -12,12 +12,16 @@ and open the template in the editor.
     </h:head>
     <h:body>
         <p:panel header="Login Form">
-            <form method="POST" action="j_security_check">
-                Username: <input type="text" name="j_username" />
-                Password: <input type="password" name="j_password" />
-                <input type="submit" value="Login" />
+            <h:form>
+                <h:outputLabel for="usernameInput">Username:
+                </h:outputLabel>
+                <p:inputText id="usernameInput" value="#{loginBean.username}" required="true" requiredMessage="Campo obligatorio"/>
+                <h:outputLabel for="passwordInput" >Password:
+                </h:outputLabel>
+                <h:inputSecret id="passwordInput" value="#{loginBean.password}" required="true" requiredMessage="Campo obligatorio" />
+                <h:commandButton type="submit" value="Login" action="#{loginBean.login}"/>
                 <input type="reset" value="Reset" />
-            </form>
+            </h:form>
         </p:panel>
     </h:body>
 </html>
