@@ -4,14 +4,14 @@
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:p="http://primefaces.org/ui">
     <h:head>
-        <title>SAGPro Web - LogIn</title>
-        <h:outputStylesheet name="css/bootstrap.css" />
+        <title>Hila</title>
     </h:head>
     <h:body>
-        Hello from Facelets
-        <br />
-        <h:link class="hola" outcome="login" value="Login" /><br/>
-        <h:link outcome="welcomePrimefaces" value="Primefaces welcome page" />
+        Nombre: <h:outputText value="#{userManagedBean.username}" /> <br/>
+        Apellido: <h:outputText value="#{userManagedBean.userlastname}" /> <br/>
+        <h:form>
+            <p:commandLink action="#{loginBean.logout()}" value="Log Out" />
+        </h:form>
     </h:body>
 </html>
 

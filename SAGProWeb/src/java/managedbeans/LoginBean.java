@@ -4,8 +4,9 @@
  */
 package managedbeans;
 
+import javax.el.ELContext;
 import javax.inject.Named;
-import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.servlet.ServletException;
@@ -16,7 +17,7 @@ import javax.servlet.http.HttpServletRequest;
  * @author Jose
  */
 @Named(value = "loginBean")
-@ApplicationScoped
+@RequestScoped
 public class LoginBean {
 
     public String getUsername() {
@@ -35,16 +36,15 @@ public class LoginBean {
         this.password = password;
     }
     
-    String username;
-    String password;
+    private String username;
+    private String password;
 
     /**
      * Creates a new instance of LoginBean
      */
     public LoginBean() {
-        username = new String();
-        password = new String();
     }
+    
     
     /**
      * Autentificación del usuario ingresado.
@@ -54,12 +54,35 @@ public class LoginBean {
     public String login(){
         FacesContext context = FacesContext.getCurrentInstance();
         HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
-        try{
-            request.login(username, password);
-        }catch (ServletException e){
-            context.addMessage(null, new FacesMessage(e.getMessage()));
+        if (request.getUserPrincipal() == null){
+            try{
+                request.login(username, password);
+                return "admin/index?faces-redirect=true";
+            }catch (ServletException e){
+                context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,"Error", "Login inválido"));
+                return "";
+            }
         }
-        
-        return "admin/index";
+        else{
+            System.out.println(request.getUserPrincipal().getName());
+            context.addMessage(null, new FacesMessage("Logueado"));
+            return "";
+        }
+    }
+    
+    public String logout(){
+        FacesContext context = FacesContext.getCurrentInstance();
+        HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
+        if (request.getUserPrincipal() != null){
+            try{
+                request.logout();
+                return "/index?faces-redirect=true";
+            }
+            catch(ServletException e){
+                System.out.println("No se pudo desloguear :(");
+                return "";
+            }
+        }
+        return "/index?faces-redirect=true";
     }
 }

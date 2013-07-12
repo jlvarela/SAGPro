@@ -1,27 +1,24 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!--
-To change this template, choose Tools | Templates
-and open the template in the editor.
--->
-<!DOCTYPE html>
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:p="http://primefaces.org/ui">
     <h:head>
-        <title>SAGPro</title>
+        <title>SAGPro Web - LogIn</title>
     </h:head>
     <h:body>
         <p:panel header="Login Form">
+            <p:messages id="messages" showDetail="true" showSummary="false" autoUpdate="true" closable="true" />
             <h:form>
-                <h:outputLabel for="usernameInput">Username:
-                </h:outputLabel>
+                <h:outputLabel for="usernameInput" value="Username:"/>
                 <p:inputText id="usernameInput" value="#{loginBean.username}" required="true" requiredMessage="Campo obligatorio"/>
-                <h:outputLabel for="passwordInput" >Password:
-                </h:outputLabel>
-                <h:inputSecret id="passwordInput" value="#{loginBean.password}" required="true" requiredMessage="Campo obligatorio" />
-                <h:commandButton type="submit" value="Login" action="#{loginBean.login}"/>
-                <input type="reset" value="Reset" />
+                <h:outputLabel for="passwordInput" value="Password:"/>
+                <p:inputText type="password" id="passwordInput" value="#{loginBean.password}" required="true" requiredMessage="Campo obligatorio" />
+                <p:commandButton type="submit" value="Login" action="#{loginBean.login()}"/>
+                <p:commandButton type="reset" value="Reset" />
             </h:form>
+            
         </p:panel>
     </h:body>
 </html>
+

@@ -11,14 +11,17 @@
                 <meta content='text/html; charset=UTF-8' http-equiv="Content-Type"/>
                 <title>PrimeFaces</title>
             </f:facet>
+            <link type="text/css" rel="stylesheet" href="#{request.contextPath}/css/style.css" />
         </h:head>
+        <f:facet name="last">
+                <h:outputStylesheet name="css/style.css" />
+        </f:facet>
 
         <h:body>
-
             <p:layout fullPage="true">
 
                 <p:layoutUnit position="north" size="100" resizable="true" closable="true" collapsible="true">
-                    Header
+                    Header<div class="hola">Probando</div>
                 </p:layoutUnit>
 
                 <p:layoutUnit position="south" size="100" closable="true" collapsible="true">
