@@ -1,0 +1,74 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!--<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        
+    </h:body>
+</html>-->
+<ui:composition template ="/WEB-INF/templates/templateGestorCalidad.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets">
+    <ui:define name="cuerpo">
+        <div class="span6">
+            <fieldset>
+                <legend>Ingresar Producción</legend>
+                <div class="row-fluid">
+                    <div class="span9">
+                        1.Ingrese la cantidad del material producido.
+                    </div>
+                </div>
+
+                <div class="row-fluid">
+                    <div class="span4">
+                        Materiales
+                    </div>
+                    <div class="span6">
+                        <select>
+                            <option>Metal</option>
+                            <option>Plástico</option>
+                            <option>Vidrio</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="row-fluid">
+                    <div class="span4">
+                        Cantidad
+                    </div>
+                    <div class="span6">
+                        <input type="text" ></input>
+                    </div>
+                </div>
+                
+                <div class="row-fluid">
+                    <div class="span4">
+                        Unidad
+                    </div>
+                    <div class="span6">
+                        <select>
+                            <option>Toneladas</option>
+                            <option>Otra</option>
+                            <option>..y otra</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="row-fluid">
+                    <button type="button" class="btn">Ingresar</button>
+                </div>
+
+
+            </fieldset>
+        </div>
+
+        <div class="span6">
+        </div>    
+    </ui:define>>
+
+
+</ui:composition>
