@@ -1,0 +1,100 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<ui:composition template ="/WEB-INF/templates/templateGestorCalidad.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets">
+    <ui:define name="cuerpo">
+        <div class="span9">
+            <fieldset style="padding: 20px">
+                <legend>Editar Producción</legend>
+
+                <div class="row-fluid">
+                    <div class="span9">
+                        Modifique los valores de la producción que desee
+                    </div>
+                </div>
+
+                <div class="row-fluid">
+                    <div class="span6">
+
+
+                        <div class="row-fluid">
+                            <div class="span5">
+                                Materiales
+                            </div>
+                            <div class="span7">
+                                <select>
+                                    <option>Metal</option>
+                                    <option>Plástico</option>
+                                    <option>Vidrio</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="row-fluid">
+                            <div class="span5">
+                                Cantidad
+                            </div>
+                            <div class="span7">
+                                <input type="text" ></input>
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                    <div class="span5">
+                        <div class="row-fluid">
+                            <div class="span5">
+                                Unidad
+                            </div>
+                            <div class="span7">
+                                <select>
+                                    <option>Toneladas</option>
+                                    <option>Otra</option>
+                                    <option>..y otra</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="row-fluid">
+                            <div class="span5">
+                                Fecha
+                            </div>
+                            <div class="span7">
+                                <div id="datetimepicker4" class="input-append">
+                                    <input class="span12" data-format="yyyy-MM-dd" type="text"></input>
+                                    <span class="add-on">
+                                        <i data-time-icon="icon-time" data-date-icon="icon-calendar">
+                                        </i>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="span7 offset5">
+                            <div class="control-group" style="margin-right: 15px;">
+                                <div class="controls pull-right">
+                                    <button type="button" class="btn"><i class="icon-pencil"></i> Editar</button>
+                                    <button type="button" class="btn"><i class="icon-remove"></i> Eliminar</button>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                    </div>
+
+                </div>
+            </fieldset>
+        </div>
+
+
+    </ui:define>
+
+
+</ui:composition>
+
