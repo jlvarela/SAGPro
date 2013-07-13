@@ -14,61 +14,97 @@
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:ui="http://java.sun.com/jsf/facelets">
     <ui:define name="cuerpo">
-        <div class="span6">
-            <fieldset>
+        <div class="span9">
+            <fieldset style="padding: 20px">
                 <legend>Ingresar Producción</legend>
                 <div class="row-fluid">
-                    <div class="span9">
-                        1.Ingrese la cantidad del material producido.
-                    </div>
-                </div>
+                    <div class="span5">
+                        <div class="row-fluid">
+                            <div class="span9">
+                                1. Ingrese la cantidad del material producido.
+                            </div>
+                        </div>
 
-                <div class="row-fluid">
-                    <div class="span4">
-                        Materiales
+                        <div class="row-fluid">
+                            <div class="span5">
+                                Materiales
+                            </div>
+                            <div class="span7">
+                                <select>
+                                    <option>Metal</option>
+                                    <option>Plástico</option>
+                                    <option>Vidrio</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="row-fluid">
+                            <div class="span5">
+                                Cantidad
+                            </div>
+                            <div class="span7">
+                                <input type="text" ></input>
+                            </div>
+                        </div>
+
+                        <div class="row-fluid">
+                            <div class="span5">
+                                Unidad
+                            </div>
+                            <div class="span7">
+                                <select>
+                                    <option>Toneladas</option>
+                                    <option>Otra</option>
+                                    <option>..y otra</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="row-fluid">
+                            <div class="controls pull-right">
+                                <button type="button" class="btn"><i class=" icon-ok"></i>Ingresar</button>
+                            </div>
+                        </div>
                     </div>
+
                     <div class="span6">
-                        <select>
-                            <option>Metal</option>
-                            <option>Plástico</option>
-                            <option>Vidrio</option>
-                        </select>
+                        <div class="row-fluid">
+                            <div class="span9">
+                                2. Detalle Producción
+                            </div>
+                        </div>
+
+                        <div class="row-fluid">
+                            <div class="span12">
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>Material</th>
+                                            <th>Cantidad</th>
+                                            <th>Unidad</th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody>
+                                        <tr>
+                                            <td>Vidrio</td>
+                                            <td>20</td>
+                                            <td>Toneladas</td>
+                                        </tr>
+                                    </tbody>
+
+                                </table>
+                            </div>
+                        </div>
                     </div>
-                </div>
-                
-                <div class="row-fluid">
-                    <div class="span4">
-                        Cantidad
-                    </div>
-                    <div class="span6">
-                        <input type="text" ></input>
-                    </div>
-                </div>
-                
-                <div class="row-fluid">
-                    <div class="span4">
-                        Unidad
-                    </div>
-                    <div class="span6">
-                        <select>
-                            <option>Toneladas</option>
-                            <option>Otra</option>
-                            <option>..y otra</option>
-                        </select>
-                    </div>
-                </div>
-                
-                <div class="row-fluid">
-                    <button type="button" class="btn">Ingresar</button>
                 </div>
 
 
             </fieldset>
         </div>
 
-        <div class="span6">
-        </div>    
-    </ui:define>>
+
+    </ui:define>
 
 
 </ui:composition>

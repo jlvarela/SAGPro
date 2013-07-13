@@ -1,0 +1,98 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition template ="/WEB-INF/templates/templateGestorCalidad.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets">
+    <ui:define name="cuerpo">
+        <div class="span9">
+            <fieldset style="padding: 20px">
+                <legend>Consultar Producción</legend>
+                <div class="row-fluid">
+                    <div class="span6">
+                            <div id="datetimepicker4" class="input-append">
+                                <input data-format="yyyy-MM-dd" type="text"></input>
+                                <span class="add-on">
+                                    <i data-time-icon="icon-time" data-date-icon="icon-calendar">
+                                    </i>
+                                </span>
+                            </div>
+                    </div>
+                </div>
+
+                <div class="row-fluid">
+                    <div class="span6">
+                        <div class="row-fluid">
+                            <div class="span7">
+                                Listado de Materiales
+                            </div>
+                        </div>
+
+                        <div class="row-fluid">
+                            <div class="span12">
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>Material</th>
+                                            <th>Unidad</th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody>
+                                        <tr>
+                                            <td>Metal Férrico</td>
+                                            <td>Tonelada</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Plástico</td>
+                                            <td>Tonelada</td>
+                                        </tr>
+                                    </tbody>
+
+                                </table>
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                    <div class="span6">
+                        <div class="row-fluid">
+                            <div class="span7">
+                                Detalle de Producción
+                            </div>
+                        </div>
+                        <div class="row-fluid">
+                            <div class="span12">
+                                <pre>
+Material: Plástico
+Cantidad: 3
+Unidad:   Tonelada
+Fecha:    20/03/2013
+Hora:     15:30</pre>
+                            </div>
+                        </div>
+
+                        <div class="row-fluid">
+                            <div class="control-group">
+                                <div class="controls pull-right">
+                                    <button type="button" class="btn"><i class="icon-pencil"></i> Editar</button>
+                                    <button type="button" class="btn"><i class="icon-trash"></i> Eliminar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </fieldset>
+        </div>
+
+
+    </ui:define>
+
+
+</ui:composition>
+
+
+
