@@ -1,0 +1,203 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition template ="/WEB-INF/templates/templateGerente.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets">
+
+    <ui:define name="cuerpo">
+        <div class="span9">
+            <fieldset style="padding: 20px">
+                <legend>Crear Objetivo</legend>
+
+                <div class="row-fluid">
+                    <div class="span6">
+                        <div class="row-fluid">
+                            <div class="span12">
+                                1. Ingrese un nombre para el objetivo
+                            </div>
+                        </div>
+
+                        <div class="row-fluid">
+                            <div class="span3">
+                                Nombre 
+                            </div>
+                            <div class="span9">
+                                <input class="span10" type="text" ></input>
+                            </div>
+                        </div>
+
+                        <div class="row-fluid">
+                            <div class="span12">
+                                2. Seleccionar material y cantidad
+                            </div>
+                        </div>
+
+                        <div class="row-fluid">
+                            <div class="span3">
+                                Material
+                            </div>
+                            <div class="span3">
+                                <select class="span12">
+                                    <option>Metal</option>
+                                    <option>Plástico</option>
+                                    <option>Vidrio</option>
+                                </select>
+                            </div>
+                            <div class="span3">
+                                <input class="span11" type="number" placeholder="Cant." ></input>
+                            </div>
+                            <div class="span3">
+                                <button type="button" class="btn"><i class=" icon-plus"></i></button>
+                            </div>
+                        </div>
+
+                        <div class="row-fluid">
+                            <div class="span11">
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>Material</th>
+                                            <th>Cantidad</th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody>
+                                        <tr>
+                                            <td>Metal</td>
+                                            <td>10</td>
+                                        </tr>
+                                    </tbody>
+
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="row-fluid">
+                            <div class="span12">
+                                3. Seleccionar fecha inicial para cumplir
+                            </div>
+                        </div>
+
+                        <div class="row-fluid">
+                            <div class="span3">
+                                Fecha
+                            </div>
+                            <div class="span8">
+                                <div id="datetimepicker4" class="input-append" style="width:100%">
+                                    <input  class="span11" data-format="yyyy-MM-dd" type="text"></input>
+                                    <span class="add-on">
+                                        <i data-time-icon="icon-time" data-date-icon="icon-calendar">
+                                        </i>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="row-fluid">
+                            <div class="span12">
+                                4. Seleccionar fecha límite para cumplir
+                            </div>
+                        </div>
+                        
+                        <div class="row-fluid">
+                            <div class="span3">
+                                Fecha
+                            </div>
+                            <div class="span8">
+                                <div id="datetimepicker4" class="input-append" style="width:100%">
+                                    <input  class="span11" data-format="yyyy-MM-dd" type="text"></input>
+                                    <span class="add-on">
+                                        <i data-time-icon="icon-time" data-date-icon="icon-calendar">
+                                        </i>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+                    <div class="span6">
+                        <div class="row-fluid">
+                            <div class="span12">
+                                5. Definir una prioridad
+                            </div>
+                        </div>
+
+                        <div class="row-fluid">
+                            <div class="span4">
+                                Prioridad
+                            </div>
+                            <div class="span3">
+                                <select class="span12">
+                                    <option>Alta</option>
+                                    <option>Media</option>
+                                    <option>Baja</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="row-fluid">
+                            <table class="table table-bordered">
+
+                                <tbody>
+                                    <tr>
+                                        <td>Alta</td>
+                                        <td>Objetivo Crítico. Su no realización puede implicar consecuencias negativas importantes.</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Media</td>
+                                        <td>Objetivo Primario. Su no realización puede implicar consecuencias menores o a largo plazo.</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Baja</td>
+                                        <td>Objetivo Secundario. Su no realización no implica consecuencias negativas.</td>
+                                    </tr>
+                                </tbody>
+
+                            </table>
+                        </div>
+
+                        <div class="row-fluid">
+                            <div class="span12">
+                                6. Ingresar descripción del objetivo
+                            </div>
+                        </div>
+
+                        <div class="row-fluid">
+                            <div class="span12">
+                                <textarea rows="6" style="width:97%"></textarea>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+
+
+    </ui:define>
+
+    <ui:define name="menu">
+        <div class="span2"><!--Menú de la pagina-->
+            <div class="accordion" >
+                <div id="menuLateral" class="accordion-group">
+                    <div class="accordion-heading">
+                        <a class="accordion-toggle" data-toggle="collapse" >Objetivos</a>
+
+                        <div class="accordion-body collapse in">
+                            <div class="accordion-inner nav nav-list">
+                                <li><a>Crear Objetivo</a></li>
+                                <li><a>Ver Objetivo</a></li>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>		
+        </div>
+    </ui:define>  
+
+</ui:composition>
+
