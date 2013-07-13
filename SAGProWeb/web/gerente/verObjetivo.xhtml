@@ -1,0 +1,39 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition template ="/WEB-INF/templates/templateGerente.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets">
+
+    <ui:define name="cuerpo">
+       <div class="span9">
+           <fieldset style="padding: 20px">
+               <legend>Ver Objetivo</legend>
+           </fieldset>
+       </div>
+
+
+    </ui:define>
+
+    <ui:define name="menu">
+        <div class="span2"><!--Menú de la pagina-->
+            <div class="accordion" >
+                <div id="menuLateral" class="accordion-group">
+                    <div class="accordion-heading">
+                        <a class="accordion-toggle" data-toggle="collapse" >Objetivos</a>
+
+                        <div class="accordion-body collapse in">
+                            <div class="accordion-inner nav nav-list">
+                                <li><a>Crear Objetivo</a></li>
+                                <li><a>Ver Objetivo</a></li>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>		
+        </div>
+    </ui:define>  
+
+</ui:composition>
+
