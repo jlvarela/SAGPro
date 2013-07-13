@@ -28,5 +28,11 @@ public interface MaterialFacadeLocal {
     List<Material> findRange(int[] range);
 
     int count();
+
+    int agregarMaterial(final String nombre_material, final String medida_produccion_material, final String medida_venta_material);
+
+    String[] getValuesVentaMaterial();
+
+    String[] getValuesProducMaterial();
     
 }

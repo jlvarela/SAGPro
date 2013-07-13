@@ -6,7 +6,6 @@ package managedbeans;
 
 import entities.User;
 import javax.inject.Named;
-import javax.inject.Inject;
 import java.io.Serializable;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -52,6 +51,7 @@ public class UserManagedBean implements Serializable {
     private String userid;
     private String username;
     private String userlastname;
+    private String usermail;
         
     /**
      * Creates a new instance of UserManagedBean
@@ -70,6 +70,7 @@ public class UserManagedBean implements Serializable {
         if (usuario != null){
             this.username = usuario.getNombreUser();
             this.userlastname = usuario.getApellidoUser();
+            this.usermail = usuario.getEmailUser();
         }
     }
 }

@@ -5,23 +5,7 @@
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:ui="http://java.sun.com/jsf/facelets">
     <ui:define name="menu">
-                <div class="span2">
-                    <div class="accordion" >
-                        <div id="menuLateral" class="accordion-group">
-                            <div class="accordion-heading">
-                                <a class="accordion-toggle" data-toggle="collapse" >Material</a>
-
-                                <div class="accordion-body collapse in">
-                                    <div class="accordion-inner nav nav-list">
-                                        <li><a href="/web/faces/admin/ingresarMaterial.xhtml">Ingresar Material</a></li>
-                                        <li class="active"><a href="/web/faces/admin/consultarMaterial.xhtml">Consultar Material</a></li>
-
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>		
-                </div>
-            </ui:define>  
+        <ui:include src="/WEB-INF/templates/menuMateriales.xhtml"></ui:include>
+    </ui:define> 
 </ui:composition>
 

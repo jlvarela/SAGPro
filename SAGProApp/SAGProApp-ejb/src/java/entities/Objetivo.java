@@ -11,6 +11,8 @@ import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
@@ -65,7 +67,10 @@ public class Objetivo implements Serializable {
     @Column(name = "FECHA_LIMITE")
     @Temporal(TemporalType.TIME)
     private Date fechaLimite;
-    @ManyToMany(mappedBy = "objetivoCollection")
+    @JoinTable(name = "objetivo_material", joinColumns = {
+        @JoinColumn(name = "COD_OBJETIVO", referencedColumnName = "COD_OBJETIVO")}, inverseJoinColumns = {
+        @JoinColumn(name = "COD_MATERIAL", referencedColumnName = "COD_MATERIAL")})
+    @ManyToMany
     private Collection<Material> materialCollection;
 
     public Objetivo() {

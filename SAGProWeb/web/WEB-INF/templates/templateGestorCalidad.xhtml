@@ -1,84 +1,39 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:ui="http://java.sun.com/jsf/facelets">
-    <h:head>
-        <ui:insert name="head">
-            <f:facet name="first">
-                <meta content='text/html; charset=UTF-8' http-equiv="Content-Type"/>  
-                <title>SAGPro</title>
-            </f:facet>
+<ui:composition template="/WEB-INF/templates/templateMeister.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets">
 
-
-            <link type="text/css" rel="stylesheet" href="#{request.contextPath}/resources/css/bootstrap-responsive.css" />
-            <link type="text/css" rel="stylesheet" href="#{request.contextPath}/resources/css/bootstrap-responsive.min.css" />
-            <link type="text/css" rel="stylesheet" href="#{request.contextPath}/resources/css/bootstrap.min.css" />
-            <link type="text/css" rel="stylesheet" href="#{request.contextPath}/resources/css/bootstrap.css" />
-            <link type="text/css" rel="stylesheet" href="#{request.contextPath}/resources/css/bootstrap-datetimepicker.min.css" />
-            <script type="text/javascript" src="#{request.contextPath}/resources/js/jquery.js"></script>
-            <script type="text/javascript" src="#{request.contextPath}/resources/js/bootstrap-datetimepicker.min.js"></script>
-
-            <script>
-                $(function() {
-                    $('#datetimepicker4').datetimepicker({
-                        pickTime: false
-                    });
-                });
-            </script>
-
-        </ui:insert>
-    </h:head>
-    <h:body>
-        <ui:insert name="header">
-            <div class="row-fluid"> <!--Header de la pagina-->	
-                <div class="row-fluid">
-                    <div id="header" class="span12">
-                    </div>
-                </div>
+    <ui:define name="menusuperior">
+        <div class="navbar navbar-custom1">
+            <div class="navbar-inner">
             </div>
-        </ui:insert>
+        </div>
+    </ui:define>
+    <ui:define name="menu">
+        <div class="span2"><!--Menú de la pagina-->
+            <div class="accordion" >
+                <div id="menuLateral" class="accordion-group">
+                    <div class="accordion-heading">
+                        <a class="accordion-toggle" data-toggle="collapse" >Producción</a>
 
+                        <div class="accordion-body collapse in">
+                            <div class="accordion-inner nav nav-list">
+                                <li><a>Ingresar Producción</a></li>
+                                <li><a>Ver Producción</a></li>
 
-        <div class="row-fluid"><!--bloque central-->
-            <ui:insert name="menu">
-                <div class="span2"><!--Menú de la pagina-->
-                    <div class="accordion" >
-                        <div id="menuLateral" class="accordion-group">
-                            <div class="accordion-heading">
-                                <a class="accordion-toggle" data-toggle="collapse" >Producción</a>
-
-                                <div class="accordion-body collapse in">
-                                    <div class="accordion-inner nav nav-list">
-                                        <li><a>Ingresar Producción</a></li>
-                                        <li><a>Ver Producción</a></li>
-
-                                    </div>
-                                </div>
                             </div>
                         </div>
-                    </div>		
+                    </div>
                 </div>
-            </ui:insert>    
-
-            <ui:insert name="cuerpo">    
-                <!--Cuerpo-->
-
-
-            </ui:insert>
-
+            </div>		
         </div>
+    </ui:define>    
 
 
-        <ui:insert name="footer">
-            <div class="row-fluid"> <!--Footer de la pagina-->
-                <div id="footer" class="span12">
-                    Empresa Metropolitana de Residuos S.A
-                </div>
-            </div>
-        </ui:insert>
 
-    </h:body>
-</html>
+
+</ui:composition>
 

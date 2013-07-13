@@ -2,16 +2,34 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
     <h:head>
         <title>Hila</title>
     </h:head>
     <h:body>
-        Nombre: <h:outputText value="#{userManagedBean.username}" /> <br/>
-        Apellido: <h:outputText value="#{userManagedBean.userlastname}" /> <br/>
-        <h:form>
-            <p:commandLink action="#{loginBean.logout()}" value="Log Out" />
-        </h:form>
+        <div>
+            Nombre: <h:outputText value="#{userManagedBean.username}" /> <br/>
+            Apellido: <h:outputText value="#{userManagedBean.userlastname}" /> <br/>
+            <h:form>
+                <p:commandLink action="#{loginBean.logout()}" value="Log Out" />
+            </h:form>
+        </div>
+        <div>
+            <p:messages autoUpdate="true" closable="true" showDetail="true" showSummary="false" />
+            <h:form>
+                Nombre Material: <h:inputText value="#{materialManagedBean.nombreMaterial}" /> <br/>
+                Medida Producción Material: 
+                <p:selectOneMenu id="medidaProd" value="#{materialManagedBean.medidaProduccionMaterial}" >
+                    <f:selectItems value="#{materialManagedBean.medidasProduccionMaterial}" />
+                </p:selectOneMenu> <br/>
+                Medida Venta Material: 
+                <p:selectOneMenu id="medidaVenta" value="#{materialManagedBean.medidaVentaMaterial}" >
+                    <f:selectItems value="#{materialManagedBean.medidasVentaMaterial}" />
+                </p:selectOneMenu> <br/>
+                <p:commandButton action="#{materialManagedBean.ingresarMaterial()}" value="Agregar" />
+            </h:form>
+        </div>
     </h:body>
 </html>
 

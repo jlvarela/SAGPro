@@ -10,9 +10,9 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -39,8 +39,8 @@ import javax.xml.bind.annotation.XmlTransient;
 public class Material implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @NotNull
     @Column(name = "COD_MATERIAL")
     private Integer codMaterial;
     @Basic(optional = false)
@@ -50,18 +50,15 @@ public class Material implements Serializable {
     private String nombreMaterial;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 10)
+    @Size(min = 1, max = 4)
     @Column(name = "MEDIDA_PRODUCCION_MATERIAL")
     private String medidaProduccionMaterial;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 10)
+    @Size(min = 1, max = 4)
     @Column(name = "MEDIDA_VENTA_MATERIAL")
     private String medidaVentaMaterial;
-    @JoinTable(name = "objetivo_material", joinColumns = {
-        @JoinColumn(name = "COD_MATERIAL", referencedColumnName = "COD_MATERIAL")}, inverseJoinColumns = {
-        @JoinColumn(name = "COD_OBJETIVO", referencedColumnName = "COD_OBJETIVO")})
-    @ManyToMany
+    @ManyToMany(mappedBy = "materialCollection")
     private Collection<Objetivo> objetivoCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "codMaterial")
     private Collection<ProduccionDiaria> produccionDiariaCollection;

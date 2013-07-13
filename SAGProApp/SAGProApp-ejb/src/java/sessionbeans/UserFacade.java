@@ -44,7 +44,7 @@ public class UserFacade extends AbstractFacade<User> implements UserFacadeLocal 
            return null;
        }
        catch(NonUniqueResultException e){
-           System.out.println("Usuario: '"+userRut+"' por alguna razón inesperada se encuentra repetido");
+           System.out.println("Usuario: '"+userRut+"', por alguna razón inesperada, se encuentra repetido");
            return null;
        }
     }
