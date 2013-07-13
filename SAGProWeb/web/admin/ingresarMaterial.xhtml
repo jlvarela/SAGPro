@@ -1,0 +1,27 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition template="/WEB-INF/templates/templateAdmin.xhtml" 
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets">
+    <ui:define name="menu">
+                <div class="span2">
+                    <div class="accordion" >
+                        <div id="menuLateral" class="accordion-group">
+                            <div class="accordion-heading">
+                                <a class="accordion-toggle" data-toggle="collapse" >Material</a>
+
+                                <div class="accordion-body collapse in">
+                                    <div class="accordion-inner nav nav-list">
+                                        <li class="active"><a href="/web/faces/admin/ingresarMaterial.xhtml">Ingresar Material</a></li>
+                                        <li><a href="/web/faces/admin/consultarMaterial.xhtml">Consultar Material</a></li>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>		
+                </div>
+            </ui:define>  
+</ui:composition>
+

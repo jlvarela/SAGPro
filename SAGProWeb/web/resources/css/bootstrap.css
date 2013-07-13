@@ -14,8 +14,8 @@
   background-image: url(../img/header-natural.jpg);
   height: 130px;
   background-size: 100%;
-  margin-bottom: 30px;
-  box-shadow: 0 0 60px rgba(16, 85, 10, 0.38);
+  /*margin-bottom: 30px;*/
+  /*box-shadow: 0 0 60px rgba(16, 85, 10, 0.38);*/
 }
 
 #footer{
