@@ -6,11 +6,72 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets">
 
     <ui:define name="cuerpo">
-       <div class="span9">
-           <fieldset style="padding: 20px">
-               <legend>Ver Objetivo</legend>
-           </fieldset>
-       </div>
+        <div class="span9">
+            <fieldset style="padding: 20px">
+                <legend>Ver Objetivo</legend>
+
+                <div class="row-fluid">
+                    <div class="span6">
+                        1. Seleccione un objetivo
+                    </div>
+                    <div class="span6">
+                        2. Detalle del objetivo
+                    </div>
+                </div>
+                <div class="row-fluid">
+                    <div class="span6">
+                        <div class="span12">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>Nombre Objetivo</th>
+                                        <th>Material</th>
+                                        <th>Fecha Límite</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                    <tr>
+                                        <td>Acme Inc:Metales Ferricos</td>
+                                        <td>Metal Férrico</td>
+                                        <td>15/11/2013</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Incremento de plásticos 1</td>
+                                        <td>Plástico</td>
+                                        <td>08/10/2013</td>
+                                    </tr>
+                                </tbody>
+
+                            </table>
+                        </div>
+                    </div>
+                    <div class="span6">
+                        <div class="row-fluid">
+                            <div class="span12">
+                                <pre>
+Nombre:       Acme Inc:Metales Férricos
+Material:     Metal Férrico
+Cantidad:     1200 Ton
+Fecha límite: 15/11/2013
+Prioridad:    Alta
+Descripción:  Acme Inc.requiere 1200 toneladas de metales.
+Completado:   40%
+                                </pre>
+                            </div>
+                        </div>
+                        <div class="row-fluid">
+                            <div class="control-group" >
+                                <div class="controls pull-right">
+                                    <button type="button" class="btn"><i class="icon-pencil"></i> Editar</button>
+                                    <button type="button" class="btn"><i class="icon-trash"></i> Eliminar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+        </div>
 
 
     </ui:define>
