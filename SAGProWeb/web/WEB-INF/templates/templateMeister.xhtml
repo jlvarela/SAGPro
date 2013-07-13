@@ -12,6 +12,18 @@
             </f:facet>
             <link type="text/css" rel="stylesheet" href="#{request.contextPath}/resources/css/bootstrap.css" />
             <link type="text/css" rel="stylesheet" href="#{request.contextPath}/resources/css/bootstrap-responsive.css" />
+            <link type="text/css" rel="stylesheet" href="#{request.contextPath}/resources/css/bootstrap-datetimepicker.min.css" />
+            <script type="text/javascript" src="#{request.contextPath}/resources/js/jquery.js"></script>
+            <script type="text/javascript" src="#{request.contextPath}/resources/js/bootstrap-datetimepicker.min.js"></script>
+
+            <script>
+                $(function() {
+                    $('#datetimepicker4').datetimepicker({
+                        pickTime: false
+                    });
+                });
+            </script>
+
         </ui:insert>
     </h:head>
     <h:body>
