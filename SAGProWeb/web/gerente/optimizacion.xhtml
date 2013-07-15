@@ -1,0 +1,171 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition template ="/WEB-INF/templates/templateGerente.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui">
+
+    <ui:define name="cuerpo">
+        <div class="span9">
+            <fieldset style="padding: 20px">
+                <legend>Optimización</legend>
+
+                <div class="row-fluid">
+                    <div class="span6">
+                        <div class="row-fluid">
+                            <div class="span7">
+                                1. Ingresar precio de comercialización de cada material
+                            </div>
+                        </div>
+
+
+                        <div class="row-fluid">
+                            <div class="span8">
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>Material</th>
+                                            <th>Precio unitario</th>
+                                            <th>Unidad</th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody>
+                                        <tr>
+                                            <td>Vidrio</td>
+                                            <td><p:spinner min="0" value="15000"/></td>
+                                            <td>Tonelada</td>
+                                        </tr>
+                                    </tbody>
+
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="row-fluid">
+                            <div class="span7">
+                                2. Ingresar valores mínimos de producción
+                            </div>
+                        </div>
+
+                        <div class="row-fluid">
+                            <div class="span8">
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>Material</th>
+                                            <th>Cantidad mínima</th>
+                                            <th>Unidad</th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody>
+                                        <tr>
+                                            <td>Vidrio</td>
+                                            <td><p:spinner min="0" value="15000"/></td>
+                                            <td>Tonelada</td>
+                                        </tr>
+                                    </tbody>
+
+                                </table>
+                            </div>
+                        </div>
+
+                        
+
+                       
+                    </div>
+
+
+                    <div class="span6">
+                        <div class="row-fluid">
+                            <div class="span7">
+                                3. Ingresar valores máximos de producción
+                            </div>
+                        </div>
+
+                        <div class="row-fluid">
+                            <div class="span8">
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>Material</th>
+                                            <th>Cantidad máxima</th>
+                                            <th>Unidad</th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody>
+                                        <tr>
+                                            <td>Vidrio</td>
+                                            <td><p:spinner min="0" value="15000"/></td>
+                                            <td>Tonelada</td>
+                                        </tr>
+                                    </tbody>
+
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+<div class="span6">
+                        <div class="row-fluid">
+                            <div class="span7">
+                                4. Detalle de la optimización
+                            </div>
+                        </div>
+
+                        <div class="row-fluid">
+                            <div class="span8">
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>Material</th>
+                                            <th>Cantidad óptima</th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody>
+                                        <tr>
+                                            <td>Vidrio</td>
+                                            <td>8</td>
+                                        </tr>
+                                    </tbody>
+
+                                </table>
+                            </div>
+                        </div>
+    <div class="row-fluid">
+                            <div class="control-group" >
+                                <div class="controls pull-right">
+                                    <button type="button" class="btn"><i class="icon-list-alt"></i> Guardar como objetivo</button>
+                                    <button type="button" class="btn"><i class="icon-check"></i> Optimizar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+    </ui:define>
+
+    <ui:define name="menu">
+        <div class="span2"><!--Menú de la pagina-->
+            <div class="accordion" >
+                <div id="menuLateral" class="accordion-group">
+                    <div class="accordion-heading">
+                        <a class="accordion-toggle" data-toggle="collapse" >Optimización</a>
+
+                        <div class="accordion-body collapse in">
+                            <div class="accordion-inner nav nav-list">
+                                <li><a>Optimización</a></li>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>		
+        </div>
+    </ui:define> 
+</ui:composition>
+
