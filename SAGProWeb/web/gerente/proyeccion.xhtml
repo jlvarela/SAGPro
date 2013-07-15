@@ -1,0 +1,129 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition template ="/WEB-INF/templates/templateGerente.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets">
+
+    <ui:define name="cuerpo">
+        <div class="span9">
+            <fieldset style="padding: 20px">
+                <legend>Generar Proyección</legend>
+                <div class="row-fluid">
+                    <div class="span6">
+                        <div class="row-fluid">
+                            <div class="span7">
+                                1. Seleccionar fecha de inicio
+                            </div>
+                        </div>
+
+                        <div class="row-fluid">
+                            <div class="span4">
+                                Fecha
+                            </div>
+                            <div class="span8">
+                                <div id="datetimepicker4" class="input-append" style="width:94%" >
+                                    <input  class="span7" data-format="yyyy-MM-dd" type="text" ></input>
+                                    <span class="add-on">
+                                        <i data-time-icon="icon-time" data-date-icon="icon-calendar">
+                                        </i>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row-fluid">
+                            <div class="span7">
+                                2. Seleccionar fecha de termino
+                            </div>
+                        </div>
+
+                        <div class="row-fluid">
+                            <div class="span4">
+                                Fecha
+                            </div>
+                            <div class="span8">
+                                <div id="datetimepicker4" class="input-append" style="width:94%">
+                                    <input  class="span7" data-format="yyyy-MM-dd" type="text"></input>
+                                    <span class="add-on">
+                                        <i data-time-icon="icon-time" data-date-icon="icon-calendar">
+                                        </i>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row-fluid">
+                            <div class="span7">
+                                3. Seleccionar los materiales
+                            </div>
+                        </div>
+
+                        <div class="row-fluid">
+                            <div class="span9">
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>Material</th>
+                                            <th><input type="checkbox"></input></th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody>
+                                        <tr>
+                                            <td>Metal</td>
+                                            <td><input type="checkbox"></input></td>
+                                        </tr>
+                                    </tbody>
+
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="span6">
+                        <div class="row-fluid">
+                            <div class="span7">
+                                Datos de Proyección
+                            </div>
+                        </div>
+                        
+                        <div class="row-fluid">
+                            <div class="span11" style="height:300px">
+                                <!--div para mostrar el gráfico de proyección-->
+                            </div>
+                        </div>
+                        
+                        <div class="row-fluid">
+                            <div class="control-group" >
+                                <div class="controls pull-right">
+                                    <button type="button" class="btn"><i class="icon-ok"></i> Guardar Objetivo</button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+    </ui:define>
+
+
+    <ui:define name="menu">
+        <div class="span2"><!--Menú de la pagina-->
+            <div class="accordion" >
+                <div id="menuLateral" class="accordion-group">
+                    <div class="accordion-heading">
+                        <a class="accordion-toggle" data-toggle="collapse" >Proyección</a>
+
+                        <div class="accordion-body collapse in">
+                            <div class="accordion-inner nav nav-list">
+                                <li><a>Generar Proyección</a></li>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>		
+        </div>
+    </ui:define> 
+</ui:composition>
