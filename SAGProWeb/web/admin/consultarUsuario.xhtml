@@ -1,0 +1,100 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition template ="/WEB-INF/templates/templateAdmin.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets">
+
+    <ui:define name="menu">
+        <ui:include src="/WEB-INF/templates/menuUsuarios.xhtml"></ui:include>
+    </ui:define> 
+    
+    <ui:define name="cuerpo">
+        <div class="span9">
+            <fieldset style="padding: 20px">
+                <legend>Consultar Usuario</legend>
+
+                <div class="row-fluid">
+                    <div class="span6">
+                        1. Seleccione un usuario
+                    </div>
+                    <div class="span6">
+                        2. Detalle del usuario
+                    </div>
+                </div>
+                <div class="row-fluid">
+                    <div class="span6">
+                        <div class="span12">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>RUT</th>
+                                        <th>Nombres</th>
+                                        <th>Apellido Paterno</th>
+                                        <th>Apellido Materno</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                    <tr>
+                                        <td>17490314-K</td>
+                                        <td>Gary Ignacio</td>
+                                        <td>Fuenzalida</td>
+                                        <td>Navarrete</td>
+                                    </tr>
+                                    <tr>
+                                        <td>17123349-6</td>
+                                        <td>Marco Antonio</td>
+                                        <td>Acevedo</td>
+                                        <td>Baeza</td>
+                                    </tr>
+                                    <tr>
+                                        <td>17601343-5</td>
+                                        <td>Jose Luis</td>
+                                        <td>Varela</td>
+                                        <td>Otárola</td>
+                                    </tr>
+                                    <tr>
+                                        <td>8397887-2</td>
+                                        <td>Mauricio Gonzalo</td>
+                                        <td>Solar</td>
+                                        <td>Fuentes</td>
+                                    </tr>
+                                </tbody>
+
+                            </table>
+                        </div>
+                    </div>
+                    <div class="span6">
+                        <div class="row-fluid">
+                            <div class="span12">
+                                <pre>
+RUT:                8397887-2
+Nombres:            Mauricio Gonzalo
+Apellido Paterno:   Solar
+Apellido Materno:   Fuentes
+Correo:             mauricio.solar@usach.cl
+Teléfono:           8888888
+Dirección:          Te Pito O Te Henua 555, Rapa nui
+Tipo:               Postdoctorado
+                                </pre>
+                            </div>
+                        </div>
+                        <div class="row-fluid">
+                            <div class="control-group" >
+                                <div class="controls pull-right">
+                                    <button type="button" class="btn"><i class="icon-pencil"></i> Editar</button>
+                                    <button type="button" class="btn"><i class="icon-trash"></i> Eliminar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+
+
+    </ui:define>
+
+</ui:composition>
+

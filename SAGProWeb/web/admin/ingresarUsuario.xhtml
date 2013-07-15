@@ -1,0 +1,120 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition template="/WEB-INF/templates/templateAdmin.xhtml" 
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui">
+    <ui:define name="menu">
+        <ui:include src="/WEB-INF/templates/menuUsuarios.xhtml"></ui:include>
+    </ui:define> 
+
+    <ui:define name="cuerpo">
+        <div class="span9">
+            <fieldset style="padding: 20px">
+                <legend>Ingresar Usuario</legend>
+                <div class="row-fluid">
+                    <div class="span5">
+                        <!--                        <div class="row-fluid">
+                                                    <div class="span9">
+                                                        Tal vez esto sirva de algo.
+                                                    </div>
+                                                </div>-->
+
+                        <div class="row-fluid">
+                            <div class="span5">
+                                RUT
+                            </div>
+                            <div class="span7">
+                                <div class="span9">
+                                    <input class="span12" type="text"></input>
+                                </div><div class="span1">
+                                    <p align="center">-</p>
+                                </div>
+                                <div class="span2">
+                                    <input class="span12" align="right" type="text"></input>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row-fluid">
+                            <div class="span5">
+                                Nombres
+                            </div>
+                            <div class="span7">
+                                <!--                                <p:inputText></p:inputText>-->
+                                <!--                                <h:inputText></h:inputText>-->
+                                <input type="text"></input>
+                            </div>
+                        </div>
+
+                        <div class="row-fluid">
+                            <div class="span5">
+                                Apellido Paterno
+                            </div>
+                            <div class="span7">
+                                <input type="text"></input>
+                            </div>
+                        </div>
+                        <div class="row-fluid">
+                            <div class="span5">
+                                Apellido Materno
+                            </div>
+                            <div class="span7">
+                                <input type="text"></input>
+                            </div>
+                        </div>
+
+                        <div class="row-fluid">
+                            <div class="span5">
+                                Correo
+                            </div>
+                            <div class="span7">
+                                <input type="text"></input>
+                            </div>
+                        </div>
+                        <div class="row-fluid">
+                            <div class="span5">
+                                Teléfono
+                            </div>
+                            <div class="span7">
+                                <input type="text"></input>
+                            </div>
+                        </div>
+                        <div class="row-fluid">
+                            <div class="span5">
+                                Dirección
+                            </div>
+                            <div class="span7">
+                                <input type="text"></input>
+                            </div>
+                        </div>
+                        <div class="row-fluid">
+                            <div class="span5">
+                                Tipo de usuario
+                            </div>
+                            <div class="span7">
+                                <select>
+                                    <option>Admin</option>
+                                    <option>Gestor de calidad</option>
+                                    <option>Gerente de planta</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="row-fluid">
+                            <div class="controls pull-right">
+                                <button type="button" class="btn"><i class=" icon-ok"></i>Ingresar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </fieldset>
+        </div>
+
+
+    </ui:define>
+</ui:composition>
+

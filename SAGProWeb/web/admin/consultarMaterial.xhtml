@@ -6,6 +6,85 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets">
     <ui:define name="menu">
         <ui:include src="/WEB-INF/templates/menuMateriales.xhtml"></ui:include>
-    </ui:define> 
+    </ui:define>
+
+    <ui:define name="cuerpo">
+        <div class="span9">
+            <fieldset style="padding: 20px">
+                <legend>Ver Material</legend>
+
+                <!--                <div class="row-fluid">
+                                    <div class="span6">
+                                        1. Seleccione un objetivo
+                                    </div>
+                                    <div class="span6">
+                                        2. Detalle del material ()
+                                    </div>
+                                </div>-->
+                <div class="row-fluid">
+                    <div class="span6">
+                        <div class="span12">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>Nombre Material</th>
+                                        <th>Unidad de producción</th>
+                                        <th>Unidad de venta</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                    <tr>
+                                        <td>Metal</td>
+                                        <td>Tonelada</td>
+                                        <td>Tonelada</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Plástico</td>
+                                        <td>Tonelada</td>
+                                        <td>Tonelada</td>
+                                    </tr>
+                                </tbody>
+
+                            </table>
+                        </div>
+                    </div>
+                    <!--                    <div class="span6">
+                                            <div class="row-fluid">
+                                                <div class="span12">
+                                                    <pre>
+                    Nombre:       Acme Inc:Metales Férricos
+                    Material:     Metal Férrico
+                    Cantidad:     1200 Ton
+                    Fecha límite: 15/11/2013
+                    Prioridad:    Alta
+                    Descripción:  Acme Inc.requiere 1200 toneladas de metales.
+                    Completado:   40%
+                                                    </pre>
+                                                </div>
+                                            </div>
+                                            <div class="row-fluid">
+                                                <div class="control-group" >
+                                                    <div class="controls pull-right">
+                                                        <button type="button" class="btn"><i class="icon-pencil"></i> Editar</button>
+                                                        <button type="button" class="btn"><i class="icon-trash"></i> Eliminar</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>-->
+                </div>
+                <div class="row-fluid">
+                    <div class="control-group" >
+                        <div class="controls pull-right">
+                            <button type="button" class="btn"><i class="icon-pencil"></i> Editar</button>
+                            <button type="button" class="btn"><i class="icon-trash"></i> Eliminar</button>
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+
+
+    </ui:define>
 </ui:composition>
 
