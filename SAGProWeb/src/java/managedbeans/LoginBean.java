@@ -35,7 +35,6 @@ public class LoginBean {
     public void setPassword(String password) {
         this.password = password;
     }
-    
     private String username;
     private String password;
 
@@ -59,6 +58,7 @@ public class LoginBean {
                 return "admin/index?faces-redirect=true";
             } catch (ServletException e) {
                 context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error", "Login inválido"));
+                System.out.println("Login Failed: " + e.getMessage());
                 return "";
             }
         } else {
