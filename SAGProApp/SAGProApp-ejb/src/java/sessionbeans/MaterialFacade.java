@@ -5,7 +5,6 @@
 package sessionbeans;
 
 import entities.Material;
-import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityExistsException;
@@ -32,6 +31,14 @@ public class MaterialFacade extends AbstractFacade<Material> implements Material
 
     public MaterialFacade() {
         super(Material.class);
+    }
+    /**
+     * 
+     * @return Lista de todos los materiales
+     */
+    @Override
+    public List<Material> findAll() {
+        return super.findAll(); //To change body of generated methods, choose Tools | Templates.
     }
 
     /**

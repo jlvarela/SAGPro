@@ -60,7 +60,7 @@ public class Material implements Serializable {
     private String medidaVentaMaterial;
     @ManyToMany(mappedBy = "materialCollection")
     private Collection<Objetivo> objetivoCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "codMaterial")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "material")
     private Collection<ProduccionDiaria> produccionDiariaCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "codMaterial")
     private Collection<EstadisticaMensual> estadisticaMensualCollection;

@@ -8,15 +8,13 @@ import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
+import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -29,42 +27,43 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "ProduccionDiaria.findAll", query = "SELECT p FROM ProduccionDiaria p"),
-    @NamedQuery(name = "ProduccionDiaria.findByFechaDiariaEstadistica", query = "SELECT p FROM ProduccionDiaria p WHERE p.fechaDiariaEstadistica = :fechaDiariaEstadistica"),
+    @NamedQuery(name = "ProduccionDiaria.findByFechaDiariaEstadistica", query = "SELECT p FROM ProduccionDiaria p WHERE p.produccionDiariaPK.fechaDiariaEstadistica = :fechaDiariaEstadistica"),
+    @NamedQuery(name = "ProduccionDiaria.findByCodMaterial", query = "SELECT p FROM ProduccionDiaria p WHERE p.produccionDiariaPK.codMaterial = :codMaterial"),
     @NamedQuery(name = "ProduccionDiaria.findByProduccionMaterial", query = "SELECT p FROM ProduccionDiaria p WHERE p.produccionMaterial = :produccionMaterial")})
 public class ProduccionDiaria implements Serializable {
     private static final long serialVersionUID = 1L;
-    @Id
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "FECHA_DIARIA_ESTADISTICA")
-    @Temporal(TemporalType.TIME)
-    private Date fechaDiariaEstadistica;
+    @EmbeddedId
+    protected ProduccionDiariaPK produccionDiariaPK;
     @Basic(optional = false)
     @NotNull
     @Column(name = "PRODUCCION_MATERIAL")
     private int produccionMaterial;
-    @JoinColumn(name = "COD_MATERIAL", referencedColumnName = "COD_MATERIAL")
+    @JoinColumn(name = "COD_MATERIAL", referencedColumnName = "COD_MATERIAL", insertable = false, updatable = false)
     @ManyToOne(optional = false)
-    private Material codMaterial;
+    private Material material;
 
     public ProduccionDiaria() {
     }
 
-    public ProduccionDiaria(Date fechaDiariaEstadistica) {
-        this.fechaDiariaEstadistica = fechaDiariaEstadistica;
+    public ProduccionDiaria(ProduccionDiariaPK produccionDiariaPK) {
+        this.produccionDiariaPK = produccionDiariaPK;
     }
 
-    public ProduccionDiaria(Date fechaDiariaEstadistica, int produccionMaterial) {
-        this.fechaDiariaEstadistica = fechaDiariaEstadistica;
+    public ProduccionDiaria(ProduccionDiariaPK produccionDiariaPK, int produccionMaterial) {
+        this.produccionDiariaPK = produccionDiariaPK;
         this.produccionMaterial = produccionMaterial;
     }
 
-    public Date getFechaDiariaEstadistica() {
-        return fechaDiariaEstadistica;
+    public ProduccionDiaria(Date fechaDiariaEstadistica, int codMaterial) {
+        this.produccionDiariaPK = new ProduccionDiariaPK(fechaDiariaEstadistica, codMaterial);
     }
 
-    public void setFechaDiariaEstadistica(Date fechaDiariaEstadistica) {
-        this.fechaDiariaEstadistica = fechaDiariaEstadistica;
+    public ProduccionDiariaPK getProduccionDiariaPK() {
+        return produccionDiariaPK;
+    }
+
+    public void setProduccionDiariaPK(ProduccionDiariaPK produccionDiariaPK) {
+        this.produccionDiariaPK = produccionDiariaPK;
     }
 
     public int getProduccionMaterial() {
@@ -75,18 +74,18 @@ public class ProduccionDiaria implements Serializable {
         this.produccionMaterial = produccionMaterial;
     }
 
-    public Material getCodMaterial() {
-        return codMaterial;
+    public Material getMaterial() {
+        return material;
     }
 
-    public void setCodMaterial(Material codMaterial) {
-        this.codMaterial = codMaterial;
+    public void setMaterial(Material material) {
+        this.material = material;
     }
 
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (fechaDiariaEstadistica != null ? fechaDiariaEstadistica.hashCode() : 0);
+        hash += (produccionDiariaPK != null ? produccionDiariaPK.hashCode() : 0);
         return hash;
     }
 
@@ -97,7 +96,7 @@ public class ProduccionDiaria implements Serializable {
             return false;
         }
         ProduccionDiaria other = (ProduccionDiaria) object;
-        if ((this.fechaDiariaEstadistica == null && other.fechaDiariaEstadistica != null) || (this.fechaDiariaEstadistica != null && !this.fechaDiariaEstadistica.equals(other.fechaDiariaEstadistica))) {
+        if ((this.produccionDiariaPK == null && other.produccionDiariaPK != null) || (this.produccionDiariaPK != null && !this.produccionDiariaPK.equals(other.produccionDiariaPK))) {
             return false;
         }
         return true;
@@ -105,7 +104,7 @@ public class ProduccionDiaria implements Serializable {
 
     @Override
     public String toString() {
-        return "entities.ProduccionDiaria[ fechaDiariaEstadistica=" + fechaDiariaEstadistica + " ]";
+        return "entities.ProduccionDiaria[ produccionDiariaPK=" + produccionDiariaPK + " ]";
     }
     
 }

@@ -28,5 +28,7 @@ public interface ProduccionDiariaFacadeLocal {
     List<ProduccionDiaria> findRange(int[] range);
 
     int count();
+
+    int agregarProduccionDiaria(final int codMaterial, final int cantidadMaterial);
     
 }
