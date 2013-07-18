@@ -5,6 +5,7 @@
 package sessionbeans;
 
 import entities.User;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
@@ -47,6 +48,11 @@ public class UserFacade extends AbstractFacade<User> implements UserFacadeLocal 
            System.out.println("Usuario: '"+userRut+"', por alguna razón inesperada, se encuentra repetido");
            return null;
        }
+    }
+
+    @Override
+    public List<User> findAll() {
+        return super.findAll(); //To change body of generated methods, choose Tools | Templates.
     }
     
 }
