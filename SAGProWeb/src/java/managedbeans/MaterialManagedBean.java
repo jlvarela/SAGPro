@@ -40,6 +40,8 @@ public class MaterialManagedBean {
             medidasVentaMaterial = valuesVentas;
             medidasProduccionMaterial = valuesProduc;
         }
+        
+        listaMateriales = materialFacade.findAll();
     }
 
     public List<Material> getListaMateriales() {
