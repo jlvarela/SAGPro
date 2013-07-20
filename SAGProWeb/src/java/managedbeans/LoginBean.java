@@ -4,6 +4,8 @@
  */
 package managedbeans;
 
+import java.io.IOException;
+import java.io.Serializable;
 import javax.el.ELContext;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
@@ -13,6 +15,7 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  *
@@ -20,7 +23,7 @@ import javax.servlet.http.HttpServletRequest;
  */
 @ManagedBean(name = "loginBean")
 @ViewScoped
-public class LoginBean {
+public class LoginBean implements Serializable {
 
     public String getUsername() {
         return username;
@@ -76,12 +79,12 @@ public class LoginBean {
         if (request.getUserPrincipal() != null) {
             try {
                 request.logout();
-                return "/index?faces-redirect=true";
+                return "";
             } catch (ServletException e) {
-                System.out.println("No se pudo desloguear :(");
+                System.out.println("No se pudo desloguear :( " + e.getMessage());
                 return "";
             }
         }
-        return "/index?faces-redirect=true";
+        return "";
     }
 }
