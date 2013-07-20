@@ -54,5 +54,9 @@ public class UserFacade extends AbstractFacade<User> implements UserFacadeLocal 
     public List<User> findAll() {
         return super.findAll(); //To change body of generated methods, choose Tools | Templates.
     }
-    
+
+    @Override
+    public User find(Object id) {
+        return super.find(id); //To change body of generated methods, choose Tools | Templates.
+    }
 }

@@ -74,9 +74,9 @@ public class UserManagedBean implements Serializable {
     private String usermail;
     private List<User> listaUsers;
     private List<User> selectedUsers;
+
+   
     
-    
-        
     /**
      * Creates a new instance of UserManagedBean
      */
@@ -99,7 +99,7 @@ public class UserManagedBean implements Serializable {
             this.usermail = usuario.getEmailUser();
         } 
         
-        listaUsers=userFacade.findAll();
+        listaUsers=userFacade.findAll();        
         System.out.println(listaUsers.size());
     }
 }
