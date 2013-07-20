@@ -2,23 +2,82 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:f="http://java.sun.com/jsf/core">
     <h:head>
-        <title>SAGPro Web - LogIn</title>
+        <title>SAGPro</title>
+        <link rel="icon" href="#{request.contextPath}/resources/img/logo.png" type="image/png"/>
+        <link type="text/css" rel="stylesheet" href="#{request.contextPath}/resources/css/bootstrap-responsive.css" />
+        <link type="text/css" rel="stylesheet" href="#{request.contextPath}/resources/css/bootstrap-responsive.min.css" />
+        <link type="text/css" rel="stylesheet" href="#{request.contextPath}/resources/css/bootstrap.min.css" />
+        <link type="text/css" rel="stylesheet" href="#{request.contextPath}/resources/css/bootstrap.css" />
+        <link type="text/css" rel="stylesheet" href="#{request.contextPath}/resources/css/bootstrap-datetimepicker.min.css" />
+        <script type="text/javascript" src="#{request.contextPath}/resources/js/jquery.js"></script>
+        <script type="text/javascript" src="#{request.contextPath}/resources/js/bootstrap-datetimepicker.min.js"></script>
     </h:head>
-    <h:body>
-        <p:panel header="Login Form">
-            <p:messages id="messages" showDetail="true" showSummary="false" autoUpdate="true" closable="true" />
-            <h:form>
-                <h:outputLabel for="usernameInput" value="Username:"/>
-                <p:inputText id="usernameInput" value="#{loginBean.username}" required="true" requiredMessage="Campo obligatorio"/>
-                <h:outputLabel for="passwordInput" value="Password:"/>
-                <p:inputText type="password" id="passwordInput" value="#{loginBean.password}" required="true" requiredMessage="Campo obligatorio" />
-                <p:commandButton type="submit" value="Login" action="#{loginBean.login()}"/>
-                <p:commandButton type="reset" value="Reset" />
-            </h:form>
+    <h:body class="cuerpoLogin">
+        <div class="row-fluid"> <!--Header de la pagina-->	
+            <div id="header" class="span12">
+                <img src="#{request.contextPath}/resources/img/logo.png" width="400" height="20" align="right" style="margin-top: 10px"/>
+            </div>
             
-        </p:panel>
+        </div>
+        <div class="navbar navbar-custom1">
+            <div class="navbar-inner">
+                <div class="container pull-right">
+                    <ul class="nav">
+                        <li><a href="#"><i class="icon-question-sign"></i> Ayuda</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="row-fluid" style="margin-top: 5%">
+            <div class="span7 offset1">
+                <h2>Bienvenido a SAGPro</h2>
+                <p align="justify">
+                    "Sistema de apoyo a la gestión de producción mediante herramientas estadísticas, creación y cumplimiento de objetivos y 
+                    optimización de cantidades óptimas de producción. SAGPro provee de las utilidades necesarias para poder tomar decisiones 
+                    fundadas y evaluar la progresión del negocio. "
+                </p>
+            </div>
+            <fieldset class="span3" style="min-width: 300px">
+                <legend > Inicio de sesión</legend>
+                <div class="row-fluid" style="margin-left: 30px">
+                    <h:form>
+                    <div class="control-group">
+                        <label class="control-label">Rut</label>
+                        <div class="controls">
+                            <h:inputText style="width:200px" value="#{loginBean.username}" maxlength="9" />
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <label class="control-label">Contraseña</label>
+                        <div class="controls">
+                            <h:inputSecret style="width:200px" value="#{loginBean.password}" >
+                                <f:attribute name="type" value="password" />
+                            </h:inputSecret>
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <div class="controls">
+                            <label class="checkbox">
+                                <input type="checkbox" name="recordarme_check">Recordarme</input>
+                                <a href="">¿Olvidó su contraseña?</a>
+                            </label>
+                            <div class="row">
+                                <div class="span4 offset1">
+                                    <h:commandButton styleClass="btn btn-primary" action="#{loginBean.login()}"
+                                                     value="Entrar" />
+                                </div>
+                            </div>				
+                        </div>
+                    </div>
+                    </h:form>
+                </div>
+            </fieldset>
+        </div>
     </h:body>
 </html>
 

@@ -141,7 +141,6 @@ public class CrearObjetivoManagedBean implements Serializable{
     
     public void addMaterialObjetivo(){
         SelectedMaterial newmaterial = new SelectedMaterial();
-        System.out.println(codMaterialSelected + cantMaterialSelected);
         newmaterial.setIdMaterial(codMaterialSelected);
         newmaterial.setNombreMaterial(codMaterialSelected);
         newmaterial.setCantidad(cantMaterialSelected);
