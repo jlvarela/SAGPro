@@ -7,7 +7,6 @@ package managedbeans;
 import entities.User;
 import javax.inject.Named;
 import java.io.Serializable;
-import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
@@ -50,6 +49,7 @@ public class UserManagedBean implements Serializable {
         this.userlastname = userlastname;
     }
 
+<<<<<<< HEAD
     public List<User> getListaUsers() {
         return listaUsers;
     }
@@ -65,12 +65,18 @@ public class UserManagedBean implements Serializable {
     public void setSelectedUsers(List<User> selectedUsers) {
         this.selectedUsers = selectedUsers;
     }
+=======
+>>>>>>> 243bf8d4cab127a2d5591610cc9588bbc8f49829
     private String userid;
     private String username;
     private String userlastname;
     private String usermail;
+<<<<<<< HEAD
     private List<User> listaUsers;
     private List<User> selectedUsers;
+=======
+
+>>>>>>> 243bf8d4cab127a2d5591610cc9588bbc8f49829
 
     /**
      * Creates a new instance of UserManagedBean
