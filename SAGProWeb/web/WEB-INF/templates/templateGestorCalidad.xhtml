@@ -7,19 +7,20 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets">
 
     <ui:define name="menusuperior">
+        <h:form>
         <div class="navbar navbar-custom1">
             <div class="navbar-inner">
                 <div class="container pull-right">
                     <ul class="nav">
-                        <li style="margin-top: 9px; color:#777777">Bienvenido(a) #{userManagedBean.username}</li>
-                        <li><a href="#"><i class="icon-off"></i> Cerrar Sesión</a></li>
-                        <li><a href="#"><i class="icon-wrench"></i> Cuenta</a></li>
-                        <li><a href="#"><i class="icon-question-sign"></i> Ayuda</a></li>
-                        
+                            <li style="margin-top: 9px; color:#777777">Bienvenido(a) #{userManagedBean.username}</li>
+                            <li><h:commandLink action="#{loginBean.logout()}"><i class="icon-off"></i> Cerrar Sesión</h:commandLink></li>
+                            <li><a href="#"><i class="icon-wrench"></i> Cuenta</a></li>
+                            <li><a href="#"><i class="icon-question-sign"></i> Ayuda</a></li>                        
                     </ul>
                 </div>
             </div>
         </div>
+        </h:form>
     </ui:define>
     <ui:define name="menu">
         <div class="span2"><!--Menú de la pagina-->
