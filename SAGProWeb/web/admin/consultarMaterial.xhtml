@@ -26,22 +26,24 @@
                 <div class="row-fluid">
                     <div class="span6" >
                         <div class="span12" >
-                            <p:dataTable var="material" value="#{materialManagedBean.listaMateriales}" rows="10" rowKey="#{material.nombreMaterial}" paginator="true" >  
-                                <f:facet name="header">  
-                                    Materiales 
-                                </f:facet>  
-                                <p:column headerText="Nombre del material">  
-                                    <h:outputText value="#{material.nombreMaterial}" />  
-                                </p:column>  
+                            <h:form id="form">  
+                                <p:dataTable var="material" value="#{consultarMaterialManagedBean.listaMateriales}" rows="10" rowKey="#{material.nombreMaterial}" paginator="true" selection="#{consultarMaterialManagedBean.selectedMaterial}" selectionMode="single">  
+                                    <f:facet name="header">  
+                                        Materiales 
+                                    </f:facet>  
+                                    <p:column headerText="Nombre del material">  
+                                        <h:outputText value="#{material.nombreMaterial}" />  
+                                    </p:column>  
 
-                                <p:column headerText="Unidad de producción">  
-                                    <h:outputText value="#{material.medidaProduccionMaterial}" />  
-                                </p:column>  
+                                    <p:column headerText="Unidad de producción">  
+                                        <h:outputText value="#{material.medidaProduccionMaterial}" />  
+                                    </p:column>  
 
-                                <p:column headerText="Unidad de venta">  
-                                    <h:outputText value="#{material.medidaVentaMaterial}" />  
-                                </p:column>  
-                            </p:dataTable>  
+                                    <p:column headerText="Unidad de venta">  
+                                        <h:outputText value="#{material.medidaVentaMaterial}" />  
+                                    </p:column>  
+                                </p:dataTable>  
+                            </h:form>
                             <!--                            <table class="table table-bordered">
                                                             <thead>
                                                                 <tr>
