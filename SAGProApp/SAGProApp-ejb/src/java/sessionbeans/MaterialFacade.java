@@ -107,4 +107,5 @@ public class MaterialFacade extends AbstractFacade<Material> implements Material
     public String[] getValuesProducMaterial() {
         return getMedidasProducValues();
     }
+    
 }

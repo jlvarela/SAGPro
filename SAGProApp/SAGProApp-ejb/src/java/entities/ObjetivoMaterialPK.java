@@ -5,12 +5,9 @@
 package entities;
 
 import java.io.Serializable;
-import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 
 /**
@@ -18,31 +15,30 @@ import javax.validation.constraints.NotNull;
  * @author Jose
  */
 @Embeddable
-public class ProduccionDiariaPK implements Serializable {
+public class ObjetivoMaterialPK implements Serializable {
     @Basic(optional = false)
     @NotNull
-    @Column(name = "FECHA_DIARIA_ESTADISTICA")
-    @Temporal(TemporalType.DATE)
-    private Date fechaDiariaEstadistica;
+    @Column(name = "COD_OBJETIVO")
+    private int codObjetivo;
     @Basic(optional = false)
     @NotNull
     @Column(name = "COD_MATERIAL")
     private int codMaterial;
 
-    public ProduccionDiariaPK() {
+    public ObjetivoMaterialPK() {
     }
 
-    public ProduccionDiariaPK(Date fechaDiariaEstadistica, int codMaterial) {
-        this.fechaDiariaEstadistica = fechaDiariaEstadistica;
+    public ObjetivoMaterialPK(int codObjetivo, int codMaterial) {
+        this.codObjetivo = codObjetivo;
         this.codMaterial = codMaterial;
     }
 
-    public Date getFechaDiariaEstadistica() {
-        return fechaDiariaEstadistica;
+    public int getCodObjetivo() {
+        return codObjetivo;
     }
 
-    public void setFechaDiariaEstadistica(Date fechaDiariaEstadistica) {
-        this.fechaDiariaEstadistica = fechaDiariaEstadistica;
+    public void setCodObjetivo(int codObjetivo) {
+        this.codObjetivo = codObjetivo;
     }
 
     public int getCodMaterial() {
@@ -56,7 +52,7 @@ public class ProduccionDiariaPK implements Serializable {
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (fechaDiariaEstadistica != null ? fechaDiariaEstadistica.hashCode() : 0);
+        hash += (int) codObjetivo;
         hash += (int) codMaterial;
         return hash;
     }
@@ -64,11 +60,11 @@ public class ProduccionDiariaPK implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof ProduccionDiariaPK)) {
+        if (!(object instanceof ObjetivoMaterialPK)) {
             return false;
         }
-        ProduccionDiariaPK other = (ProduccionDiariaPK) object;
-        if ((this.fechaDiariaEstadistica == null && other.fechaDiariaEstadistica != null) || (this.fechaDiariaEstadistica != null && !this.fechaDiariaEstadistica.equals(other.fechaDiariaEstadistica))) {
+        ObjetivoMaterialPK other = (ObjetivoMaterialPK) object;
+        if (this.codObjetivo != other.codObjetivo) {
             return false;
         }
         if (this.codMaterial != other.codMaterial) {
@@ -79,7 +75,7 @@ public class ProduccionDiariaPK implements Serializable {
 
     @Override
     public String toString() {
-        return "entities.ProduccionDiariaPK[ fechaDiariaEstadistica=" + fechaDiariaEstadistica + ", codMaterial=" + codMaterial + " ]";
+        return "entities.ObjetivoMaterialPK[ codObjetivo=" + codObjetivo + ", codMaterial=" + codMaterial + " ]";
     }
     
 }

@@ -4,7 +4,7 @@
  */
 package sessionbeans;
 
-import entities.Objetivo;
+import entities.ObjetivoMaterial;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -14,7 +14,7 @@ import javax.persistence.PersistenceContext;
  * @author Jose
  */
 @Stateless
-public class ObjetivoFacade extends AbstractFacade<Objetivo> implements ObjetivoFacadeLocal {
+public class ObjetivoMaterialFacade extends AbstractFacade<ObjetivoMaterial> implements ObjetivoMaterialFacadeLocal {
     @PersistenceContext(unitName = "SAGProApp-ejbPU")
     private EntityManager em;
 
@@ -23,8 +23,8 @@ public class ObjetivoFacade extends AbstractFacade<Objetivo> implements Objetivo
         return em;
     }
 
-    public ObjetivoFacade() {
-        super(Objetivo.class);
+    public ObjetivoMaterialFacade() {
+        super(ObjetivoMaterial.class);
     }
     
 }
