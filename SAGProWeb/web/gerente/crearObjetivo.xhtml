@@ -3,13 +3,15 @@
 <ui:composition template ="/WEB-INF/templates/templateGerente.xhtml"
                 xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:h="http://java.sun.com/jsf/html"
-                xmlns:ui="http://java.sun.com/jsf/facelets">
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
 
     <ui:define name="cuerpo">
         <div class="span9">
             <fieldset style="padding: 20px">
                 <legend>Crear Objetivo</legend>
-
+                <h:form>
                 <div class="row-fluid">
                     <div class="span6">
                         <div class="row-fluid">
@@ -38,38 +40,41 @@
                                 Material
                             </div>
                             <div class="span3">
-                                <select class="span12">
-                                    <option>Metal</option>
-                                    <option>Plástico</option>
-                                    <option>Vidrio</option>
-                                </select>
+                                <h:selectOneMenu value="#{crearObjetivoManagedBean.codMaterialSelected}" 
+                                                 styleClass="span12" >
+                                    <f:selectItems value="#{crearObjetivoManagedBean.listaMateriales}"
+                                                   var="material"
+                                                   itemLabel="#{material.nombreMaterial}"
+                                                   itemValue="#{material.codMaterial}" />
+                                </h:selectOneMenu>
                             </div>
                             <div class="span3">
-                                <input class="span11" type="number" placeholder="Cant." ></input>
+                                <p:inputText styleClass="span11" id="kasfhk"
+                                             value="#{crearObjetivoManagedBean.cantMaterialSelected}"
+                                             title="Cantidad"
+                                             type="number" >
+                                    <f:attribute name="min" value="0" />
+                                </p:inputText>
                             </div>
                             <div class="span3">
-                                <button type="button" class="btn"><i class=" icon-plus"></i></button>
+                                <p:commandButton action="#{crearObjetivoManagedBean.addMaterialObjetivo}"
+                                                 icon="ui-icon-plus"
+                                                 update="materialObjetivoTabla" />
                             </div>
                         </div>
 
                         <div class="row-fluid">
                             <div class="span11">
-                                <table class="table table-bordered">
-                                    <thead>
-                                        <tr>
-                                            <th>Material</th>
-                                            <th>Cantidad</th>
-                                        </tr>
-                                    </thead>
-
-                                    <tbody>
-                                        <tr>
-                                            <td>Metal</td>
-                                            <td>10</td>
-                                        </tr>
-                                    </tbody>
-
-                                </table>
+                                <p:dataTable var="materialObjetivo"
+                                             value="#{crearObjetivoManagedBean.selectedMateriales}"
+                                             id="materialObjetivoTabla">
+                                    <p:column headerText="Material">
+                                        <h:outputText value="#{materialObjetivo.nombreMaterial}" />
+                                    </p:column>
+                                    <p:column headerText="Cantidad">
+                                        <h:outputText value="#{materialObjetivo.cantidad}" />
+                                    </p:column>
+                                </p:dataTable>
                             </div>
                         </div>
 
@@ -85,7 +90,11 @@
                             </div>
                             <div class="span8">
                                 <div class="input-append datetimepicker" style="width:100%">
-                                    <input  class="span11" data-format="yyyy-MM-dd" type="text"></input>
+<!--                                    <input  class="span11" data-format="yyyy-MM-dd" type="text"></input>-->
+                                    <h:inputText styleClass="span11"
+                                                 value="#{crearObjetivoManagedBean.initialDate}">
+                                        <f:attribute name="data-format" value="yyyy-MM-dd" />
+                                    </h:inputText>
                                     <span class="add-on">
                                         <i data-time-icon="icon-time" data-date-icon="icon-calendar">
                                         </i>
@@ -106,7 +115,9 @@
                             </div>
                             <div class="span8">
                                 <div  class="input-append datetimepicker" style="width:100%">
-                                    <input  class="span11" data-format="yyyy-MM-dd" type="text"></input>
+                                    <h:inputText styleClass="span11" value="#{crearObjetivoManagedBean.finishDate}">
+                                        <f:attribute name="data-format" value="yyyy-MM-dd" />
+                                    </h:inputText>
                                     <span class="add-on">
                                         <i data-time-icon="icon-time" data-date-icon="icon-calendar">
                                         </i>
@@ -182,6 +193,7 @@
 
                     </div>
                 </div>
+                </h:form>
             </fieldset>
         </div>
 

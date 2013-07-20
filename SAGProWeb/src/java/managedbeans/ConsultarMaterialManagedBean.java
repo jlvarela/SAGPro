@@ -8,30 +8,30 @@ import entities.Material;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
-import javax.inject.Named;
-import javax.enterprise.context.RequestScoped;
-import javax.faces.application.FacesMessage;
-import javax.faces.context.FacesContext;
-import javax.faces.event.ValueChangeEvent;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ViewScoped;
 import sessionbeans.MaterialFacadeLocal;
-import org.primefaces.model.MenuModel;
 
 /**
  *
- * @author Jose
+ * @author Gary
  */
-@Named(value = "materialManagedBean")
-@RequestScoped
-public class MaterialManagedBean {
-       
-    @EJB
+@ManagedBean (name = "consultarMaterialManagedBean")
+@ViewScoped
+public class ConsultarMaterialManagedBean {
+
+    /**
+     * Creates a new instance of ConsultarMaterialManagedBean
+     */
+    public ConsultarMaterialManagedBean() {
+    }
+    
+     @EJB
     private MaterialFacadeLocal materialFacade;
 
     /**
      * Creates a new instance of MaterialManagedBean
      */
-    public MaterialManagedBean() {
-    }
 
     @PostConstruct
     public void init() {
@@ -58,6 +58,27 @@ public class MaterialManagedBean {
     private String[] medidasVentaMaterial;
     private String[] medidasProduccionMaterial;
     private List<Material> listaMateriales;
+    
+    private Material selectedMaterial;
+    private Material[] selectedMaterials;
+
+    public Material getSelectedMaterial() {
+        return selectedMaterial;
+    }
+
+    public void setSelectedMaterial(Material selectedMaterial) {
+        this.selectedMaterial = selectedMaterial;
+    }
+
+    public Material[] getSelectedMaterials() {
+        return selectedMaterials;
+    }
+
+    public void setSelectedMaterials(Material[] selectedMaterials) {
+        this.selectedMaterials = selectedMaterials;
+    }
+    
+    
 
     public String[] getMedidasVentaMaterial() {
         return medidasVentaMaterial;
@@ -97,27 +118,5 @@ public class MaterialManagedBean {
 
     public void setMedidaVentaMaterial(String medidaVentaMaterial) {
         this.medidaVentaMaterial = medidaVentaMaterial;
-    }
-
-    public void ingresarMaterial() {
-        System.out.println(nombreMaterial+medidaProduccionMaterial+medidaVentaMaterial);
-        int resp = materialFacade.agregarMaterial(nombreMaterial, medidaProduccionMaterial, medidaVentaMaterial);
-        FacesContext fcontext = FacesContext.getCurrentInstance();
-        if (resp == 0) {
-            fcontext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "", "Material agregado con éxito"));
-        } else if (resp == -1) {
-            fcontext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "", "Material ya ingresado"));
-        }
-    }
-    
-    public void materialSelectCantidadListener(ValueChangeEvent event){
-        String idMatSelect = (String) event.getNewValue();
-        for(Material material: listaMateriales){
-            if(material.getCodMaterial().equals(Integer.parseInt(idMatSelect))){
-                medidaProduccionMaterial = material.getMedidaProduccionMaterial();
-                System.out.println("new value " + medidaProduccionMaterial);
-                break;
-            }
-        }
     }
 }

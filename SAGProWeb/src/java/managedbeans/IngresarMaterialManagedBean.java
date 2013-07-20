@@ -8,30 +8,33 @@ import entities.Material;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
-import javax.inject.Named;
-import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ValueChangeEvent;
 import sessionbeans.MaterialFacadeLocal;
-import org.primefaces.model.MenuModel;
 
 /**
  *
- * @author Jose
+ * @author Gary
  */
-@Named(value = "materialManagedBean")
-@RequestScoped
-public class MaterialManagedBean {
-       
+@ManagedBean (name = "ingresarMaterialManagedBean")
+@ViewScoped
+public class IngresarMaterialManagedBean {
+
+    /**
+     * Creates a new instance of IngresarMaterialManagedBean
+     */
+    public IngresarMaterialManagedBean() {
+    }
+    
     @EJB
     private MaterialFacadeLocal materialFacade;
 
     /**
      * Creates a new instance of MaterialManagedBean
      */
-    public MaterialManagedBean() {
-    }
 
     @PostConstruct
     public void init() {

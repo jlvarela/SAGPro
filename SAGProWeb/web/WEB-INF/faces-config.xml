@@ -5,4 +5,20 @@
 <faces-config version="2.1"
     xmlns="http://java.sun.com/xml/ns/javaee"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_2_1.xsd"></faces-config>
+    xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_2_1.xsd">
+    <managed-bean>
+        <managed-bean-name>consultarMaterialManagedBean</managed-bean-name>
+        <managed-bean-class>managedbeans.ConsultarMaterialManagedBean</managed-bean-class>
+        <managed-bean-scope>view</managed-bean-scope>
+    </managed-bean>
+    <managed-bean>
+        <managed-bean-name>insertarManagedBean</managed-bean-name>
+        <managed-bean-class>managedbeans.IngresarMaterialManagedBean</managed-bean-class>
+    
+        <managed-bean-scope>view</managed-bean-scope></managed-bean>
+    <managed-bean>
+        <managed-bean-name>ingresarMaterialManagedBean</managed-bean-name>
+        <managed-bean-class>managedbeans.IngresarMaterialManagedBean</managed-bean-class>
+        <managed-bean-scope>view</managed-bean-scope>
+    </managed-bean>
+</faces-config>
