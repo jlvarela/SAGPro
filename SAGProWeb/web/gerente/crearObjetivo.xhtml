@@ -3,7 +3,9 @@
 <ui:composition template ="/WEB-INF/templates/templateGerente.xhtml"
                 xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:h="http://java.sun.com/jsf/html"
-                xmlns:ui="http://java.sun.com/jsf/facelets">
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
 
     <ui:define name="cuerpo">
         <div class="span9">
@@ -23,7 +25,7 @@
                                 Nombre 
                             </div>
                             <div class="span8">
-                                <h:inputText class="span12" value="#{objetivoManagedBean.nombreObjetivo}" />
+                                <h:inputText class="span12" value="#{crearObjetivoManagedBean.nombreObjetivo}" />
                             </div>
                         </div>
 
@@ -38,17 +40,19 @@
                                 Material
                             </div>
                             <div class="span3">
-                                <select class="span12">
-                                    <option>Metal</option>
-                                    <option>Plástico</option>
-                                    <option>Vidrio</option>
-                                </select>
+                                <h:selectOneMenu styleClass="span12" value="#{crearObjetivoManagedBean.codMaterialSelected}" >
+                                    <f:selectItems value="#{crearObjetivoManagedBean.listaMateriales}"
+                                                   var="material"
+                                                   itemLabel="#{material.nombreMaterial}"
+                                                   itemValue="#{material.codMaterial}" />
+                                </h:selectOneMenu>
                             </div>
                             <div class="span3">
-                                <input class="span11" type="number" placeholder="Cant." ></input>
+                                <p:inputText styleClass="span11" id="cantidadInput" label="Cantidad" title="Cantidad"/>
+                                <p:watermark for="cantidadInput"  value="10"/>
                             </div>
                             <div class="span3">
-                                <button type="button" class="btn"><i class=" icon-plus"></i></button>
+                                <h:commandLink type=submit" value="" class="btn"><i class=" icon-plus"></i></h:commandLink>
                             </div>
                         </div>
 

@@ -5,6 +5,7 @@
 package sessionbeans;
 
 import entities.Objetivo;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -23,8 +24,17 @@ public class ObjetivoFacade extends AbstractFacade<Objetivo> implements Objetivo
         return em;
     }
 
+    @Override
+    public void create(Objetivo entity) {
+        super.create(entity); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public List<Objetivo> findAll() {
+        return super.findAll(); //To change body of generated methods, choose Tools | Templates.
+    }
+
     public ObjetivoFacade() {
         super(Objetivo.class);
-    }
-    
+    }    
 }
