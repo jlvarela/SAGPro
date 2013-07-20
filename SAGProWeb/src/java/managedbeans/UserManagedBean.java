@@ -49,35 +49,10 @@ public class UserManagedBean implements Serializable {
         this.userlastname = userlastname;
     }
 
-<<<<<<< HEAD
-    public List<User> getListaUsers() {
-        return listaUsers;
-    }
-
-    public void setListaUsers(List<User> listaUsers) {
-        this.listaUsers = listaUsers;
-    }
-
-    public List<User> getSelectedUsers() {
-        return selectedUsers;
-    }
-
-    public void setSelectedUsers(List<User> selectedUsers) {
-        this.selectedUsers = selectedUsers;
-    }
-=======
->>>>>>> 243bf8d4cab127a2d5591610cc9588bbc8f49829
     private String userid;
     private String username;
     private String userlastname;
     private String usermail;
-<<<<<<< HEAD
-    private List<User> listaUsers;
-    private List<User> selectedUsers;
-=======
-
->>>>>>> 243bf8d4cab127a2d5591610cc9588bbc8f49829
-
     /**
      * Creates a new instance of UserManagedBean
      */
