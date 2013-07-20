@@ -5,9 +5,13 @@
 package managedbeans;
 
 import entities.Material;
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.enterprise.context.RequestScoped;
+import javax.faces.bean.ManagedBean;
 import javax.inject.Named;
 import javax.faces.bean.ViewScoped;
 import javax.faces.event.ValueChangeEvent;
@@ -17,17 +21,27 @@ import sessionbeans.MaterialFacadeLocal;
  *
  * @author Jose
  */
-@Named(value = "crearObjetivoManagedBean")
+@ManagedBean(name = "crearObjetivoManagedBean")
 @ViewScoped
-public class CrearObjetivoManagedBean {
+public class CrearObjetivoManagedBean implements Serializable{
     @EJB
     private MaterialFacadeLocal materialFacade;
     
-    private class SelectedMaterial{
+    public class SelectedMaterial{
         private String idMaterial;
-        private int cantidad;
+        public int cantidad;
+        public String nombreMaterial;
+        
         public SelectedMaterial () {
             
+        }
+
+        public String getNombreMaterial() {
+            return nombreMaterial;
+        }
+
+        public void setNombreMaterial(String nombreMaterial) {
+            this.nombreMaterial = nombreMaterial;
         }
 
         public String getIdMaterial() {
@@ -123,6 +137,19 @@ public class CrearObjetivoManagedBean {
     @PostConstruct
     public void init (){
         listaMateriales = materialFacade.findAll();
+        selectedMateriales = new ArrayList<>();
+        System.out.println(selectedMateriales.size());
+    }
+    
+    public void addMaterialObjetivo(){
+        SelectedMaterial newmaterial = new SelectedMaterial();
+        System.out.println(codMaterialSelected + cantMaterialSelected);
+        newmaterial.setIdMaterial(codMaterialSelected);
+        newmaterial.setNombreMaterial(codMaterialSelected);
+        newmaterial.setCantidad(Integer.parseInt(cantMaterialSelected));
+        selectedMateriales.add(newmaterial);
+        
+        return;
     }
     
 }
