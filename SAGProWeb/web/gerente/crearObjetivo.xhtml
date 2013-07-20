@@ -49,13 +49,16 @@
                                 </h:selectOneMenu>
                             </div>
                             <div class="span3">
-                                <p:inputText styleClass="span11"
+                                <p:inputText styleClass="span11" id="kasfhk"
                                              value="#{crearObjetivoManagedBean.cantMaterialSelected}"
-                                             title="Cantidad" />
+                                             title="Cantidad"
+                                             type="number" >
+                                    <f:attribute name="min" value="0" />
+                                </p:inputText>
                             </div>
                             <div class="span3">
                                 <p:commandButton action="#{crearObjetivoManagedBean.addMaterialObjetivo}"
-                                                 icon="icon-plus"
+                                                 icon="ui-icon-plus"
                                                  update="materialObjetivoTabla" />
                             </div>
                         </div>
@@ -87,7 +90,11 @@
                             </div>
                             <div class="span8">
                                 <div class="input-append datetimepicker" style="width:100%">
-                                    <input  class="span11" data-format="yyyy-MM-dd" type="text"></input>
+<!--                                    <input  class="span11" data-format="yyyy-MM-dd" type="text"></input>-->
+                                    <h:inputText styleClass="span11"
+                                                 value="#{crearObjetivoManagedBean.initialDate}">
+                                        <f:attribute name="data-format" value="yyyy-MM-dd" />
+                                    </h:inputText>
                                     <span class="add-on">
                                         <i data-time-icon="icon-time" data-date-icon="icon-calendar">
                                         </i>
@@ -108,7 +115,9 @@
                             </div>
                             <div class="span8">
                                 <div  class="input-append datetimepicker" style="width:100%">
-                                    <input  class="span11" data-format="yyyy-MM-dd" type="text"></input>
+                                    <h:inputText styleClass="span11" value="#{crearObjetivoManagedBean.finishDate}">
+                                        <f:attribute name="data-format" value="yyyy-MM-dd" />
+                                    </h:inputText>
                                     <span class="add-on">
                                         <i data-time-icon="icon-time" data-date-icon="icon-calendar">
                                         </i>

@@ -7,14 +7,12 @@ package managedbeans;
 import entities.Material;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
-import javax.enterprise.context.RequestScoped;
 import javax.faces.bean.ManagedBean;
-import javax.inject.Named;
 import javax.faces.bean.ViewScoped;
-import javax.faces.event.ValueChangeEvent;
 import sessionbeans.MaterialFacadeLocal;
 
 /**
@@ -68,7 +66,7 @@ public class CrearObjetivoManagedBean implements Serializable{
     private String initialDate;
     private String finishDate;
     private String codMaterialSelected;
-    private String cantMaterialSelected;
+    private Integer cantMaterialSelected;
 
     public String getCodMaterialSelected() {
         return codMaterialSelected;
@@ -78,11 +76,11 @@ public class CrearObjetivoManagedBean implements Serializable{
         this.codMaterialSelected = codMaterialSelected;
     }
 
-    public String getCantMaterialSelected() {
+    public Integer getCantMaterialSelected() {
         return cantMaterialSelected;
     }
 
-    public void setCantMaterialSelected(String cantMaterialSelected) {
+    public void setCantMaterialSelected(Integer cantMaterialSelected) {
         this.cantMaterialSelected = cantMaterialSelected;
     }
     
@@ -138,7 +136,7 @@ public class CrearObjetivoManagedBean implements Serializable{
     public void init (){
         listaMateriales = materialFacade.findAll();
         selectedMateriales = new ArrayList<>();
-        System.out.println(selectedMateriales.size());
+        cantMaterialSelected = 0;
     }
     
     public void addMaterialObjetivo(){
@@ -146,10 +144,8 @@ public class CrearObjetivoManagedBean implements Serializable{
         System.out.println(codMaterialSelected + cantMaterialSelected);
         newmaterial.setIdMaterial(codMaterialSelected);
         newmaterial.setNombreMaterial(codMaterialSelected);
-        newmaterial.setCantidad(Integer.parseInt(cantMaterialSelected));
+        newmaterial.setCantidad(cantMaterialSelected);
         selectedMateriales.add(newmaterial);
-        
-        return;
     }
     
 }
