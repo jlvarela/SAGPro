@@ -53,11 +53,7 @@ public class UserManagedBean implements Serializable {
     private String username;
     private String userlastname;
     private String usermail;
-<<<<<<< HEAD
-=======
 
-
->>>>>>> 243bf8d4cab127a2d5591610cc9588bbc8f49829
     /**
      * Creates a new instance of UserManagedBean
      */
