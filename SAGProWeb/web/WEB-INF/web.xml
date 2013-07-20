@@ -39,6 +39,36 @@
         <auth-constraint>
             <description>Páginas del Administrador</description>
             <role-name>Admin</role-name>
+            <role-name>Gerencia</role-name>
+            <role-name>Calidad</role-name>
+        </auth-constraint>
+    </security-constraint>
+    <security-constraint>
+        <display-name>GerenciaPages</display-name>
+        <web-resource-collection>
+            <web-resource-name>Gerente</web-resource-name>
+            <description>Páginas del Gerente</description>
+            <url-pattern>/faces/gerente/*</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <description/>
+            <role-name>Admin</role-name>
+            <role-name>Gerencia</role-name>
+            <role-name>Calidad</role-name>
+        </auth-constraint>
+    </security-constraint>
+    <security-constraint>
+        <display-name>CalidadPages</display-name>
+        <web-resource-collection>
+            <web-resource-name>Calidad</web-resource-name>
+            <description>Páginas del Gestor de Calidad</description>
+            <url-pattern>/faces/calidad/*</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <description/>
+            <role-name>Admin</role-name>
+            <role-name>Gerencia</role-name>
+            <role-name>Calidad</role-name>
         </auth-constraint>
     </security-constraint>
     <login-config>
