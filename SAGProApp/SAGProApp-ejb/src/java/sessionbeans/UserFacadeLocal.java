@@ -30,5 +30,7 @@ public interface UserFacadeLocal {
     int count();
 
     User buscarPorRut(final String userRut);
+
+    public int eliminarUsuario(final String usuario_rut);
     
 }
