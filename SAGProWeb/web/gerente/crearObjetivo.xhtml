@@ -5,13 +5,15 @@
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:f="http://java.sun.com/jsf/core"
-                xmlns:p="http://primefaces.org/ui">
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:cc="http://java.sun.com/jsf/composite">
 
     <ui:define name="cuerpo">
         <div class="span9">
             <fieldset style="padding: 20px">
                 <legend>Crear Objetivo</legend>
                 <h:form>
+                    <p:messages autoUpdate="true" closable="true" showDetail="true" showSummary="false" />
                 <div class="row-fluid">
                     <div class="span6">
                         <div class="row-fluid">
@@ -25,7 +27,7 @@
                                 Nombre 
                             </div>
                             <div class="span8">
-                                <h:inputText class="span12" value="#{objetivoManagedBean.nombreObjetivo}" />
+                                <h:inputText class="span12" value="#{crearObjetivoManagedBean.nombreObjetivo}" />
                             </div>
                         </div>
 
@@ -49,10 +51,11 @@
                                 </h:selectOneMenu>
                             </div>
                             <div class="span3">
-                                <p:inputText styleClass="span11" id="kasfhk"
+                                <p:inputText styleClass="span11" 
                                              value="#{crearObjetivoManagedBean.cantMaterialSelected}"
                                              title="Cantidad"
-                                             type="number" >
+                                             type="number"
+                                >
                                     <f:attribute name="min" value="0" />
                                 </p:inputText>
                             </div>
@@ -64,15 +67,25 @@
                         </div>
 
                         <div class="row-fluid">
-                            <div class="span11">
+                            <div class="span12">
                                 <p:dataTable var="materialObjetivo"
                                              value="#{crearObjetivoManagedBean.selectedMateriales}"
-                                             id="materialObjetivoTabla">
+                                             id="materialObjetivoTabla" 
+                                             emptyMessage="No se han añadido materiales"
+                                             style="margin-bottom: 10px;"
+                                             >
                                     <p:column headerText="Material">
                                         <h:outputText value="#{materialObjetivo.nombreMaterial}" />
                                     </p:column>
                                     <p:column headerText="Cantidad">
                                         <h:outputText value="#{materialObjetivo.cantidad}" />
+                                    </p:column>
+                                    <p:column>
+                                        <p:commandButton icon="ui-icon-close"
+                                                         styleClass="btn"
+                                                         title="Borrar"
+                                                         actionListener="#{crearObjetivoManagedBean.removeMaterialObjetivo(materialObjetivo)}"
+                                                         update="materialObjetivoTabla"/>
                                     </p:column>
                                 </p:dataTable>
                             </div>
@@ -140,11 +153,11 @@
                                 Prioridad
                             </div>
                             <div class="span3">
-                                <select class="span12">
-                                    <option>Alta</option>
-                                    <option>Media</option>
-                                    <option>Baja</option>
-                                </select>
+                                <h:selectOneMenu styleClass="span12" value="#{crearObjetivoManagedBean.prioridadObjetivo}">
+                                    <f:selectItem itemLabel="Baja" itemValue="0" />
+                                    <f:selectItem itemLabel="Media" itemValue="1" />
+                                    <f:selectItem itemLabel="Alta" itemValue="2" />
+                                </h:selectOneMenu>
                             </div>
                         </div>
 
@@ -177,20 +190,18 @@
 
                         <div class="row-fluid">
                             <div class="span12">
-                                <textarea rows="6" style="width:97%"></textarea>
+                                <h:inputTextarea rows="6" style="width:97%" value="#{crearObjetivoManagedBean.descripcionObjetivo}" />
                             </div>
                         </div>
 
                         <div class="row-fluid">
                             <div class="control-group" >
                                 <div class="controls pull-right">
-                                    <button type="button" class="btn"><i class="icon-ok"></i> Agregar</button>
-                                    <button type="button" class="btn"><i class="icon-remove"></i> Cancelar</button>
+                                    <p:commandButton ajax="false" styleClass="btn" value="Agregar" action="#{crearObjetivoManagedBean.agregarObjetivo()}"/>
+                                    <p:commandButton type="reset" styleClass="btn" value="Cancelar" />
                                 </div>
                             </div>
                         </div>
-
-
                     </div>
                 </div>
                 </h:form>
@@ -209,7 +220,7 @@
 
                         <div class="accordion-body collapse in">
                             <div class="accordion-inner nav nav-list">
-                                <li><a>Crear Objetivo</a></li>
+                                <li class="active"><a>Crear Objetivo</a></li>
                                 <li><a>Ver Objetivo</a></li>
 
                             </div>
