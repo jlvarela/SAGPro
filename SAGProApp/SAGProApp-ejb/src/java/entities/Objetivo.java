@@ -5,11 +5,14 @@
 package entities;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
@@ -17,6 +20,7 @@ import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -40,10 +44,12 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Objetivo.findByFechaInicial", query = "SELECT o FROM Objetivo o WHERE o.fechaInicial = :fechaInicial"),
     @NamedQuery(name = "Objetivo.findByFechaLimite", query = "SELECT o FROM Objetivo o WHERE o.fechaLimite = :fechaLimite")})
 public class Objetivo implements Serializable {
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "objetivo")
+    private List<ObjetivoMaterial> objetivoMaterialList;
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @NotNull
     @Column(name = "COD_OBJETIVO")
     private Integer codObjetivo;
     @Basic(optional = false)
@@ -71,7 +77,7 @@ public class Objetivo implements Serializable {
         @JoinColumn(name = "COD_OBJETIVO", referencedColumnName = "COD_OBJETIVO")}, inverseJoinColumns = {
         @JoinColumn(name = "COD_MATERIAL", referencedColumnName = "COD_MATERIAL")})
     @ManyToMany
-    private Collection<Material> materialCollection;
+    private List<Material> materialList;
 
     public Objetivo() {
     }
@@ -136,12 +142,12 @@ public class Objetivo implements Serializable {
     }
 
     @XmlTransient
-    public Collection<Material> getMaterialCollection() {
-        return materialCollection;
+    public List<Material> getMaterialList() {
+        return materialList;
     }
 
-    public void setMaterialCollection(Collection<Material> materialCollection) {
-        this.materialCollection = materialCollection;
+    public void setMaterialList(List<Material> materialList) {
+        this.materialList = materialList;
     }
 
     @Override
@@ -167,6 +173,15 @@ public class Objetivo implements Serializable {
     @Override
     public String toString() {
         return "entities.Objetivo[ codObjetivo=" + codObjetivo + " ]";
+    }
+
+    @XmlTransient
+    public List<ObjetivoMaterial> getObjetivoMaterialList() {
+        return objetivoMaterialList;
+    }
+
+    public void setObjetivoMaterialList(List<ObjetivoMaterial> objetivoMaterialList) {
+        this.objetivoMaterialList = objetivoMaterialList;
     }
     
 }

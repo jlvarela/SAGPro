@@ -5,6 +5,7 @@
 package sessionbeans;
 
 import entities.Objetivo;
+import java.util.Date;
 import java.util.List;
 import javax.ejb.Local;
 
@@ -28,5 +29,7 @@ public interface ObjetivoFacadeLocal {
     List<Objetivo> findRange(int[] range);
 
     int count();
+
+    int agregarObjetivo(final String nombre, final String descripcion, final Date fecha_inicial, final Date fecha_final, final short prioridad);
     
 }
