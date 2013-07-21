@@ -10,9 +10,13 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
+import javax.faces.application.ViewHandler;
 import javax.faces.bean.ManagedBean;
 import javax.inject.Named;
 import javax.faces.bean.ViewScoped;
+import javax.faces.component.UIViewRoot;
+import javax.faces.context.FacesContext;
 import org.primefaces.event.SelectEvent;
 import sessionbeans.UserFacadeLocal;
 
@@ -112,13 +116,24 @@ public class ConsultarUsuarioManagedBean implements Serializable{
         
     }
     
-    public void hola(SelectEvent arg){
-        System.out.println("Holasfksagfask");
-        selectedUser = (User)arg.getObject();
+    public void borrarUsuario(){
+        //System.out.println(selectedUser.getRutUser());
+        String rut=(selectedUser.getRutUser()).toString();
+        System.out.println(rut);
+        int resp=userFacade.eliminarUsuario(rut);
+        FacesContext fcontext = FacesContext.getCurrentInstance();
+        String viewId = fcontext.getViewRoot().getViewId();
+        ViewHandler handler = fcontext.getApplication().getViewHandler();
+        UIViewRoot root = handler.createView(fcontext, viewId);
+        root.setViewId(viewId);
+        fcontext.setViewRoot(root);
+        
+         if (resp == 0) {
+            fcontext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "", "Usuario eliminado con éxito"));
+        } else if (resp == -1) {
+            fcontext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "", "Error al eliminar el usuario"));
+        }
     }
     
-    public void holi()
-    {
-        System.out.println(selectedUser.getNombreUser());
-    }
+    
 }

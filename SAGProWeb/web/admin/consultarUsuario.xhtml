@@ -16,7 +16,7 @@
             <div class="span9">
                 <fieldset style="padding: 20px">
                     <legend>Consultar Usuario</legend>
-
+                    <p:messages  autoUpdate="true" closable="true" showDetail="true" showSummary="false" />
                     <div class="row-fluid">
                         <div class="span6">
 
@@ -66,8 +66,8 @@ Tipo:               <h:outputText value="#{consultarUsuarioManagedBean.selectedU
                             <div class="row-fluid">
                                 <div class="control-group" >
                                     <div class="controls pull-right">
-                                        <button type="button" class="btn"><i class="icon-pencil"></i> Editar</button>
-                                        <button type="button" class="btn"><i class="icon-trash"></i> Eliminar</button>
+                                        <p:button outcome="editarUsuario.xhtml" value="Editar" icon="ui-icon-pencil"/>
+                                        <p:commandButton  action="#{consultarUsuarioManagedBean.borrarUsuario()}" value="Eliminar" icon="ui-icon-trash"/>
                                     </div>
                                 </div>
                             </div>
