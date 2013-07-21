@@ -35,4 +35,8 @@ public interface MaterialFacadeLocal {
 
     String[] getValuesProducMaterial();
     
+    Material buscarPorNombre(final String material_name);
+    
+    public int eliminarMaterial(final String material_name);
+    
 }

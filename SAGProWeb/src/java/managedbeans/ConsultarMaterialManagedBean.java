@@ -5,6 +5,7 @@
 package managedbeans;
 
 import entities.Material;
+import java.io.Serializable;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -16,35 +17,33 @@ import sessionbeans.MaterialFacadeLocal;
  *
  * @author Gary
  */
-@ManagedBean (name = "consultarMaterialManagedBean")
+@ManagedBean(name = "consultarMaterialManagedBean")
 @ViewScoped
-public class ConsultarMaterialManagedBean {
+public class ConsultarMaterialManagedBean implements Serializable {
 
-    /**
-     * Creates a new instance of ConsultarMaterialManagedBean
-     */
-    public ConsultarMaterialManagedBean() {
-    }
-    
-     @EJB
+    @EJB
     private MaterialFacadeLocal materialFacade;
+    
+    private String nombreMaterial;
+    private String medidaProduccionMaterial;
+    private String medidaVentaMaterial;
+    private String[] medidasVentaMaterial;
+    private String[] medidasProduccionMaterial;
+    private List<Material> listaMateriales;
+    private Material selectedMaterial;
+    private List<Material> selectedMaterials;
+    private String text; 
 
-    /**
-     * Creates a new instance of MaterialManagedBean
-     */
-
-    @PostConstruct
-    public void init() {
-        String[] valuesVentas = materialFacade.getValuesVentaMaterial();
-        String[] valuesProduc = materialFacade.getValuesProducMaterial();
-        if (valuesVentas != null && valuesProduc != null){
-            medidasVentaMaterial = valuesVentas;
-            medidasProduccionMaterial = valuesProduc;
-        }
-        
-        listaMateriales = materialFacade.findAll();
+    public String getText() {
+        return text;
     }
 
+    public void setText(String text) {
+        this.text = text;
+    }
+
+    
+    
     public List<Material> getListaMateriales() {
         return listaMateriales;
     }
@@ -52,15 +51,6 @@ public class ConsultarMaterialManagedBean {
     public void setListaMateriales(List<Material> listaMateriales) {
         this.listaMateriales = listaMateriales;
     }
-    private String nombreMaterial;
-    private String medidaProduccionMaterial;
-    private String medidaVentaMaterial;
-    private String[] medidasVentaMaterial;
-    private String[] medidasProduccionMaterial;
-    private List<Material> listaMateriales;
-    
-    private Material selectedMaterial;
-    private Material[] selectedMaterials;
 
     public Material getSelectedMaterial() {
         return selectedMaterial;
@@ -70,15 +60,13 @@ public class ConsultarMaterialManagedBean {
         this.selectedMaterial = selectedMaterial;
     }
 
-    public Material[] getSelectedMaterials() {
+    public List<Material>  getSelectedMaterials() {
         return selectedMaterials;
     }
 
-    public void setSelectedMaterials(Material[] selectedMaterials) {
+    public void setSelectedMaterials(List<Material>  selectedMaterials) {
         this.selectedMaterials = selectedMaterials;
     }
-    
-    
 
     public String[] getMedidasVentaMaterial() {
         return medidasVentaMaterial;
@@ -118,5 +106,19 @@ public class ConsultarMaterialManagedBean {
 
     public void setMedidaVentaMaterial(String medidaVentaMaterial) {
         this.medidaVentaMaterial = medidaVentaMaterial;
+    }
+
+    public ConsultarMaterialManagedBean() {
+    }
+
+    @PostConstruct
+    public void init() {
+        String[] valuesVentas = materialFacade.getValuesVentaMaterial();
+        String[] valuesProduc = materialFacade.getValuesProducMaterial();
+        if (valuesVentas != null && valuesProduc != null){
+            medidasVentaMaterial = valuesVentas;
+            medidasProduccionMaterial = valuesProduc;
+        }
+        listaMateriales = materialFacade.findAll();
     }
 }
