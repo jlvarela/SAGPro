@@ -32,5 +32,9 @@ public interface UserFacadeLocal {
     User buscarPorRut(final String userRut);
 
     public int eliminarUsuario(final String usuario_rut);
+
+    public int editarUsuario(String userid, String username, String userlastname, String usermail);
+
+    
     
 }
