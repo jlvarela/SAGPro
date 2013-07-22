@@ -85,6 +85,27 @@ public class UserFacade extends AbstractFacade<User> implements UserFacadeLocal 
         }
     }
     
+    @Override
+    public int editarUsuario(final String usuario_rut, final String nombre, final String apellido, final String correo){
+        if (!usuarioExists(usuario_rut)) {
+            return -1;
+            
+        } else {
+            try {
+                User usuario=buscarPorRut(usuario_rut);
+                usuario.setNombreUser(nombre);
+                usuario.setApellidoUser(apellido);
+                usuario.setEmailUser(correo);
+                edit(usuario);
+                System.out.println("edición del usuario realizada con éxito");
+                return 0;
+            } catch (EntityExistsException e) {
+                System.out.println("Editando Usuario: Error -> " + e.getMessage());
+                return -1;
+            }
+        }
+    }
+    
     private Boolean usuarioExists(String usuario_rut) {
         int resultados;
         resultados = em.createNamedQuery("User.findByRutUser")
@@ -93,11 +114,20 @@ public class UserFacade extends AbstractFacade<User> implements UserFacadeLocal 
 
         return resultados != 0;
     }
+    
+    
 
     @Override
     public void remove(User entity) {
         super.remove(entity); //To change body of generated methods, choose Tools | Templates.
     }
+
+    @Override
+    public void edit(User entity) {
+        super.edit(entity); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    
     
     
     
