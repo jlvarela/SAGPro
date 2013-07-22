@@ -47,11 +47,8 @@ public class ObjetivoFacade extends AbstractFacade<Objetivo> implements Objetivo
             , final Date fecha_final
             , final short prioridad) {
         
-        Objetivo obj = new Objetivo();
-        obj.setNombreObjetivo(nombre);
+        Objetivo obj = new Objetivo(0, nombre, new Date(), new Date());
         obj.setDescripcionObjetivo(decripcion);
-        obj.setFechaInicial(fecha_inicial);
-        obj.setFechaLimite(fecha_final);
         obj.setPrioridadObjetivo(prioridad);
         
         if (!objetivoExists(nombre)){
