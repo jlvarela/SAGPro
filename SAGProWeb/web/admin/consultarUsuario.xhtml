@@ -77,8 +77,8 @@
 
                                         <h:outputText value="Tipo: " />  
                                         <p:inplace editor="true" >  
-                                            <h:selectOneMenu  value="#{consultarUsuarioManagedBean.selectedUser.roleUser}" >
-                                                <!--<f:selectItem value="#{consultarUsuarioManagedBean.tiposUsuario}" />-->  
+                                            <h:selectOneMenu value="#{consultarUsuarioManagedBean.selectedUser.roleUser}"  >
+                                                <f:selectItems value="#{consultarUsuarioManagedBean.tiposUsuarios}" />
                                             </h:selectOneMenu>
                                         </p:inplace>
 

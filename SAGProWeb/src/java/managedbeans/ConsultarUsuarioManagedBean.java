@@ -41,6 +41,17 @@ public class ConsultarUsuarioManagedBean implements Serializable{
     private List<User> listaUsers;
     private List<User> selectedUsers;
     private User selectedUser;
+    private String[] tiposUsuarios;
+
+    public String[] getTiposUsuarios() {
+        return tiposUsuarios;
+    }
+
+    public void setTiposUsuarios(String[] tiposUsuarios) {
+        this.tiposUsuarios = tiposUsuarios;
+    }
+    
+    
 
     public User getSelectedUser() {
         return selectedUser;
@@ -112,7 +123,13 @@ public class ConsultarUsuarioManagedBean implements Serializable{
     
     @PostConstruct
     public void init(){ 
+        String[] valuesUsuarios=userFacade.getValuesTiposUsuarios();
         listaUsers=userFacade.findAll();
+        
+        if (valuesUsuarios != null ){
+            tiposUsuarios = valuesUsuarios;
+            
+        }
         
     }
     

@@ -19,9 +19,21 @@ import javax.persistence.PersistenceContext;
  */
 @Stateless
 public class UserFacade extends AbstractFacade<User> implements UserFacadeLocal {
+    private final String[] tiposUsuariosValues={"Admin", "Calidad", "Gerente"};
     @PersistenceContext(unitName = "SAGProApp-ejbPU")
     private EntityManager em;
 
+    @Override
+    public String[] getTiposUsuariosValues() {
+        return tiposUsuariosValues;
+    }
+    
+    @Override
+    public String[] getValuesTiposUsuarios() {
+        return getTiposUsuariosValues();
+    }
+    
+    
     @Override
     protected EntityManager getEntityManager() {
         return em;

@@ -35,6 +35,10 @@ public interface UserFacadeLocal {
 
     public int editarUsuario(String userid, String username, String userlastname, String usermail, String rol);
 
+    public String[] getTiposUsuariosValues();
+
+    public String[] getValuesTiposUsuarios();
+
     
 
 }
