@@ -12,7 +12,7 @@
     </ui:define> 
 
     <ui:define name="cuerpo">
-        <h:form id="form">
+        <h:form id="form" prependId="false">
             <div class="span9">
                 <fieldset style="padding: 20px">
                     <legend>Consultar Usuario</legend>
@@ -53,24 +53,49 @@
                                 </div>
                             </div>
                             <div class="row-fluid" >
-                                <div class="span12" >
-                                    <pre >
-RUT:                <h:outputText value="#{consultarUsuarioManagedBean.selectedUser.rutUser}"/> 
-Nombres:            <h:outputText value="#{consultarUsuarioManagedBean.selectedUser.nombreUser}" />
-Apellido Paterno:   <h:outputText value="#{consultarUsuarioManagedBean.selectedUser.apellidoUser}" />
-Correo:             <h:outputText value="#{consultarUsuarioManagedBean.selectedUser.emailUser}" />
-Tipo:               <h:outputText value="#{consultarUsuarioManagedBean.selectedUser.roleUser}" />
-                                    </pre>
-                                </div>
+                                <p:panel header="Datos del Usuario">
+                                    <h:panelGrid columns="2" columnClasses="column" cellpadding="5">
+                                        <h:outputText value="RUT: " />  
+                                        <p:inplace >  
+                                            <p:inputText value="#{consultarUsuarioManagedBean.selectedUser.rutUser}" />  
+                                        </p:inplace>
+
+                                        <h:outputText value="Nombres: " />  
+                                        <p:inplace >  
+                                            <p:inputText value="#{consultarUsuarioManagedBean.selectedUser.nombreUser}" />  
+                                        </p:inplace>
+
+                                        <h:outputText value="Apellido Paterno: " />  
+                                        <p:inplace >  
+                                            <p:inputText value="#{consultarUsuarioManagedBean.selectedUser.apellidoUser}" />  
+                                        </p:inplace>
+
+                                        <h:outputText value="Correo: " />  
+                                        <p:inplace >  
+                                            <p:inputText value="#{consultarUsuarioManagedBean.selectedUser.emailUser}" />  
+                                        </p:inplace>
+
+                                        <h:outputText value="Tipo: " />  
+                                        <p:inplace >  
+                                            <p:inputText value="#{consultarUsuarioManagedBean.selectedUser.roleUser}" />  
+                                        </p:inplace>
+
+
+                                    </h:panelGrid>
+                                </p:panel>
                             </div>
-                            <div class="row-fluid">
+                            <div class="row-fluid" style="margin-top:3px">
                                 <div class="control-group" >
                                     <div class="controls pull-right">
-                                        <p:button outcome="editarUsuario.xhtml" value="Editar" icon="ui-icon-pencil"/>
-                                        <p:commandButton  action="#{consultarUsuarioManagedBean.borrarUsuario()}" value="Eliminar" icon="ui-icon-trash"/>
+                                        <p:button outcome="editarUsuario.xhtml"  value="Editar" icon="ui-icon-pencil"/>
+                                        <p:commandButton  action="#{consultarUsuarioManagedBean.borrarUsuario()}"  ajax="false" value="Eliminar" icon="ui-icon-trash"/>
                                     </div>
                                 </div>
                             </div>
+                            <!--desde aqui invento-->
+
+
+                            <!--fin invento-->
                         </div>
                     </div>
                 </fieldset>

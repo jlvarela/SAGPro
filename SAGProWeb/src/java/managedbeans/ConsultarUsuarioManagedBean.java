@@ -135,5 +135,9 @@ public class ConsultarUsuarioManagedBean implements Serializable{
         }
     }
     
+    public void holi(){
+        System.out.println(selectedUser.getNombreUser());
+    }
+    
     
 }

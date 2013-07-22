@@ -10,106 +10,110 @@
     </ui:define> 
 
     <ui:define name="cuerpo">
-        <div class="span9">
-            <fieldset style="padding: 20px">
-                <legend>Editar Usuario</legend>
-                <div class="row-fluid">
-                    <div class="span5">
-                        <div class="row-fluid">
-                            <div class="span5">
-                                RUT
-                            </div>
-                            <div class="span7">
-                                <div class="span9">
-                                    <input class="span12" type="text" value="17490314"></input>
+        <h:form id="form">
+            <div class="span9">
+                <fieldset style="padding: 20px">
+                    <legend>Editar Usuario</legend>
+                    <div class="row-fluid">
+                        <div class="span5">
+                            <div class="row-fluid">
+                                <div class="span5">
+                                    RUT
                                 </div>
-                                <div class="span1">
-                                    <p align="center">-</p>
+                                <div class="span7">
+                                    <div class="span9">
+                                        <input class="span12" type="text" value="17490314"></input>
+                                    </div>
+                                    <div class="span1">
+                                        <p align="center">-</p>
+                                    </div>
+                                    <div class="span2">
+                                        <input class="span12" type="text" value="K"></input>
+                                    </div>
                                 </div>
-                                <div class="span2">
-                                    <input class="span12" type="text" value="K"></input>
+                            </div>
+
+                            <div class="row-fluid">
+                                <div class="span5">
+                                    Nombres
+                                </div>
+                                <div class="span7">
+                                    <input class="span12" type="text" value=""></input>
+
                                 </div>
                             </div>
-                        </div>
 
-                        <div class="row-fluid">
-                            <div class="span5">
-                                Nombres
+                            <div class="row-fluid">
+                                <div class="span5">
+                                    Apellido Paterno
+                                </div>
+                                <div class="span7">
+                                    <input class="span12" type="text" value=""></input>
+                                </div>
                             </div>
-                            <div class="span7">
-                                <input class="span12" type="text" value=""></input>
-                                <h:outputText value=""/> 
-                            </div>
-                        </div>
+                            <div class="row-fluid">
+                                <div class="span5">
+                                    Apellido Materno
+                                </div>
+                                <div class="span7">
+                                    <input class="span12" type="text" value=""></input>
 
-                        <div class="row-fluid">
-                            <div class="span5">
-                                Apellido Paterno
+                                </div>
                             </div>
-                            <div class="span7">
-                                <input class="span12" type="text" value=""></input>
-                            </div>
-                        </div>
-                        <div class="row-fluid">
-                            <div class="span5">
-                                Apellido Materno
-                            </div>
-                            <div class="span7">
-                                <input class="span12" type="text" value=""></input>
-                            </div>
-                        </div>
 
-                        <div class="row-fluid">
-                            <div class="span5">
-                                Correo
+                            <div class="row-fluid">
+                                <div class="span5">
+                                    Correo
+                                </div>
+                                <div class="span7">
+                                    <input class="span12" type="text" value=""></input>
+                                </div>
                             </div>
-                            <div class="span7">
-                                <p:inputText class="span12" type="text" value="dsjkc"></p:inputText>
+                            <div class="row-fluid">
+                                <div class="span5">
+                                    Teléfono
+                                </div>
+                                <div class="span7">
+                                    <input class="span12" type="text" value=""></input>
+                                </div>
                             </div>
-                        </div>
-                        <div class="row-fluid">
-                            <div class="span5">
-                                Teléfono
+                            <div class="row-fluid">
+                                <div class="span5">
+                                    Dirección
+                                </div>
+                                <div class="span7">
+                                    <input  class="span12" type="text" value=""></input>
+                                    <h:inputText value="#{consultarUsuarioManagedBean.selectedUser.roleUser}"/>
+                                    <h:outputText value="#{consultarUsuarioManagedBean.selectedUser.roleUser}" />
+                                </div>
                             </div>
-                            <div class="span7">
-                                <input class="span12" type="text" value=""></input>
+                            <div class="row-fluid">
+                                <div class="span5">
+                                    Tipo de usuario
+                                </div>
+                                <div class="span7">
+                                    <select>
+                                        <option>Admin</option>
+                                        <option>Gestor de calidad</option>
+                                        <option>Gerente de planta</option>
+                                    </select>
+                                </div>
                             </div>
-                        </div>
-                        <div class="row-fluid">
-                            <div class="span5">
-                                Dirección
-                            </div>
-                            <div class="span7">
-                                <input  class="span12" type="text" value=""></input>
-                            </div>
-                        </div>
-                        <div class="row-fluid">
-                            <div class="span5">
-                                Tipo de usuario
-                            </div>
-                            <div class="span7">
-                                <select>
-                                    <option>Admin</option>
-                                    <option>Gestor de calidad</option>
-                                    <option>Gerente de planta</option>
-                                </select>
-                            </div>
-                        </div>
 
-                        <div class="row-fluid">
-                            <div class="controls pull-right">
-                                <button type="button" class="btn"><i class="icon-pencil"></i> Guardar</button>
-                                <button type="button" class="btn"><i class="icon-remove"></i> Cancelar</button>
+                            <div class="row-fluid">
+                                <div class="controls pull-right">
+                                    <p:commandButton   value="Eliminar" icon="ui-icon-check"/>
+                                    <p:commandButton  action="#{consultarUsuarioManagedBean.holi()}" value="Cancelar" icon="ui-icon-closethick"/>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
 
 
-            </fieldset>
-        </div>
+                </fieldset>
+            </div>
 
-
+        </h:form>
     </ui:define>
 </ui:composition>
 
