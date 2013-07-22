@@ -42,17 +42,19 @@ public class ObjetivoFacade extends AbstractFacade<Objetivo> implements Objetivo
 
     @Override
     public int agregarObjetivo(final String nombre
-            , final String decripcion
-            , final Date fecha_inicial
-            , final Date fecha_final
+            , final String descripcion
+            , Date fecha_inicial
+            , Date fecha_final
             , final short prioridad) {
-        
-        Objetivo obj = new Objetivo(0, nombre, new Date(), new Date());
-        obj.setDescripcionObjetivo(decripcion);
-        obj.setPrioridadObjetivo(prioridad);
         
         if (!objetivoExists(nombre)){
             try{
+                Objetivo obj = new Objetivo();
+                obj.setNombreObjetivo(nombre);
+                obj.setDescripcionObjetivo(descripcion);
+                obj.setPrioridadObjetivo(prioridad);
+                obj.setFechaInicial(fecha_inicial);
+                obj.setFechaLimite(fecha_final);
                 create(obj);
                 System.out.println("Creación de Objetivo realizada con éxito");
                 return 0;

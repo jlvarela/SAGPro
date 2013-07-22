@@ -66,12 +66,12 @@ public class Objetivo implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "FECHA_INICIAL")
-    @Temporal(TemporalType.TIME)
+    @Temporal(TemporalType.DATE)
     private Date fechaInicial;
     @Basic(optional = false)
     @NotNull
     @Column(name = "FECHA_LIMITE")
-    @Temporal(TemporalType.TIME)
+    @Temporal(TemporalType.DATE)
     private Date fechaLimite;
     @JoinTable(name = "objetivo_material", joinColumns = {
         @JoinColumn(name = "COD_OBJETIVO", referencedColumnName = "COD_OBJETIVO")}, inverseJoinColumns = {
