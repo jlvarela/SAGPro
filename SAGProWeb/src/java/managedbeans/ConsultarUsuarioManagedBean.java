@@ -139,5 +139,15 @@ public class ConsultarUsuarioManagedBean implements Serializable{
         System.out.println(selectedUser.getNombreUser());
     }
     
+    public void modificarUsuario(){
+        int resp = userFacade.editarUsuario(selectedUser.getRutUser().toString(),selectedUser.getNombreUser(), selectedUser.getApellidoUser(), selectedUser.getEmailUser());
+        FacesContext fcontext = FacesContext.getCurrentInstance();
+        if (resp == 0) {
+            fcontext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "", "Usuario editado con éxito"));
+        } else if (resp == -1) {
+            fcontext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "", "Error en la edición del usuario"));
+        }
+    }
+    
     
 }

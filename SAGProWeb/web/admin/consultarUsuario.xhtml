@@ -57,7 +57,7 @@
                                     <h:panelGrid columns="2" columnClasses="column" cellpadding="5">
                                         <h:outputText value="RUT: " />  
                                         <p:inplace >  
-                                            <p:inputText value="#{consultarUsuarioManagedBean.selectedUser.rutUser}" />  
+                                            <p:inputText value="#{consultarUsuarioManagedBean.selectedUser.rutUser}" readonly="true"/>  
                                         </p:inplace>
 
                                         <h:outputText value="Nombres: " />  
@@ -77,7 +77,11 @@
 
                                         <h:outputText value="Tipo: " />  
                                         <p:inplace >  
-                                            <p:inputText value="#{consultarUsuarioManagedBean.selectedUser.roleUser}" />  
+                                            <h:selectOneMenu  value="#{consultarUsuarioManagedBean.selectedUser.roleUser}" >
+                                                <f:selectItem itemLabel="Admin" itemValue="Admin" />  
+                                                <f:selectItem itemLabel="Calidad" itemValue="Calidad" />  
+                                                <f:selectItem itemLabel="Gerente" itemValue="Gerente" />
+                                            </h:selectOneMenu>
                                         </p:inplace>
 
 
@@ -87,7 +91,7 @@
                             <div class="row-fluid" style="margin-top:3px">
                                 <div class="control-group" >
                                     <div class="controls pull-right">
-                                        <p:button outcome="editarUsuario.xhtml"  value="Editar" icon="ui-icon-pencil"/>
+                                        <p:commandButton action="#{consultarUsuarioManagedBean.modificarUsuario()}" ajax="false"  value="Editar" icon="ui-icon-pencil"/>
                                         <p:commandButton  action="#{consultarUsuarioManagedBean.borrarUsuario()}"  ajax="false" value="Eliminar" icon="ui-icon-trash"/>
                                     </div>
                                 </div>
