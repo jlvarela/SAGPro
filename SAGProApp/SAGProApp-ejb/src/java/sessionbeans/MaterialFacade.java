@@ -115,11 +115,11 @@ public class MaterialFacade extends AbstractFacade<Material> implements Material
     @Override
     public Material buscarPorNombre(final String material_name) {
         try {
-            Material usuario = (Material) em.createNamedQuery("Material.findByNombreMaterial")
-                    .setParameter("nombreMaterial", Long.parseLong(material_name))
+            Material material = (Material) em.createNamedQuery("Material.findByNombreMaterial")
+                    .setParameter("nombreMaterial", (String)material_name)
                     .getSingleResult();
             System.out.println("Material: '" + material_name + "' se ha encontrado con éxito");
-            return usuario;
+            return material;
 
         } catch (NoResultException e) {
             System.out.println("Material: '" + material_name + "' no se encuentra registrado");
@@ -130,6 +130,18 @@ public class MaterialFacade extends AbstractFacade<Material> implements Material
         }
     }
 
+    @Override
+    public void edit(Material entity) {
+        super.edit(entity); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void remove(Material entity) {
+        super.remove(entity); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    
+    
     @Override
     public int eliminarMaterial(final String material_name) {
 
@@ -144,6 +156,26 @@ public class MaterialFacade extends AbstractFacade<Material> implements Material
                 return 0;
             } catch (EntityExistsException e) {
                 System.out.println("Eliminando material: Error -> " + e.getMessage());
+                return -1;
+            }
+        }
+    }
+    
+    @Override
+    public int editarMaterial(final String nombre_material, final String medida_produccion_material, final String medida_venta_material){
+        if (!materialExists(nombre_material)) {
+            return -1;
+            
+        } else {
+            try {
+                Material material=buscarPorNombre(nombre_material);
+                material.setMedidaProduccionMaterial(medida_produccion_material);
+                material.setMedidaVentaMaterial(medida_venta_material);
+                edit(material);
+                System.out.println("edición del material realizada con éxito");
+                return 0;
+            } catch (EntityExistsException e) {
+                System.out.println("Editando material: Error -> " + e.getMessage());
                 return -1;
             }
         }
