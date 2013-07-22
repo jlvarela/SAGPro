@@ -92,10 +92,12 @@ public class MaterialFacade extends AbstractFacade<Material> implements Material
         return resultados != 0;
     }
 
+    @Override
     public String[] getMedidasVentasValues() {
         return medidasVentasValues;
     }
 
+    @Override
     public String[] getMedidasProducValues() {
         return medidasProducValues;
     }

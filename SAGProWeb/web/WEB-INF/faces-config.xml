@@ -12,13 +12,13 @@
         <managed-bean-scope>view</managed-bean-scope>
     </managed-bean>
     <managed-bean>
-        <managed-bean-name>insertarManagedBean</managed-bean-name>
-        <managed-bean-class>managedbeans.IngresarMaterialManagedBean</managed-bean-class>
-    
-        <managed-bean-scope>view</managed-bean-scope></managed-bean>
-    <managed-bean>
         <managed-bean-name>ingresarMaterialManagedBean</managed-bean-name>
         <managed-bean-class>managedbeans.IngresarMaterialManagedBean</managed-bean-class>
+        <managed-bean-scope>view</managed-bean-scope>
+    </managed-bean>
+    <managed-bean>
+        <managed-bean-name>consultarMaterialManagedBean1</managed-bean-name>
+        <managed-bean-class>managedbeans.ConsultarMaterialManagedBean1</managed-bean-class>
         <managed-bean-scope>view</managed-bean-scope>
     </managed-bean>
 </faces-config>
