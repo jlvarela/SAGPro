@@ -30,7 +30,7 @@ public class UserFacade extends AbstractFacade<User> implements UserFacadeLocal 
     public UserFacade() {
         super(User.class);
     }
-
+    
     @Override
     public User buscarPorRut(final String userRut) {
        try{
@@ -86,7 +86,7 @@ public class UserFacade extends AbstractFacade<User> implements UserFacadeLocal 
     }
     
     @Override
-    public int editarUsuario(final String usuario_rut, final String nombre, final String apellido, final String correo){
+    public int editarUsuario(final String usuario_rut, final String nombre, final String apellido, final String correo, final String rol){
         if (!usuarioExists(usuario_rut)) {
             return -1;
             
@@ -96,6 +96,7 @@ public class UserFacade extends AbstractFacade<User> implements UserFacadeLocal 
                 usuario.setNombreUser(nombre);
                 usuario.setApellidoUser(apellido);
                 usuario.setEmailUser(correo);
+                usuario.setRoleUser(rol);
                 edit(usuario);
                 System.out.println("edición del usuario realizada con éxito");
                 return 0;

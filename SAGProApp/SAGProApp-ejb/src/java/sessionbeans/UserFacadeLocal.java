@@ -33,8 +33,8 @@ public interface UserFacadeLocal {
 
     public int eliminarUsuario(final String usuario_rut);
 
-    public int editarUsuario(String userid, String username, String userlastname, String usermail);
+    public int editarUsuario(String userid, String username, String userlastname, String usermail, String rol);
 
     
-    
+
 }

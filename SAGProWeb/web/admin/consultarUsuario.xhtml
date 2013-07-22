@@ -61,26 +61,24 @@
                                         </p:inplace>
 
                                         <h:outputText value="Nombres: " />  
-                                        <p:inplace >  
-                                            <p:inputText value="#{consultarUsuarioManagedBean.selectedUser.nombreUser}" />  
+                                        <p:inplace editor="true" >  
+                                            <p:inputText  value="#{consultarUsuarioManagedBean.selectedUser.nombreUser}" />  
                                         </p:inplace>
 
                                         <h:outputText value="Apellido Paterno: " />  
-                                        <p:inplace >  
+                                        <p:inplace editor="true">  
                                             <p:inputText value="#{consultarUsuarioManagedBean.selectedUser.apellidoUser}" />  
                                         </p:inplace>
 
                                         <h:outputText value="Correo: " />  
-                                        <p:inplace >  
+                                        <p:inplace editor="true" >  
                                             <p:inputText value="#{consultarUsuarioManagedBean.selectedUser.emailUser}" />  
                                         </p:inplace>
 
                                         <h:outputText value="Tipo: " />  
-                                        <p:inplace >  
+                                        <p:inplace editor="true" >  
                                             <h:selectOneMenu  value="#{consultarUsuarioManagedBean.selectedUser.roleUser}" >
-                                                <f:selectItem itemLabel="Admin" itemValue="Admin" />  
-                                                <f:selectItem itemLabel="Calidad" itemValue="Calidad" />  
-                                                <f:selectItem itemLabel="Gerente" itemValue="Gerente" />
+                                                <!--<f:selectItem value="#{consultarUsuarioManagedBean.tiposUsuario}" />-->  
                                             </h:selectOneMenu>
                                         </p:inplace>
 

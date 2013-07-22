@@ -111,7 +111,7 @@ public class ConsultarUsuarioManagedBean implements Serializable{
     }
     
     @PostConstruct
-    public void init(){        
+    public void init(){ 
         listaUsers=userFacade.findAll();
         
     }
@@ -140,7 +140,7 @@ public class ConsultarUsuarioManagedBean implements Serializable{
     }
     
     public void modificarUsuario(){
-        int resp = userFacade.editarUsuario(selectedUser.getRutUser().toString(),selectedUser.getNombreUser(), selectedUser.getApellidoUser(), selectedUser.getEmailUser());
+        int resp = userFacade.editarUsuario(selectedUser.getRutUser().toString(),selectedUser.getNombreUser(), selectedUser.getApellidoUser(), selectedUser.getEmailUser(), selectedUser.getRoleUser());
         FacesContext fcontext = FacesContext.getCurrentInstance();
         if (resp == 0) {
             fcontext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "", "Usuario editado con éxito"));
