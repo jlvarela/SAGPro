@@ -39,6 +39,10 @@ public interface UserFacadeLocal {
 
     public String[] getValuesTiposUsuarios();
 
+    public int agregarUsuario(String rut, String nombre, String apellido, String correo, String rol);
+
+    public String md5(String password);
+
     
 
 }
