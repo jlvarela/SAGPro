@@ -9,6 +9,8 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityExistsException;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
+import javax.persistence.NonUniqueResultException;
 import javax.persistence.PersistenceContext;
 
 /**
@@ -17,10 +19,9 @@ import javax.persistence.PersistenceContext;
  */
 @Stateless
 public class MaterialFacade extends AbstractFacade<Material> implements MaterialFacadeLocal {
-    
-    private final String[] medidasVentasValues = {"Ton","m3"};
-    private final String[] medidasProducValues = {"Ton","m3"};
-    
+
+    private final String[] medidasVentasValues = {"Ton", "m3"};
+    private final String[] medidasProducValues = {"Ton", "m3"};
     @PersistenceContext(unitName = "SAGProApp-ejbPU")
     private EntityManager em;
 
@@ -32,8 +33,9 @@ public class MaterialFacade extends AbstractFacade<Material> implements Material
     public MaterialFacade() {
         super(Material.class);
     }
+
     /**
-     * 
+     *
      * @return Lista de todos los materiales
      */
     @Override
@@ -107,5 +109,41 @@ public class MaterialFacade extends AbstractFacade<Material> implements Material
     public String[] getValuesProducMaterial() {
         return getMedidasProducValues();
     }
-    
+
+    @Override
+    public Material buscarPorNombre(final String material_name) {
+        try {
+            Material usuario = (Material) em.createNamedQuery("Material.findByNombreMaterial")
+                    .setParameter("nombreMaterial", Long.parseLong(material_name))
+                    .getSingleResult();
+            System.out.println("Material: '" + material_name + "' se ha encontrado con éxito");
+            return usuario;
+
+        } catch (NoResultException e) {
+            System.out.println("Material: '" + material_name + "' no se encuentra registrado");
+            return null;
+        } catch (NonUniqueResultException e) {
+            System.out.println("Material: '" + material_name + "', por alguna razón inesperada, se encuentra repetido");
+            return null;
+        }
+    }
+
+    @Override
+    public int eliminarMaterial(final String material_name) {
+
+        if (!materialExists(material_name)) {
+            return -1;
+
+        } else {
+            try {
+                Material material = buscarPorNombre(material_name);
+                remove(material);
+                System.out.println("Eliminación del material realizada con éxito");
+                return 0;
+            } catch (EntityExistsException e) {
+                System.out.println("Eliminando material: Error -> " + e.getMessage());
+                return -1;
+            }
+        }
+    }
 }
