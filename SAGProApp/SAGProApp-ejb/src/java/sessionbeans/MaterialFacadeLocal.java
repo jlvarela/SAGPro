@@ -38,6 +38,8 @@ public interface MaterialFacadeLocal {
     Material buscarPorNombre(final String material_name);
     
     public int eliminarMaterial(final String material_name);
+    
+    public int editarMaterial(final String nombre_material, final String medida_produccion_material, final String medida_venta_material);
 
     public String[] getMedidasVentasValues();
 
