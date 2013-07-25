@@ -7,28 +7,38 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets">
 
 
-            <ui:define name="menusuperior">
-                <h:form>
-                <div class="navbar navbar-custom1">
-                    <div class="navbar-inner">
-                        <div class="container pull-left">
-                            <ul class="nav">
-                                <li><a href="/web/faces/admin/ingresarMaterial.xhtml"><i class="icon-group"></i>Usuarios</a></li>
-                                <li><a href="/web/faces/admin/ingresarMaterial.xhtml"><i class="icon-cargo"></i>Materiales</a></li>
-                            </ul>
-                        </div>
-                        <div class="container pull-right">
-                            <ul class="nav">
-                                <li style="margin-top: 9px; color:#777777">Bienvenido(a) #{userManagedBean.username}</li>
-                                <li><h:commandLink action="#{loginBean.logout()}"><i class="icon-off"></i> Cerrar Sesión</h:commandLink></li>
-                                <li><a href="#"><i class="icon-wrench"></i> Cuenta</a></li>
-                                <li><a href="#"><i class="icon-question-sign"></i> Ayuda</a></li>
+    <ui:define name="menusuperior">
+        <h:form>
+            <div class="navbar navbar-custom1">
+                <div class="navbar-inner">
+                    <div class="container pull-left">
+                        <ul class="nav">
+                            <li><a href="/SAGProWeb/faces/admin/ingresarUsuario.xhtml"><i class="icon-user"></i>  Usuarios</a></li>
+                            <li><a href="/SAGProWeb/faces/admin/ingresarMaterial.xhtml"><i class="icon-leaf"></i>  Materiales</a></li>
+                        </ul>
+                    </div>
+                    <div class="container pull-right">
+                        <ul class="nav">
+                            <li style="margin-top: 9px; color:#777777">Bienvenido(a) #{userManagedBean.username}</li>
+                            <li><h:commandLink action="#{loginBean.logout()}"><i class="icon-off"></i> Cerrar Sesión</h:commandLink></li>
+                            <li class="dropdown" id="boton">
+                                
+                                <a class="dropdown-toggle" data-toggle="dropdown" href="#boton">
+                                    <i class="icon-wrench"></i> Cuenta
+                                    <b class="caret"></b>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="#">Modificar Perfil</a></li>
+                                </ul>
 
-                            </ul>
-                        </div>
+                            </li>
+                            <li><a href="#"><i class="icon-question-sign"></i> Ayuda</a></li>
+
+                        </ul>
                     </div>
                 </div>
-                </h:form>
-            </ui:define>
+            </div>
+        </h:form>
+    </ui:define>
 
 </ui:composition>
