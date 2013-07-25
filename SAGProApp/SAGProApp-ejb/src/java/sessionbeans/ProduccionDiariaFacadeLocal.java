@@ -31,4 +31,7 @@ public interface ProduccionDiariaFacadeLocal {
 
     int agregarProduccionDiaria(final int codMaterial, final int cantidadMaterial);
     
+    public List<ProduccionDiaria> buscarPorFecha(final String produccion_fecha);
+   
+    
 }

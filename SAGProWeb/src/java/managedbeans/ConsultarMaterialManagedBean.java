@@ -26,6 +26,7 @@ public class ConsultarMaterialManagedBean implements Serializable {
     @EJB
     private MaterialFacadeLocal materialFacade;
     
+    private String codMaterial;
     private String nombreMaterial;
     private String medidaProduccionMaterial;
     private String medidaVentaMaterial;
@@ -43,6 +44,15 @@ public class ConsultarMaterialManagedBean implements Serializable {
     public void setText(String text) {
         this.text = text;
     }
+
+    public String getCodMaterial() {
+        return codMaterial;
+    }
+
+    public void setCodMaterial(String codMaterial) {
+        this.codMaterial = codMaterial;
+    }
+
 
     
     
@@ -126,7 +136,7 @@ public class ConsultarMaterialManagedBean implements Serializable {
     
      public void modificarMaterial(){
         int resp;
-        resp = materialFacade.editarMaterial(selectedMaterial.getNombreMaterial(),selectedMaterial.getMedidaProduccionMaterial(),selectedMaterial.getMedidaVentaMaterial());
+        resp = materialFacade.editarMaterial(selectedMaterial.getCodMaterial().toString(),selectedMaterial.getNombreMaterial(),selectedMaterial.getMedidaProduccionMaterial(),selectedMaterial.getMedidaVentaMaterial());
         FacesContext fcontext = FacesContext.getCurrentInstance();
         if (resp == 0) {
             fcontext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "", "Material editado con éxito"));

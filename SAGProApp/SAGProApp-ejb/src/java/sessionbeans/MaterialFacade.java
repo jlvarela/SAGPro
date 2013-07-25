@@ -91,6 +91,15 @@ public class MaterialFacade extends AbstractFacade<Material> implements Material
 
         return resultados != 0;
     }
+    
+    private Boolean materialExists2(String material_name) {
+        int resultados;
+        resultados = em.createNamedQuery("Material.findByCodMaterial")
+                .setParameter("codMaterial", Long.parseLong(material_name))
+                .getResultList().size();
+
+        return resultados != 0;
+    }
 
     @Override
     public String[] getMedidasVentasValues() {
@@ -113,19 +122,19 @@ public class MaterialFacade extends AbstractFacade<Material> implements Material
     }
 
     @Override
-    public Material buscarPorNombre(final String material_name) {
+    public Material buscarPorID(final String material_id) {
         try {
-            Material material = (Material) em.createNamedQuery("Material.findByNombreMaterial")
-                    .setParameter("nombreMaterial", (String)material_name)
+            Material material = (Material) em.createNamedQuery("Material.findByCodMaterial")
+                    .setParameter("codMaterial", Long.parseLong(material_id))
                     .getSingleResult();
-            System.out.println("Material: '" + material_name + "' se ha encontrado con éxito");
+            System.out.println("Material: '" + material_id + "' se ha encontrado con éxito");
             return material;
 
         } catch (NoResultException e) {
-            System.out.println("Material: '" + material_name + "' no se encuentra registrado");
+            System.out.println("Material: '" + material_id + "' no se encuentra registrado");
             return null;
         } catch (NonUniqueResultException e) {
-            System.out.println("Material: '" + material_name + "', por alguna razón inesperada, se encuentra repetido");
+            System.out.println("Material: '" + material_id + "', por alguna razón inesperada, se encuentra repetido");
             return null;
         }
     }
@@ -143,14 +152,14 @@ public class MaterialFacade extends AbstractFacade<Material> implements Material
     
     
     @Override
-    public int eliminarMaterial(final String material_name) {
+    public int eliminarMaterial(final String material_id) {
 
-        if (!materialExists(material_name)) {
+        if (!materialExists(material_id)) {
             return -1;
 
         } else {
             try {
-                Material material = buscarPorNombre(material_name);
+                Material material = buscarPorID(material_id);
                 remove(material);
                 System.out.println("Eliminación del material realizada con éxito");
                 return 0;
@@ -162,13 +171,14 @@ public class MaterialFacade extends AbstractFacade<Material> implements Material
     }
     
     @Override
-    public int editarMaterial(final String nombre_material, final String medida_produccion_material, final String medida_venta_material){
-        if (!materialExists(nombre_material)) {
+    public int editarMaterial(final String codMaterial, final String nombre_material, final String medida_produccion_material, final String medida_venta_material){
+        if (!materialExists2(codMaterial)) {
             return -1;
             
         } else {
             try {
-                Material material=buscarPorNombre(nombre_material);
+                Material material=buscarPorID(codMaterial);
+                material.setNombreMaterial(nombre_material);
                 material.setMedidaProduccionMaterial(medida_produccion_material);
                 material.setMedidaVentaMaterial(medida_venta_material);
                 edit(material);

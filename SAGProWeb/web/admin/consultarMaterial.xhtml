@@ -57,8 +57,8 @@
                                 <p:panel header="Datos del Material">
                                     <h:panelGrid columns="2" columnClasses="column" cellpadding="5">
                                         <h:outputText value="Nombre: " />  
-                                        <p:inplace>  
-                                            <p:inputText value="#{consultarMaterialManagedBean.selectedMaterial.nombreMaterial}"  readonly="true"/>  
+                                        <p:inplace editor="true">  
+                                            <p:inputText value="#{consultarMaterialManagedBean.selectedMaterial.nombreMaterial}" />  
                                         </p:inplace> 
                                         
                                         <h:outputText value="Unidad de producción: "/>  
