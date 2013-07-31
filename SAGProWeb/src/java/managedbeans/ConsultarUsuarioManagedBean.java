@@ -152,9 +152,7 @@ public class ConsultarUsuarioManagedBean implements Serializable{
         }
     }
     
-    public void holi(){
-        System.out.println(selectedUser.getNombreUser());
-    }
+    
     
     public void modificarUsuario(){
         int resp = userFacade.editarUsuario(selectedUser.getRutUser().toString(),selectedUser.getNombreUser(), selectedUser.getApellidoUser(), selectedUser.getEmailUser(), selectedUser.getRoleUser());
