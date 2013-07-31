@@ -54,35 +54,33 @@
                                 </div>
                             </div>
                             <div class="row-fluid" >
-                                <div class="span12" id="infoMaterial">
-                                    <pre >
-<h:outputText value="Nombre: " />  
-            <p:inplace id="ajaxInplace" editor="true">  
-                <p:inputText value="#{consultarMaterialManagedBean.selectedMaterial.nombreMaterial}"  
-                            required="true" label="text"/>  
-            </p:inplace> 
-<p/>
-<h:outputText value="Unidad de producción: "/>  
-<p:inplace id="selectableInplace1" label="#{consultarMaterialManagedBean.selectedMaterial.medidaProduccionMaterial}" effectSpeed="fast" editor="true">  
-                <h:selectOneMenu>  
-                    <f:selectItems value="#{consultarMaterialManagedBean.medidasProduccionMaterial}" /> 
-                </h:selectOneMenu>  
-            </p:inplace>
-<p/>
-<h:outputText value="Unidad de venta: "/>  
-            <p:inplace id="selectableInplace2" label="#{consultarMaterialManagedBean.selectedMaterial.medidaVentaMaterial}" effectSpeed="fast">
-                <h:selectOneMenu>  
-                    <f:selectItems value="#{consultarMaterialManagedBean.medidasVentaMaterial}" /> 
-                </h:selectOneMenu>
-            </p:inplace>
-                                    </pre>
-                                </div>
+                                <p:panel header="Datos del Material">
+                                    <h:panelGrid columns="2" columnClasses="column" cellpadding="5">
+                                        <h:outputText value="Nombre: " />  
+                                        <p:inplace editor="true">  
+                                            <p:inputText value="#{consultarMaterialManagedBean.selectedMaterial.nombreMaterial}" />  
+                                        </p:inplace> 
+                                        
+                                        <h:outputText value="Unidad de producción: "/>  
+                                        <p:inplace editor="true">  
+                                            <h:selectOneMenu value="#{consultarMaterialManagedBean.selectedMaterial.medidaProduccionMaterial}">  
+                                                <f:selectItems value="#{consultarMaterialManagedBean.medidasProduccionMaterial}" /> 
+                                            </h:selectOneMenu>  
+                                        </p:inplace>
+                                        
+                                        <h:outputText value="Unidad de venta: "/>  
+                                        <p:inplace editor="true">
+                                            <h:selectOneMenu value="#{consultarMaterialManagedBean.selectedMaterial.medidaVentaMaterial}" >  
+                                                <f:selectItems value="#{consultarMaterialManagedBean.medidasVentaMaterial}" /> 
+                                            </h:selectOneMenu>
+                                        </p:inplace>
+                                    </h:panelGrid>
+                                </p:panel>
                             </div>
                             <div class="row-fluid">
                                 <div class="control-group" >
                                     <div class="controls pull-right">
-                                        <!--<button type="button" class="btn" ><i class="icon-pencil"></i> Editar</button>-->
-                                        <p:button href="editarMaterial.xhtml" value="editar" />
+                                        <p:commandButton action="#{consultarMaterialManagedBean.modificarMaterial()}" ajax="false"  value="Editar" icon="ui-icon-pencil"/>
                                         <button type="button" class="btn"><i class="icon-trash"></i> Eliminar</button>
                                     </div>
                                 </div>

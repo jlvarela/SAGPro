@@ -5,6 +5,8 @@
 package sessionbeans;
 
 import entities.User;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityExistsException;
@@ -13,15 +15,28 @@ import javax.persistence.NoResultException;
 import javax.persistence.NonUniqueResultException;
 import javax.persistence.PersistenceContext;
 
+
 /**
  *
  * @author Jose
  */
 @Stateless
 public class UserFacade extends AbstractFacade<User> implements UserFacadeLocal {
+    private final String[] tiposUsuariosValues={"Admin", "Calidad", "Gerencia"};
     @PersistenceContext(unitName = "SAGProApp-ejbPU")
     private EntityManager em;
 
+    @Override
+    public String[] getTiposUsuariosValues() {
+        return tiposUsuariosValues;
+    }
+    
+    @Override
+    public String[] getValuesTiposUsuarios() {
+        return getTiposUsuariosValues();
+    }
+    
+    
     @Override
     protected EntityManager getEntityManager() {
         return em;
@@ -30,7 +45,7 @@ public class UserFacade extends AbstractFacade<User> implements UserFacadeLocal 
     public UserFacade() {
         super(User.class);
     }
-
+    
     @Override
     public User buscarPorRut(final String userRut) {
        try{
@@ -60,6 +75,11 @@ public class UserFacade extends AbstractFacade<User> implements UserFacadeLocal 
     public User find(Object id) {
         return super.find(id); //To change body of generated methods, choose Tools | Templates.
     }
+
+    @Override
+    public void create(User entity) {
+        super.create(entity); //To change body of generated methods, choose Tools | Templates.
+    }
     
     /**
      *
@@ -86,7 +106,7 @@ public class UserFacade extends AbstractFacade<User> implements UserFacadeLocal 
     }
     
     @Override
-    public int editarUsuario(final String usuario_rut, final String nombre, final String apellido, final String correo){
+    public int editarUsuario(final String usuario_rut, final String nombre, final String apellido, final String correo, final String rol){
         if (!usuarioExists(usuario_rut)) {
             return -1;
             
@@ -96,6 +116,7 @@ public class UserFacade extends AbstractFacade<User> implements UserFacadeLocal 
                 usuario.setNombreUser(nombre);
                 usuario.setApellidoUser(apellido);
                 usuario.setEmailUser(correo);
+                usuario.setRoleUser(rol);
                 edit(usuario);
                 System.out.println("edición del usuario realizada con éxito");
                 return 0;
@@ -125,6 +146,57 @@ public class UserFacade extends AbstractFacade<User> implements UserFacadeLocal 
     @Override
     public void edit(User entity) {
         super.edit(entity); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    public String md5(String password){
+        char[] HEXADECIMAL = { '0', '1', '2', '3','4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f' };
+        try {
+            MessageDigest md = MessageDigest.getInstance("MD5");
+            byte[] bytes = md.digest(password.getBytes());
+            StringBuilder sb = new StringBuilder(2 * bytes.length);
+            for (int i = 0; i < bytes.length; i++) {
+                int low = (int)(bytes[i] & 0x0f);
+                int high = (int)((bytes[i] & 0xf0) >> 4);
+                sb.append(HEXADECIMAL[high]);
+                sb.append(HEXADECIMAL[low]);
+            }
+            return sb.toString();
+        } catch (NoSuchAlgorithmException e) {
+            //exception handling goes here
+            return null;
+        }
+        
+    }
+    
+    
+
+    
+    @Override
+    public int agregarUsuario(final String rut, final String nombre, final String apellido, final String correo,final String rol){
+        if (!usuarioExists(rut)){
+            try{
+            User usuario= new User();
+            usuario.setRutUser(Long.valueOf(rut));
+            usuario.setNombreUser(nombre);
+            usuario.setApellidoUser(apellido);
+            usuario.setEmailUser(correo);
+            usuario.setPasswordUser(md5(rut));
+            usuario.setRoleUser(rol);
+            create(usuario);
+            System.out.println("Creación del usuario realizada con éxito");
+            return 0;
+            }
+            catch (EntityExistsException e){
+                System.out.println("Ingresando Usuario: Error -> " + e.getMessage());
+                return -1;
+            }
+        }
+        else{
+            System.out.println("entro aca");
+            return -1;
+        }
+        
+        
     }
     
     

@@ -91,6 +91,15 @@ public class MaterialFacade extends AbstractFacade<Material> implements Material
 
         return resultados != 0;
     }
+    
+    private Boolean materialExists2(String material_name) {
+        int resultados;
+        resultados = em.createNamedQuery("Material.findByCodMaterial")
+                .setParameter("codMaterial", Long.parseLong(material_name))
+                .getResultList().size();
+
+        return resultados != 0;
+    }
 
     @Override
     public String[] getMedidasVentasValues() {
@@ -113,37 +122,70 @@ public class MaterialFacade extends AbstractFacade<Material> implements Material
     }
 
     @Override
-    public Material buscarPorNombre(final String material_name) {
+    public Material buscarPorID(final String material_id) {
         try {
-            Material usuario = (Material) em.createNamedQuery("Material.findByNombreMaterial")
-                    .setParameter("nombreMaterial", Long.parseLong(material_name))
+            Material material = (Material) em.createNamedQuery("Material.findByCodMaterial")
+                    .setParameter("codMaterial", Long.parseLong(material_id))
                     .getSingleResult();
-            System.out.println("Material: '" + material_name + "' se ha encontrado con éxito");
-            return usuario;
+            System.out.println("Material: '" + material_id + "' se ha encontrado con éxito");
+            return material;
 
         } catch (NoResultException e) {
-            System.out.println("Material: '" + material_name + "' no se encuentra registrado");
+            System.out.println("Material: '" + material_id + "' no se encuentra registrado");
             return null;
         } catch (NonUniqueResultException e) {
-            System.out.println("Material: '" + material_name + "', por alguna razón inesperada, se encuentra repetido");
+            System.out.println("Material: '" + material_id + "', por alguna razón inesperada, se encuentra repetido");
             return null;
         }
     }
 
     @Override
-    public int eliminarMaterial(final String material_name) {
+    public void edit(Material entity) {
+        super.edit(entity); //To change body of generated methods, choose Tools | Templates.
+    }
 
-        if (!materialExists(material_name)) {
+    @Override
+    public void remove(Material entity) {
+        super.remove(entity); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    
+    
+    @Override
+    public int eliminarMaterial(final String material_id) {
+
+        if (!materialExists(material_id)) {
             return -1;
 
         } else {
             try {
-                Material material = buscarPorNombre(material_name);
+                Material material = buscarPorID(material_id);
                 remove(material);
                 System.out.println("Eliminación del material realizada con éxito");
                 return 0;
             } catch (EntityExistsException e) {
                 System.out.println("Eliminando material: Error -> " + e.getMessage());
+                return -1;
+            }
+        }
+    }
+    
+    @Override
+    public int editarMaterial(final String codMaterial, final String nombre_material, final String medida_produccion_material, final String medida_venta_material){
+        if (!materialExists2(codMaterial)) {
+            return -1;
+            
+        } else {
+            try {
+                Material material=buscarPorID(codMaterial);
+                material.setNombreMaterial(nombre_material);
+                material.setMedidaProduccionMaterial(medida_produccion_material);
+                material.setMedidaVentaMaterial(medida_venta_material);
+                edit(material);
+                System.out.println("edición del material realizada con éxito");
+                return 0;
+            } catch (EntityExistsException e) {
+                System.out.println("Editando material: Error -> " + e.getMessage());
                 return -1;
             }
         }

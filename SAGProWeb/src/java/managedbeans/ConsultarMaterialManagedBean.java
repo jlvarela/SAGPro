@@ -9,8 +9,10 @@ import java.io.Serializable;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 import sessionbeans.MaterialFacadeLocal;
 
 /**
@@ -24,6 +26,7 @@ public class ConsultarMaterialManagedBean implements Serializable {
     @EJB
     private MaterialFacadeLocal materialFacade;
     
+    private String codMaterial;
     private String nombreMaterial;
     private String medidaProduccionMaterial;
     private String medidaVentaMaterial;
@@ -41,6 +44,15 @@ public class ConsultarMaterialManagedBean implements Serializable {
     public void setText(String text) {
         this.text = text;
     }
+
+    public String getCodMaterial() {
+        return codMaterial;
+    }
+
+    public void setCodMaterial(String codMaterial) {
+        this.codMaterial = codMaterial;
+    }
+
 
     
     
@@ -120,5 +132,16 @@ public class ConsultarMaterialManagedBean implements Serializable {
             medidasProduccionMaterial = valuesProduc;
         }
         listaMateriales = materialFacade.findAll();
+    }
+    
+     public void modificarMaterial(){
+        int resp;
+        resp = materialFacade.editarMaterial(selectedMaterial.getCodMaterial().toString(),selectedMaterial.getNombreMaterial(),selectedMaterial.getMedidaProduccionMaterial(),selectedMaterial.getMedidaVentaMaterial());
+        FacesContext fcontext = FacesContext.getCurrentInstance();
+        if (resp == 0) {
+            fcontext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "", "Material editado con éxito"));
+        } else if (resp == -1) {
+            fcontext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "", "Error en la edición del material"));
+        }
     }
 }

@@ -6,13 +6,13 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:f="http://java.sun.com/jsf/core">
-
+   
     <ui:define name="menu">
         <ui:include src="/WEB-INF/templates/menuUsuarios.xhtml"></ui:include>
     </ui:define> 
 
     <ui:define name="cuerpo">
-        <h:form id="form" prependId="false">
+        <h:form id="form" >
             <div class="span9">
                 <fieldset style="padding: 20px">
                     <legend>Consultar Usuario</legend>
@@ -57,30 +57,34 @@
                                     <h:panelGrid columns="2" columnClasses="column" cellpadding="5">
                                         <h:outputText value="RUT: " />  
                                         <p:inplace >  
-                                            <p:inputText value="#{consultarUsuarioManagedBean.selectedUser.rutUser}" readonly="true"/>  
+                                            <h:outputText value="#{consultarUsuarioManagedBean.selectedUser.rutUser}" />  
                                         </p:inplace>
 
                                         <h:outputText value="Nombres: " />  
-                                        <p:inplace >  
-                                            <p:inputText value="#{consultarUsuarioManagedBean.selectedUser.nombreUser}" />  
+                                        <p:inplace editor="true" >  
+                                            <p:inputText  label="Nombre" value="#{consultarUsuarioManagedBean.selectedUser.nombreUser}" >
+                                                <f:validator validatorId="nombreValidator" />
+                                            </p:inputText>  
                                         </p:inplace>
 
                                         <h:outputText value="Apellido Paterno: " />  
-                                        <p:inplace >  
-                                            <p:inputText value="#{consultarUsuarioManagedBean.selectedUser.apellidoUser}" />  
+                                        <p:inplace editor="true">  
+                                            <p:inputText label="Apellido Paterno" value="#{consultarUsuarioManagedBean.selectedUser.apellidoUser}">
+                                                <f:validator validatorId="nombreValidator" />
+                                            </p:inputText>  
                                         </p:inplace>
 
                                         <h:outputText value="Correo: " />  
-                                        <p:inplace >  
-                                            <p:inputText value="#{consultarUsuarioManagedBean.selectedUser.emailUser}" />  
+                                        <p:inplace editor="true" >  
+                                            <p:inputText label="Correo" value="#{consultarUsuarioManagedBean.selectedUser.emailUser}">
+                                                <f:validator validatorId="emailValidator" />
+                                            </p:inputText>  
                                         </p:inplace>
 
                                         <h:outputText value="Tipo: " />  
-                                        <p:inplace >  
-                                            <h:selectOneMenu  value="#{consultarUsuarioManagedBean.selectedUser.roleUser}" >
-                                                <f:selectItem itemLabel="Admin" itemValue="Admin" />  
-                                                <f:selectItem itemLabel="Calidad" itemValue="Calidad" />  
-                                                <f:selectItem itemLabel="Gerente" itemValue="Gerente" />
+                                        <p:inplace editor="true" >  
+                                            <h:selectOneMenu value="#{consultarUsuarioManagedBean.selectedUser.roleUser}"  >
+                                                <f:selectItems value="#{consultarUsuarioManagedBean.tiposUsuarios}" />
                                             </h:selectOneMenu>
                                         </p:inplace>
 
@@ -91,20 +95,28 @@
                             <div class="row-fluid" style="margin-top:3px">
                                 <div class="control-group" >
                                     <div class="controls pull-right">
-                                        <p:commandButton action="#{consultarUsuarioManagedBean.modificarUsuario()}" ajax="false"  value="Editar" icon="ui-icon-pencil"/>
-                                        <p:commandButton  action="#{consultarUsuarioManagedBean.borrarUsuario()}"  ajax="false" value="Eliminar" icon="ui-icon-trash"/>
+                                        <p:commandButton onclick="editarConfirm.show();"   value="Editar" icon="ui-icon-pencil" disabled="#{consultarUsuarioManagedBean.selectedUser==null}"/>
+                                        <p:commandButton   onclick="eliminarConfirm.show();" value="Eliminar" icon="ui-icon-trash" disabled="#{consultarUsuarioManagedBean.selectedUser==null}" />
                                     </div>
                                 </div>
                             </div>
-                            <!--desde aqui invento-->
-
-
-                            <!--fin invento-->
                         </div>
                     </div>
                 </fieldset>
             </div>
+            <p:confirmDialog widgetVar="eliminarConfirm"  header="Eliminar Usuario" message="¿Esta seguro de eliminar este usuario?" style="position: fixed" >  
+            <div class="controls pull-right">
+                <p:commandButton value="Aceptar" action="#{consultarUsuarioManagedBean.borrarUsuario()}"  ajax="false" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />  
+                <p:commandButton value="Cancelar"  onclick="eliminarConfirm.hide();" styleClass="ui-confirmdialog-no" icon="ui-icon-close"/> 
+            </div>
+            </p:confirmDialog>
 
+            <p:confirmDialog  widgetVar="editarConfirm"  header="Editar Usuario" message="¿Desea guardar los cambios hechos al usuario?" style="position:absolute; left:35%; top: 35%" >  
+            <div class="controls pull-right">
+                <p:commandButton value="Aceptar" action="#{consultarUsuarioManagedBean.modificarUsuario()}"  ajax="false" styleClass="ui-confirmdialog-yes" icon="ui-icon-check"/>  
+                <p:commandButton value="Cancelar"  onclick="editarConfirm.hide();" styleClass="ui-confirmdialog-no" icon="ui-icon-close"/> 
+            </div>
+            </p:confirmDialog>
         </h:form>
     </ui:define>
 

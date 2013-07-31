@@ -35,9 +35,11 @@ public interface MaterialFacadeLocal {
 
     String[] getValuesProducMaterial();
     
-    Material buscarPorNombre(final String material_name);
+    Material buscarPorID(final String material_id);
     
     public int eliminarMaterial(final String material_name);
+    
+    public int editarMaterial(final String codMaterial, final String nombre_material, final String medida_produccion_material, final String medida_venta_material);
 
     public String[] getMedidasVentasValues();
 

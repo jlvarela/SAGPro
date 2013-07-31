@@ -16,8 +16,10 @@
             <link type="text/css" rel="stylesheet" href="#{request.contextPath}/resources/css/bootstrap.min.css" />
             <link type="text/css" rel="stylesheet" href="#{request.contextPath}/resources/css/bootstrap.css" />
             <link type="text/css" rel="stylesheet" href="#{request.contextPath}/resources/css/bootstrap-datetimepicker.min.css" />
-            <script type="text/javascript" src="#{request.contextPath}/resources/js/jquery.js"></script>
+            <script type="text/javascript" src="#{request.contextPath}/resources/js/jquery.js"></script>  
             <script type="text/javascript" src="#{request.contextPath}/resources/js/bootstrap-datetimepicker.min.js"></script>
+            <script type="text/javascript" src="#{request.contextPath}/resources/js/bootstrap.js"></script>
+            <script type="text/javascript" src="#{request.contextPath}/resources/js/bootstrap.min.js"></script>
 
             <script>
                 $(function() {
@@ -27,9 +29,15 @@
                 });
             </script>
 
+            <script>
+                $(document).ready(function() {
+                    $('.dropdown-toggle').dropdown();
+                });
+            </script>
+
         </ui:insert>
     </h:head>
-    <h:body>
+    <h:body style="min-width: 1170px">
         <ui:insert name="header">
             <div class="row-fluid"> <!--Header de la pagina-->	
                 <div class="row-fluid">

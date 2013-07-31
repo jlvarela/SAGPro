@@ -17,6 +17,7 @@ import javax.inject.Named;
 import javax.faces.bean.ViewScoped;
 import javax.faces.component.UIViewRoot;
 import javax.faces.context.FacesContext;
+import javax.faces.event.ActionEvent;
 import org.primefaces.event.SelectEvent;
 import sessionbeans.UserFacadeLocal;
 
@@ -41,6 +42,17 @@ public class ConsultarUsuarioManagedBean implements Serializable{
     private List<User> listaUsers;
     private List<User> selectedUsers;
     private User selectedUser;
+    private String[] tiposUsuarios;
+
+    public String[] getTiposUsuarios() {
+        return tiposUsuarios;
+    }
+
+    public void setTiposUsuarios(String[] tiposUsuarios) {
+        this.tiposUsuarios = tiposUsuarios;
+    }
+    
+    
 
     public User getSelectedUser() {
         return selectedUser;
@@ -111,8 +123,14 @@ public class ConsultarUsuarioManagedBean implements Serializable{
     }
     
     @PostConstruct
-    public void init(){        
+    public void init(){ 
+        String[] valuesUsuarios=userFacade.getValuesTiposUsuarios();
         listaUsers=userFacade.findAll();
+        
+        if (valuesUsuarios != null ){
+            tiposUsuarios = valuesUsuarios;
+            
+        }
         
     }
     
@@ -127,7 +145,6 @@ public class ConsultarUsuarioManagedBean implements Serializable{
         UIViewRoot root = handler.createView(fcontext, viewId);
         root.setViewId(viewId);
         fcontext.setViewRoot(root);
-        
          if (resp == 0) {
             fcontext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "", "Usuario eliminado con éxito"));
         } else if (resp == -1) {
@@ -135,13 +152,16 @@ public class ConsultarUsuarioManagedBean implements Serializable{
         }
     }
     
-    public void holi(){
-        System.out.println(selectedUser.getNombreUser());
-    }
+    
     
     public void modificarUsuario(){
-        int resp = userFacade.editarUsuario(selectedUser.getRutUser().toString(),selectedUser.getNombreUser(), selectedUser.getApellidoUser(), selectedUser.getEmailUser());
+        int resp = userFacade.editarUsuario(selectedUser.getRutUser().toString(),selectedUser.getNombreUser(), selectedUser.getApellidoUser(), selectedUser.getEmailUser(), selectedUser.getRoleUser());
         FacesContext fcontext = FacesContext.getCurrentInstance();
+        String viewId = fcontext.getViewRoot().getViewId();
+        ViewHandler handler = fcontext.getApplication().getViewHandler();
+        UIViewRoot root = handler.createView(fcontext, viewId);
+        root.setViewId(viewId);
+        fcontext.setViewRoot(root);
         if (resp == 0) {
             fcontext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "", "Usuario editado con éxito"));
         } else if (resp == -1) {
