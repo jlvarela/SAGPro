@@ -20,14 +20,16 @@ import javax.validation.ConstraintValidatorContext;
  *
  * @author Marco
  */
-@FacesValidator("emailValidator")
-public class emailValidator implements Validator {
+@FacesValidator("nombreValidator")
+public class nombreValidator implements Validator{
     
     @Override
     public void validate(FacesContext facesContext, UIComponent uIComponent, Object value)throws 
             ValidatorException{
-        Pattern pattern = Pattern.compile("\\w+@\\w+\\.\\w+");
+        Pattern pattern = Pattern.compile("[a-zA-Z ]+");
+        
         Matcher matcher = pattern.matcher((CharSequence)value);
+        //System.out.println("Este es el valor: "+(CharSequence)value);
         HtmlInputText htmlInputText = (HtmlInputText) uIComponent;
         String label;
         
@@ -39,11 +41,13 @@ public class emailValidator implements Validator {
         }
         
         if(!matcher.matches()){
-            FacesMessage facesMessage = new FacesMessage(label + ": no es una direccion de email valido");
+            FacesMessage facesMessage = new FacesMessage(label + ": valor ingresado no es un nombre valido");
             
             throw new ValidatorException(facesMessage);
         }
+        else if((CharSequence)value == null){
+            FacesMessage facesMessage = new FacesMessage(label + ": Campo Obligatorio Vacío");
+            throw new ValidatorException(facesMessage);
+        }
     }
-    
-    
 }
