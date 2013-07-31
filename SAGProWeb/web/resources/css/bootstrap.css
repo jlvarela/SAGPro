@@ -6184,3 +6184,15 @@ a.badge:focus {
 .affix {
   position: fixed;
 }
+
+div.watermark {
+	position: absolute;
+	cursor: default;
+	font: bold 22px Verdana, Arial, Sans-serif;
+	color: White;
+	margin: 4px;
+	line-height: 20px;
+	filter: progid:DXImageTransform.Microsoft.Alpha(opacity=50);
+	opacity: .5;
+	-moz-opacity: .5;
+}
