@@ -28,5 +28,7 @@ public interface ObjetivoMaterialFacadeLocal {
     List<ObjetivoMaterial> findRange(int[] range);
 
     int count();
+
+    int agregarMaterialToObjetivo(final int codObjetivo, final int [] materialList, final int [] cantidadList);
     
 }
