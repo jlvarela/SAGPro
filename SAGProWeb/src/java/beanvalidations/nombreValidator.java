@@ -29,7 +29,7 @@ public class nombreValidator implements Validator{
         Pattern pattern = Pattern.compile("[a-zA-Z ]+");
         
         Matcher matcher = pattern.matcher((CharSequence)value);
-        //System.out.println("Este es el valor: "+(CharSequence)value);
+        System.out.println("Este es el valor: "+(CharSequence)value);
         HtmlInputText htmlInputText = (HtmlInputText) uIComponent;
         String label;
         
@@ -41,13 +41,17 @@ public class nombreValidator implements Validator{
         }
         
         if(!matcher.matches()){
-            FacesMessage facesMessage = new FacesMessage(label + ": valor ingresado no es un nombre valido");
             
-            throw new ValidatorException(facesMessage);
+            if ((CharSequence)value ==""){
+                FacesMessage facesMessage = new FacesMessage(FacesMessage.SEVERITY_ERROR, "",label + ": Campo Obligatorio Vacío");
+                throw new ValidatorException(facesMessage);
+            }
+            else{
+                FacesMessage facesMessage = new FacesMessage(label + ": valor ingresado no es un nombre valido");
+                throw new ValidatorException(facesMessage);
+            }
+            
         }
-        else if((CharSequence)value == null){
-            FacesMessage facesMessage = new FacesMessage(label + ": Campo Obligatorio Vacío");
-            throw new ValidatorException(facesMessage);
-        }
+        
     }
 }

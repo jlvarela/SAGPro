@@ -29,7 +29,8 @@
                                 </div>
                                 <div class="span7">
                                     <div class="span9">
-                                        <h:inputText value="#{ingresarUsuarioManagedBean.userid}" required="true" ></h:inputText>
+                                        <h:inputText  value="#{ingresarUsuarioManagedBean.userid}" required="true" >
+                                        </h:inputText>
                                     </div>
                                 </div>
                             </div>
@@ -50,7 +51,7 @@
                                     Apellido Paterno
                                 </div>
                                 <div class="span7">
-                                    <h:inputText title="Ingrese solo letras" label="Apellido" value="#{ingresarUsuarioManagedBean.userlastname}" required="true">
+                                    <h:inputText title="Ingrese solo letras" label="Apellido" value="#{ingresarUsuarioManagedBean.userlastname}">
                                         <f:validator validatorId="nombreValidator" />
                                     </h:inputText>
                                 </div>
@@ -69,7 +70,7 @@
                                     Correo
                                 </div>
                                 <div class="span7">
-                                    <h:inputText title="Ej: usuario@mail.com" id="email" label="Correo" value="#{ingresarUsuarioManagedBean.usermail}"  required="true">
+                                    <h:inputText title="Ej: usuario@mail.com" id="correo" label="Correo" value="#{ingresarUsuarioManagedBean.usermail}">
                                         <f:validator validatorId="emailValidator" />
                                     </h:inputText>
                                 </div>

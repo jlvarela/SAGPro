@@ -39,9 +39,15 @@ public class emailValidator implements Validator {
         }
         
         if(!matcher.matches()){
-            FacesMessage facesMessage = new FacesMessage(label + ": no es una direccion de email valido");
-            
-            throw new ValidatorException(facesMessage);
+  
+            if ((CharSequence)value ==""){
+                FacesMessage facesMessage = new FacesMessage(FacesMessage.SEVERITY_ERROR, "",label + ": Campo Obligatorio Vacío");
+                throw new ValidatorException(facesMessage);
+            }
+            else{
+                FacesMessage facesMessage = new FacesMessage(label + ": no es una dirección de email válido");
+                throw new ValidatorException(facesMessage);
+            }
         }
     }
     

@@ -62,17 +62,23 @@
 
                                         <h:outputText value="Nombres: " />  
                                         <p:inplace editor="true" >  
-                                            <p:inputText  value="#{consultarUsuarioManagedBean.selectedUser.nombreUser}" />  
+                                            <p:inputText  label="Nombre" value="#{consultarUsuarioManagedBean.selectedUser.nombreUser}" >
+                                                <f:validator validatorId="nombreValidator" />
+                                            </p:inputText>  
                                         </p:inplace>
 
                                         <h:outputText value="Apellido Paterno: " />  
                                         <p:inplace editor="true">  
-                                            <p:inputText value="#{consultarUsuarioManagedBean.selectedUser.apellidoUser}" />  
+                                            <p:inputText label="Apellido Paterno" value="#{consultarUsuarioManagedBean.selectedUser.apellidoUser}">
+                                                <f:validator validatorId="nombreValidator" />
+                                            </p:inputText>  
                                         </p:inplace>
 
                                         <h:outputText value="Correo: " />  
                                         <p:inplace editor="true" >  
-                                            <p:inputText value="#{consultarUsuarioManagedBean.selectedUser.emailUser}" />  
+                                            <p:inputText label="Correo" value="#{consultarUsuarioManagedBean.selectedUser.emailUser}">
+                                                <f:validator validatorId="emailValidator" />
+                                            </p:inputText>  
                                         </p:inplace>
 
                                         <h:outputText value="Tipo: " />  
