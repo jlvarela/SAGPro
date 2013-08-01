@@ -104,7 +104,10 @@ public class IngresarUsuarioManagedBean {
     }
     
     public void ingresarUsuario(){
-        int resp = userFacade.agregarUsuario(userid, username, userlastname, usermail,userrole);
+        
+        String rutUsuario= userid.substring(0, userid.length()-1);
+        
+        int resp = userFacade.agregarUsuario(rutUsuario, username, userlastname, usermail,userrole);
 
         FacesContext fcontext = FacesContext.getCurrentInstance();
         String viewId = fcontext.getViewRoot().getViewId();

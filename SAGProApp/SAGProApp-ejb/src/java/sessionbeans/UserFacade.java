@@ -173,6 +173,7 @@ public class UserFacade extends AbstractFacade<User> implements UserFacadeLocal 
     
     @Override
     public int agregarUsuario(final String rut, final String nombre, final String apellido, final String correo,final String rol){
+        /* el password por defecto es el rut sin digito verificador*/
         if (!usuarioExists(rut)){
             try{
             User usuario= new User();

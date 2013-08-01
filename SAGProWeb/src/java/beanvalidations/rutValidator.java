@@ -20,17 +20,40 @@ import javax.validation.ConstraintValidatorContext;
  *
  * @author Marco
  */
-@FacesValidator("emailValidator")
-public class emailValidator implements Validator {
+
+@FacesValidator("rutValidator")
+public class rutValidator implements Validator {
     
+    public static boolean ValidarRut(String cadena)
+    {
+        int ultimoDigito= cadena.length()-1;
+        
+        char dv=(char)cadena.charAt(ultimoDigito);
+        int rut=Integer.parseInt(cadena.substring(0, ultimoDigito));
+        
+        if (dv == 'k'){
+            dv='K';
+            
+        }
+        
+        int m = 0, s = 1;
+        for (; rut != 0; rut /= 10)
+        {
+            s = (s + rut % 10 * (9 - m++ % 6)) % 11;
+        }
+        
+        return dv == (char) (s != 0 ? s + 47 : 75);
+    }
+   
     @Override
     public void validate(FacesContext facesContext, UIComponent uIComponent, Object value)throws 
             ValidatorException{
-        Pattern pattern = Pattern.compile("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
-		+ "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$");
+        Pattern pattern = Pattern.compile("\\d+[kK]*");
         Matcher matcher = pattern.matcher((CharSequence)value);
         HtmlInputText htmlInputText = (HtmlInputText) uIComponent;
         String label;
+        
+        
         
         if (htmlInputText.getLabel()==null||htmlInputText.getLabel().trim().equals("")){
             label = htmlInputText.getId();
@@ -39,6 +62,8 @@ public class emailValidator implements Validator {
             label = htmlInputText.getLabel();
         }
         
+        
+        
         if(!matcher.matches()){
   
             if ((CharSequence)value ==""){
@@ -46,11 +71,16 @@ public class emailValidator implements Validator {
                 throw new ValidatorException(facesMessage);
             }
             else{
-                FacesMessage facesMessage = new FacesMessage(label + ": no es una dirección de email válido");
+                FacesMessage facesMessage = new FacesMessage(FacesMessage.SEVERITY_ERROR, "",label + ": no presenta formato permitido. Reingrese rut sin puntos ni guión (ej: 171233496)");
+                throw new ValidatorException(facesMessage);
+            }
+        }else{
+            /*si no es vacío y cumple el patron regular, se revisa la validez del rut*/
+            if(!ValidarRut((String)value)){
+                FacesMessage facesMessage = new FacesMessage(FacesMessage.SEVERITY_ERROR, "",label + ": el RUT ingresado no es válido");
                 throw new ValidatorException(facesMessage);
             }
         }
     }
-    
     
 }

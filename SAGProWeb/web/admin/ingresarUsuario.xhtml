@@ -29,7 +29,8 @@
                                 </div>
                                 <div class="span7">
                                     <div class="span9">
-                                        <h:inputText  value="#{ingresarUsuarioManagedBean.userid}" required="true" >
+                                        <h:inputText  value="#{ingresarUsuarioManagedBean.userid}" label="RUT" >
+                                            <f:validator validatorId="rutValidator" />
                                         </h:inputText>
                                     </div>
                                 </div>
