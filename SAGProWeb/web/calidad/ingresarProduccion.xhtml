@@ -85,7 +85,7 @@
                                             Materiales 
                                         </f:facet>  
                                         <p:column headerText="Material">  
-                                            <h:outputText value="#{produccionDiaria.produccionDiariaPK.codMaterial}" />  
+                                            <h:outputText value="#{produccionDiaria.material.nombreMaterial}" />  
                                         </p:column>  
 
                                         <p:column headerText="Cantidad">  
@@ -93,7 +93,7 @@
                                         </p:column>  
 
                                         <p:column headerText="Unidad">  
-                                            <h:outputText value="#" />  
+                                            <h:outputText value="#{produccionDiaria.material.medidaProduccionMaterial}" />  
                                         </p:column>  
                                     </p:dataTable>
                                 </div>

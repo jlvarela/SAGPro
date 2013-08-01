@@ -4,12 +4,19 @@
  */
 package sessionbeans;
 
+import entities.Material;
 import entities.ProduccionDiaria;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ejb.Stateless;
+import javax.persistence.EntityExistsException;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
+import javax.persistence.NonUniqueResultException;
 import javax.persistence.PersistenceContext;
 
 /**
@@ -18,6 +25,7 @@ import javax.persistence.PersistenceContext;
  */
 @Stateless
 public class ProduccionDiariaFacade extends AbstractFacade<ProduccionDiaria> implements ProduccionDiariaFacadeLocal {
+
     @PersistenceContext(unitName = "SAGProApp-ejbPU")
     private EntityManager em;
 
@@ -37,25 +45,29 @@ public class ProduccionDiariaFacade extends AbstractFacade<ProduccionDiaria> imp
 
     @Override
     public int agregarProduccionDiaria(final int codMaterial, final int cantidadMaterial) {
-        if(codMaterial > 0 && cantidadMaterial > 0){
+        if (codMaterial > 0 && cantidadMaterial > 0) {
             ProduccionDiaria prod = new ProduccionDiaria(new Date(), codMaterial);
             prod.setProduccionMaterial(cantidadMaterial);
             create(prod);
             return 0;
-        }
-        else{
+        } else {
             return -1;  // Invalid arguments
         }
-        
+
     }
 
     @Override
     public ProduccionDiaria find(Object id) {
         return super.find(id); //To change body of generated methods, choose Tools | Templates.
     }
-    
+
     @Override
-    public List<ProduccionDiaria> buscarPorFecha(final String produccion_fecha){
+    public void edit(ProduccionDiaria entity) {
+        super.edit(entity); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public List<ProduccionDiaria> buscarPorFecha(final Date produccion_fecha) {
         try {
             List<ProduccionDiaria> produccionDiaria = (List<ProduccionDiaria>) em.createNamedQuery("ProduccionDiaria.findByFechaDiariaEstadistica")
                     .setParameter("fechaDiariaEstadistica", produccion_fecha)
@@ -70,10 +82,49 @@ public class ProduccionDiariaFacade extends AbstractFacade<ProduccionDiaria> imp
     }
 
     @Override
+    public ProduccionDiaria buscarProduccion(final Date produccion_fecha, final int codMaterial) {
+        try {
+            ProduccionDiaria produccion = (ProduccionDiaria) em.createQuery("SELECT p FROM ProduccionDiaria p WHERE p.produccionDiariaPK.fechaDiariaEstadistica = :fechaDiariaEstadistica and p.produccionDiariaPK.codMaterial = :codMaterial")
+                    .setParameter("fechaDiariaEstadistica", produccion_fecha)
+                    .setParameter("codMaterial", codMaterial)
+                    .getSingleResult();
+            System.out.println("Producción: '" + produccion_fecha + " " + codMaterial + "' se ha encontrado con éxito");
+            return produccion;
+        } catch (NoResultException e) {
+            System.out.println("Producción: '" + produccion_fecha + " " + codMaterial + "' no se encuentra registrado");
+            return null;
+        } catch (NonUniqueResultException e) {
+            System.out.println("Producción: '" + produccion_fecha + " " + codMaterial + "', por alguna razón inesperada, se encuentra repetido");
+            return null;
+        }
+    }
+
+    @Override
     public List<ProduccionDiaria> findAll() {
         return super.findAll(); //To change body of generated methods, choose Tools | Templates.
     }
-    
-    
-    
+
+    @Override
+    public int editarProduccion(final int codMaterial, final Date produccionFecha, final int cantidad) {
+//        Date fecha;
+//        SimpleDateFormat df = new SimpleDateFormat("MM/dd/yyyy");
+        try {
+//            fecha = new Date(df.parse(produccionFecha).getTime());
+//            int materialid = Integer.parseInt(codMaterial);
+            ProduccionDiaria produccion = buscarProduccion(produccionFecha, codMaterial);
+            produccion.setProduccionMaterial(cantidad);
+            edit(produccion);
+            System.out.println("edición de produccion realizada con éxito");
+            return 0;
+        } catch (EntityExistsException e) {
+            System.out.println("Editando produccion: Error -> " + e.getMessage());
+            return -1;
+
+//        } catch (ParseException ex) {
+//            Logger.getLogger(ProduccionDiariaFacade.class.getName()).log(Level.SEVERE, null, ex);
+//            return -1;
+        }
+
+
+    }
 }

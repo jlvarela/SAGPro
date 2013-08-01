@@ -6,7 +6,6 @@ package managedbeans;
 
 import entities.Material;
 import entities.ProduccionDiaria;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -54,12 +53,9 @@ public class IngresarProduccionManagedBean {
     @PostConstruct
     public void init()
     {
-//        Date hoy = new Date();
-//        SimpleDateFormat formateador = new SimpleDateFormat("yyyy-MM-dd");
-//        String ahora = formateador.format(hoy);
+        Date hoy = new Date();
         listaMateriales = materialFacade.findAll();
-//        listaProduccionDiaria = produccionDiariaFacade.buscarPorFecha(ahora);
-        listaProduccionDiaria = produccionDiariaFacade.findAll();
+        listaProduccionDiaria = produccionDiariaFacade.buscarPorFecha(hoy);
     }
 
     public List<Material> getListaMateriales() {

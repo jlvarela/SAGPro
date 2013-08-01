@@ -5,6 +5,7 @@
 package sessionbeans;
 
 import entities.ProduccionDiaria;
+import java.util.Date;
 import java.util.List;
 import javax.ejb.Local;
 
@@ -31,7 +32,11 @@ public interface ProduccionDiariaFacadeLocal {
 
     int agregarProduccionDiaria(final int codMaterial, final int cantidadMaterial);
     
-    public List<ProduccionDiaria> buscarPorFecha(final String produccion_fecha);
+    public List<ProduccionDiaria> buscarPorFecha(final Date produccion_fecha);
+    
+    public ProduccionDiaria buscarProduccion(final Date produccion_fecha, final int codMaterial);
+    
+    public int editarProduccion(final int codMaterial, final Date produccionFecha, final int cantidad);
    
     
 }
