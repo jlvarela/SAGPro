@@ -4,89 +4,181 @@
 <ui:composition template ="/WEB-INF/templates/templateGestorCalidad.xhtml"
                 xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:h="http://java.sun.com/jsf/html"
-                xmlns:ui="http://java.sun.com/jsf/facelets">
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core">
     <ui:define name="cuerpo">
-        <div class="span9">
-            <fieldset style="padding: 20px">
-                <legend>Consultar Producción</legend>
-                <div class="row-fluid">
-                    <div class="span6">
-                            <div id="datetimepicker4" class="input-append">
-                                <input data-format="yyyy-MM-dd" type="text"></input>
-                                <span class="add-on">
-                                    <i data-time-icon="icon-time" data-date-icon="icon-calendar">
-                                    </i>
-                                </span>
+        <h:form id="form">
+            <div class="span9">
+                <fieldset style="padding: 20px">
+                    <legend>Consultar Producción</legend>
+                    <p:messages  autoUpdate="true" closable="true" showDetail="true" showSummary="false" />
+                    <div class="row-fluid">
+                        <div class="span6" >
+
+                            <div class="row-fluid">
+                                <div class="span12">
+                                    1. Seleccione un material
+                                </div>
                             </div>
-                    </div>
-                </div>
-
-                <div class="row-fluid">
-                    <div class="span6">
-                        <div class="row-fluid">
-                            <div class="span7">
-                                Listado de Materiales
+                            <div class="row-fluid">
+                                <div class="span8">
+                                    <div class="input-append datetimepicker" style="width:100%">
+                                        <!--                                    <input  class="span11" data-format="yyyy-MM-dd" type="text"></input>-->
+                                        <h:inputText styleClass="span11"
+                                                     value="#">
+                                            <f:attribute name="data-format" value="yyyy-MM-dd" />
+                                        </h:inputText>
+                                        <span class="add-on">
+                                            <i data-time-icon="icon-time" data-date-icon="icon-calendar">
+                                            </i>
+                                        </span>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-
-                        <div class="row-fluid">
-                            <div class="span12">
-                                <table class="table table-bordered">
-                                    <thead>
-                                        <tr>
-                                            <th>Material</th>
-                                            <th>Unidad</th>
-                                        </tr>
-                                    </thead>
-
-                                    <tbody>
-                                        <tr>
-                                            <td>Metal Férrico</td>
-                                            <td>Tonelada</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Plástico</td>
-                                            <td>Tonelada</td>
-                                        </tr>
-                                    </tbody>
-
-                                </table>
-                            </div>
-                        </div>
-
-                    </div>
 
 
-                    <div class="span6">
-                        <div class="row-fluid">
-                            <div class="span7">
-                                Detalle de Producción
+                            <div class="span12" >
+                                <p:dataTable var="produccionDiaria" value="#{consultarProduccionManagedBean.listaProduccionDiaria}" rowKey="#{produccionDiaria.produccionDiariaPK.codMaterial}" selection="#{consultarProduccionManagedBean.selectedProduccionDiaria}" selectionMode="single" filteredValue="#{consultarProduccionManagedBean.selectedProduccionesDiarias}">
+                                    <p:ajax event="rowSelect"  update=":form" />
+                                    <f:facet name="header">  
+                                        Producción diaria
+                                    </f:facet>  
+                                    <p:column headerText="Material">  
+                                        <h:outputText value="#{produccionDiaria.material.nombreMaterial}" />  
+                                    </p:column>  
+
+                                    <p:column headerText="Cantidad">  
+                                        <h:outputText value="#{produccionDiaria.produccionMaterial}" />  
+                                    </p:column>  
+
+                                    <p:column headerText="Unidad">  
+                                        <h:outputText value="#{produccionDiaria.material.medidaProduccionMaterial}" />  
+                                    </p:column>  
+                                </p:dataTable>  
+
+
                             </div>
                         </div>
-                        <div class="row-fluid">
-                            <div class="span12">
-                                <pre>
-Material: Plástico
-Cantidad: 3
-Unidad:   Tonelada
-Fecha:    20/03/2013
-Hora:     15:30</pre>
+                        <div class="span6">
+                            <div class="row-fluid">
+                                <div class="span12">
+                                    2. Detalle del material
+                                </div>
                             </div>
-                        </div>
+                            <div class="row-fluid" >
+                                <p:panel header="Datos del Material">
+                                    <h:panelGrid columns="2" columnClasses="column" cellpadding="5">
+                                        <h:outputText value="Material: " />  
+                                        <h:outputText value="#{consultarProduccionManagedBean.selectedProduccionDiaria.material.nombreMaterial}"/>  
 
-                        <div class="row-fluid">
-                            <div class="control-group">
-                                <div class="controls pull-right">
-                                    <button type="button" class="btn"><i class="icon-pencil"></i> Editar</button>
-                                    <button type="button" class="btn"><i class="icon-trash"></i> Eliminar</button>
+                                        <h:outputText value="Cantidad: " />  
+                                        <p:inplace editor="true">  
+                                            <p:inputText value="#{consultarProduccionManagedBean.selectedProduccionDiaria.produccionMaterial}"/>  
+                                        </p:inplace>
+                                        
+                                        <h:outputText value="Unidad: " />  
+                                        <h:outputText value="#{consultarProduccionManagedBean.selectedProduccionDiaria.material.medidaProduccionMaterial}" />
+
+                                    </h:panelGrid>
+                                </p:panel>
+                            </div>
+                            <div class="row-fluid">
+                                <div class="control-group" >
+                                    <div class="controls pull-right">
+                                        <p:commandButton action="#{consultarProduccionManagedBean.modificarProduccion()}" ajax="false"  value="Editar" icon="ui-icon-pencil"/>
+                                        <button type="button" class="btn"><i class="icon-trash"></i> Eliminar</button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                </div>
-            </fieldset>
-        </div>
+                </fieldset>
+            </div>
+
+        </h:form>
+        <!--        <div class="span9">
+                    <fieldset style="padding: 20px">
+                        <legend>Consultar Producción</legend>
+                        <div class="row-fluid">
+                            <div class="span6">
+                                    <div id="datetimepicker4" class="input-append">
+                                        <input data-format="yyyy-MM-dd" type="text"></input>
+                                        <span class="add-on">
+                                            <i data-time-icon="icon-time" data-date-icon="icon-calendar">
+                                            </i>
+                                        </span>
+                                    </div>
+                            </div>
+                        </div>
+        
+                        <div class="row-fluid">
+                            <div class="span6">
+                                <div class="row-fluid">
+                                    <div class="span7">
+                                        Listado de Materiales
+                                    </div>
+                                </div>
+        
+                                <div class="row-fluid">
+                                    <div class="span12">
+                                        <table class="table table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <th>Material</th>
+                                                    <th>Unidad</th>
+                                                </tr>
+                                            </thead>
+        
+                                            <tbody>
+                                                <tr>
+                                                    <td>Metal Férrico</td>
+                                                    <td>Tonelada</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Plástico</td>
+                                                    <td>Tonelada</td>
+                                                </tr>
+                                            </tbody>
+        
+                                        </table>
+                                    </div>
+                                </div>
+        
+                            </div>
+        
+        
+                            <div class="span6">
+                                <div class="row-fluid">
+                                    <div class="span7">
+                                        Detalle de Producción
+                                    </div>
+                                </div>
+                                <div class="row-fluid">
+                                    <div class="span12">
+                                        <pre>
+        Material: Plástico
+        Cantidad: 3
+        Unidad:   Tonelada
+        Fecha:    20/03/2013
+        Hora:     15:30</pre>
+                                    </div>
+                                </div>
+        
+                                <div class="row-fluid">
+                                    <div class="control-group">
+                                        <div class="controls pull-right">
+                                            <button type="button" class="btn"><i class="icon-pencil"></i> Editar</button>
+                                            <button type="button" class="btn"><i class="icon-trash"></i> Eliminar</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+        
+                        </div>
+                    </fieldset>
+                </div>-->
 
 
     </ui:define>

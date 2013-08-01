@@ -5,6 +5,7 @@
 package managedbeans;
 
 import entities.Material;
+import entities.Objetivo;
 import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -19,6 +20,7 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import sessionbeans.MaterialFacadeLocal;
 import sessionbeans.ObjetivoFacadeLocal;
+import sessionbeans.ObjetivoMaterialFacadeLocal;
 
 /**
  *
@@ -27,6 +29,8 @@ import sessionbeans.ObjetivoFacadeLocal;
 @ManagedBean(name = "crearObjetivoManagedBean")
 @ViewScoped
 public class CrearObjetivoManagedBean implements Serializable{
+    @EJB
+    private ObjetivoMaterialFacadeLocal objetivoMaterialFacade;
     @EJB
     private ObjetivoFacadeLocal objetivoFacade;
     @EJB
@@ -212,24 +216,87 @@ public class CrearObjetivoManagedBean implements Serializable{
     
     public void agregarObjetivo(){
         try{
+            // Obtener tiempo, aplicando formato específico del calendario de jQuery (MM/dd/yyyy)
             SimpleDateFormat df = new SimpleDateFormat("MM/dd/yyyy");
+            //Fecha inicial
             Date f_inicial = new Date(df.parse(initialDate).getTime());
+            //Fecha final
             Date f_final = new Date(df.parse(finishDate).getTime());
-
             
-            System.out.println(nombreObjetivo + descripcionObjetivo + f_inicial + f_final + prioridadObjetivo);
-            int resp = objetivoFacade.agregarObjetivo(nombreObjetivo
-                    , descripcionObjetivo
-                    , f_inicial
-                    , f_final
-                    , prioridadObjetivo);
+            // Validar Fechas ingresadas
+            validarFechas(f_inicial, f_final);
+            
+            // Código de respuesta
+            int resp;
+            
+            // Solicitar a EJB Objetivo, la función aagregarObjetivo.
+            resp = objetivoFacade.agregarObjetivo(nombreObjetivo
+                , descripcionObjetivo
+                , f_inicial
+                , f_final
+                , prioridadObjetivo);
+            
+            // Contexto de PrimeFaces.
             FacesContext context = FacesContext.getCurrentInstance();
+            
+            // Nuevo mensaje a usuario.
             FacesMessage msj = new FacesMessage();
+            
+            /**
+             * Si código de respuesta es cero. La operación se ha realizado con
+             * éxito
+             * */
             if (resp == 0){
-                msj.setSeverity(FacesMessage.SEVERITY_INFO);
-                msj.setDetail("Objetivo agregado con éxito");
-                context.addMessage(null, msj);
+                                
+                // Buscar Objetivo creado. Obtener su código.
+                Objetivo obj = objetivoFacade.buscarPorNombre(nombreObjetivo);
+                
+                // Si no se ha encontrado objeto objetivo. Error desconocido.
+                if (obj == null){
+                    msj.setSeverity(FacesMessage.SEVERITY_ERROR);
+                    msj.setDetail("Error desconocido. Por favor refresque la página y vuelva a intentarlo");
+                    context.addMessage(null, msj);
+                    return;
+                }
+                
+                /**
+                 * Crear lista de código y cantidades de materiales.
+                 * Para proveer de argumentos a objetivoMaterialFacade.agregarMaterialToObjetivo.
+                 * De manera de agregar los materiales al objetivo creado.
+                 **/
+                int [] codMaterialesArray = new int[selectedMateriales.size()];
+                int [] cantMaterialesArray = new int[selectedMateriales.size()];
+                
+                /**
+                 * Para cada material seleccionado.
+                 *  Agregar valor de su código al arreglo de códigos.
+                 *  Agregar valor de la cantidad del material al arreglo de cantidades.
+                 * */
+                for(int i=0; i<selectedMateriales.size(); i++){
+                    codMaterialesArray[i] = selectedMateriales.get(i).getIdMaterial().intValue();
+                    cantMaterialesArray[i] = selectedMateriales.get(i).getCantidad();
+                }
+
+                int resp2 ; // Respuesta de EJB
+                
+                // Se solicita a EJB ObjetivoMateial, la función agregarMaterialToObjetivo.
+                resp2 = objetivoMaterialFacade.agregarMaterialToObjetivo(obj.getCodObjetivo().intValue(), codMaterialesArray, cantMaterialesArray );
+                
+                // Si código de respuesta es cero. Operación satisfactoria.
+                if (resp2 == 0){
+                    // Informar a usuario mediante mensajes de PrimeFaces.
+                    msj.setSeverity(FacesMessage.SEVERITY_INFO);    // Severidad del mensaje.
+                    msj.setDetail("Objetivo agregado con éxito");   // Detalle del mensaje.
+                    context.addMessage(null, msj);                  // Agregar mensaje.
+                }
+                else{
+                    // Informar a usuario mediante mensajes de PrimeFaces.
+                    msj.setSeverity(FacesMessage.SEVERITY_ERROR);   // Severidad del mensaje.
+                    msj.setDetail("Objetivo imposible de agregar 2");   // Detalle del mensaje.
+                    context.addMessage(null, msj);                      // Agregar mensaje.
+                }
             }
+            // Código -1: 
             else if(resp == -1){
                 msj.setSeverity(FacesMessage.SEVERITY_ERROR);
                 msj.setDetail("Objetivo imposible de agregar");
@@ -239,7 +306,25 @@ public class CrearObjetivoManagedBean implements Serializable{
         catch(ParseException e){
             System.out.println("Agregando Objetivo (bean): " + e.getMessage());
         }
-
+    }
+    
+    /**
+     * Determina la validez de las fechas ingresadas como argumento del
+     * objetivo.
+     * @param finicial  Date    Fecha inicial del objetivo.
+     * @param ffinal    Date    Fecha final del objetivo.
+     * @return 
+     */
+    private Boolean validarFechas(Date finicial, Date ffinal){
+        // Si fecha inicial es posterior a fecha final
+        if (!finicial.before(ffinal))
+            return false;               // Fecha inválida
+        
+        Date now = new Date();          // Fecha del momento
+        if(now.before(finicial))        // Si fecha del objetivo es anterior a hoy.
+            return false;               // Fecha inválida
+                
+        return true;                    // Fecha válida
     }
     
 }
