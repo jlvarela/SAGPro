@@ -11,19 +11,4 @@
         <managed-bean-class>managedbeans.IngresarMaterialManagedBean</managed-bean-class>
     
         <managed-bean-scope>view</managed-bean-scope></managed-bean>
-    <managed-bean>
-        <managed-bean-name>ingresarMaterialManagedBean</managed-bean-name>
-        <managed-bean-class>managedbeans.IngresarMaterialManagedBean</managed-bean-class>
-        <managed-bean-scope>view</managed-bean-scope>
-    </managed-bean>
-    <managed-bean>
-        <managed-bean-name>ingresarProduccionManagedBean</managed-bean-name>
-        <managed-bean-class>managedbeans.IngresarProduccionManagedBean</managed-bean-class>
-        <managed-bean-scope>view</managed-bean-scope>
-    </managed-bean>
-    <managed-bean>
-        <managed-bean-name>consultarProduccionManagedBean</managed-bean-name>
-        <managed-bean-class>managedbeans.ConsultarProduccionManagedBean</managed-bean-class>
-        <managed-bean-scope>view</managed-bean-scope>
-    </managed-bean>
 </faces-config>
