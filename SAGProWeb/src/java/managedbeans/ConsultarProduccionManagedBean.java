@@ -49,7 +49,7 @@ public class ConsultarProduccionManagedBean {
     private List<ProduccionDiaria> listaProduccionDiaria;
     private ProduccionDiaria selectedProduccionDiaria;
     private List<ProduccionDiaria> selectedProduccionesDiarias;
-    private String fecha = "07/25/2013";
+    private String fecha;
 
     /**
      * Creates a new instance of ProduccionManagedBean
@@ -61,14 +61,15 @@ public class ConsultarProduccionManagedBean {
     public void init()
     {
         Date f = new Date();
-        SimpleDateFormat df = new SimpleDateFormat("MM/dd/yyyy");
-         try {
-             f = new Date(df.parse(fecha).getTime());
-         } catch (ParseException ex) {
-             Logger.getLogger(ConsultarProduccionManagedBean.class.getName()).log(Level.SEVERE, null, ex);
-         }
+//        SimpleDateFormat df = new SimpleDateFormat("MM/dd/yyyy");
+//         try {
+//             f = new Date(df.parse(fecha).getTime());
+             listaProduccionDiaria = produccionDiariaFacade.buscarPorFecha(f);
+//         } catch (ParseException ex) {
+//             Logger.getLogger(ConsultarProduccionManagedBean.class.getName()).log(Level.SEVERE, null, ex);
+//             
+//         }
         //listaMateriales = materialFacade.findAll();
-        listaProduccionDiaria = produccionDiariaFacade.buscarPorFecha(f);
     }
 
     public ProduccionDiaria getSelectedProduccionDiaria() {
@@ -157,4 +158,16 @@ public class ConsultarProduccionManagedBean {
         }
     }
    
+    public void cambiarFecha(){
+        Date f;
+        SimpleDateFormat df = new SimpleDateFormat("MM/dd/yyyy");
+         try {
+             f = new Date(df.parse(fecha).getTime());
+             listaProduccionDiaria = produccionDiariaFacade.buscarPorFecha(f);
+         } catch (ParseException ex) {
+             Logger.getLogger(ConsultarProduccionManagedBean.class.getName()).log(Level.SEVERE, null, ex);
+         }
+        //listaMateriales = materialFacade.findAll();
+        
+    }
 }
