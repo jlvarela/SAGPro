@@ -5,6 +5,7 @@
 package sessionbeans;
 
 import entities.EstadisticaMensual;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -26,5 +27,13 @@ public class EstadisticaMensualFacade extends AbstractFacade<EstadisticaMensual>
     public EstadisticaMensualFacade() {
         super(EstadisticaMensual.class);
     }
+
+    @Override
+    public List<EstadisticaMensual> findAll() {
+        return super.findAll(); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    
+    
     
 }
