@@ -165,7 +165,6 @@ public class UserFacade extends AbstractFacade<User> implements UserFacadeLocal 
             //exception handling goes here
             return null;
         }
-        
     }
     
     
@@ -195,13 +194,6 @@ public class UserFacade extends AbstractFacade<User> implements UserFacadeLocal 
         else{
             System.out.println("entro aca");
             return -1;
-        }
-        
-        
+        }   
     }
-    
-    
-    
-    
-    
 }

@@ -30,7 +30,13 @@ public interface ObjetivoFacadeLocal {
 
     int count();
 
-    int agregarObjetivo(final String nombre, final String descripcion, final Date fecha_inicial, final Date fecha_final, final short prioridad);
+    int agregarObjetivo(final String nombre
+            , final String descripcion
+            , final Date fecha_inicial
+            , final Date fecha_final
+            , final short prioridad
+            , final int [] materialList
+            , final int [] cantidadList);
 
     Objetivo buscarPorNombre(final String nombre);
     

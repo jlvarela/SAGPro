@@ -19,7 +19,6 @@
                     <p:messages  autoUpdate="true" closable="true" showDetail="true" showSummary="false" />
                     <div class="row-fluid">
                         <div class="span6">
-
                             <div class="row-fluid">
                                 <div class="span12">
                                     1. Seleccione un usuario
@@ -27,18 +26,18 @@
                             </div>
                             <div class="span12">
                                 <!--<h:form id="form">-->  
-                                <p:dataTable var="user" value="#{consultarUsuarioManagedBean.listaUsers}" rowKey="#{user.rutUser}"  selection="#{consultarUsuarioManagedBean.selectedUser}" selectionMode="single"  filteredValue="#{consultarUsuarioManagedBean.selectedUsers}" > 
+                                <p:dataTable var="user" value="#{consultarUsuarioManagedBean.listaUsers}" rowKey="#{user.rut}"  selection="#{consultarUsuarioManagedBean.selectedUser}" selectionMode="single"  filteredValue="#{consultarUsuarioManagedBean.selectedUsers}" > 
                                     <p:ajax event="rowSelect"  update=":form" />
-                                    <p:column headerText="RUT" filterBy="#{user.rutUser}"> 
-                                        <h:outputText value="#{user.rutUser}" />  
+                                    <p:column headerText="RUT" filterBy="#{user.rut}"> 
+                                        <h:outputText value="#{user.rut}" />  
                                     </p:column>  
 
-                                    <p:column headerText="Nombres" filterBy="#{user.nombreUser}">  
-                                        <h:outputText value="#{user.nombreUser}" />  
+                                    <p:column headerText="Nombres" filterBy="#{user.nombre}">  
+                                        <h:outputText value="#{user.nombre}" />  
                                     </p:column>  
 
-                                    <p:column headerText="Apellido Paterno" filterBy="#{user.apellidoUser}">  
-                                        <h:outputText value="#{user.apellidoUser}" />  
+                                    <p:column headerText="Apellido Paterno" filterBy="#{user.apellido}">  
+                                        <h:outputText value="#{user.apellido}" />  
                                     </p:column> 
 
                                 </p:dataTable>  
@@ -57,46 +56,44 @@
                                     <h:panelGrid columns="2" columnClasses="column" cellpadding="5">
                                         <h:outputText value="RUT: " />  
                                         <p:inplace >  
-                                            <h:outputText value="#{consultarUsuarioManagedBean.selectedUser.rutUser}" />  
+                                            <h:outputText value="#{consultarUsuarioManagedBean.selectedUser.rut}" />  
                                         </p:inplace>
 
                                         <h:outputText value="Nombres: " />  
                                         <p:inplace editor="true" >  
-                                            <p:inputText  label="Nombre" value="#{consultarUsuarioManagedBean.selectedUser.nombreUser}" >
+                                            <p:inputText  label="Nombre" value="#{consultarUsuarioManagedBean.selectedUser.nombre}" >
                                                 <f:validator validatorId="nombreValidator" />
                                             </p:inputText>  
                                         </p:inplace>
 
                                         <h:outputText value="Apellido Paterno: " />  
                                         <p:inplace editor="true">  
-                                            <p:inputText label="Apellido Paterno" value="#{consultarUsuarioManagedBean.selectedUser.apellidoUser}">
+                                            <p:inputText label="Apellido Paterno" value="#{consultarUsuarioManagedBean.selectedUser.apellido}">
                                                 <f:validator validatorId="nombreValidator" />
                                             </p:inputText>  
                                         </p:inplace>
 
                                         <h:outputText value="Correo: " />  
                                         <p:inplace editor="true" >  
-                                            <p:inputText label="Correo" value="#{consultarUsuarioManagedBean.selectedUser.emailUser}">
+                                            <p:inputText label="Correo" value="#{consultarUsuarioManagedBean.selectedUser.correo}">
                                                 <f:validator validatorId="emailValidator" />
                                             </p:inputText>  
                                         </p:inplace>
 
                                         <h:outputText value="Tipo: " />  
                                         <p:inplace editor="true" >  
-                                            <h:selectOneMenu value="#{consultarUsuarioManagedBean.selectedUser.roleUser}"  >
+                                            <h:selectOneMenu value="#{consultarUsuarioManagedBean.selectedUser.tipo}"  >
                                                 <f:selectItems value="#{consultarUsuarioManagedBean.tiposUsuarios}" />
                                             </h:selectOneMenu>
                                         </p:inplace>
-
-
                                     </h:panelGrid>
                                 </p:panel>
                             </div>
                             <div class="row-fluid" style="margin-top:3px">
                                 <div class="control-group" >
                                     <div class="controls pull-right">
-                                        <p:commandButton onclick="editarConfirm.show();"   value="Editar" icon="ui-icon-pencil" disabled="#{consultarUsuarioManagedBean.selectedUser==null}"/>
-                                        <p:commandButton   onclick="eliminarConfirm.show();" value="Eliminar" icon="ui-icon-trash" disabled="#{consultarUsuarioManagedBean.selectedUser==null}" />
+                                        <p:commandButton onclick="editarConfirm.show();"   value="Editar" icon="ui-icon-pencil" disabled="#{consultarUsuarioManagedBean.selectedUser == null}"/>
+                                        <p:commandButton   onclick="eliminarConfirm.show();" value="Eliminar" icon="ui-icon-trash" disabled="#{consultarUsuarioManagedBean.selectedUser == null}" />
                                     </div>
                                 </div>
                             </div>

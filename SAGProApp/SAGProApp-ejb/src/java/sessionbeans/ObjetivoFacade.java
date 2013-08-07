@@ -7,6 +7,7 @@ package sessionbeans;
 import entities.Objetivo;
 import java.util.Date;
 import java.util.List;
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityExistsException;
 import javax.persistence.EntityManager;
@@ -18,8 +19,10 @@ import javax.persistence.PersistenceContext;
  */
 @Stateless
 public class ObjetivoFacade extends AbstractFacade<Objetivo> implements ObjetivoFacadeLocal {
+    @EJB
+    private ObjetivoMaterialFacadeLocal objetivoMaterialFacade;
     @PersistenceContext(unitName = "SAGProApp-ejbPU")
-    private EntityManager em;
+    private EntityManager em;  
 
     @Override
     protected EntityManager getEntityManager() {
@@ -59,7 +62,9 @@ public class ObjetivoFacade extends AbstractFacade<Objetivo> implements Objetivo
             , final String descripcion
             , Date fecha_inicial
             , Date fecha_final
-            , final short prioridad) {
+            , final short prioridad
+            , final int [] materialList
+            , final int [] cantidadList) {
         
         if (objetivoExists(nombre)){
             return -1;
@@ -76,6 +81,8 @@ public class ObjetivoFacade extends AbstractFacade<Objetivo> implements Objetivo
                 obj.setFechaInicial(fecha_inicial);
                 obj.setFechaLimite(fecha_final);
                 create(obj);
+                obj = buscarPorNombre(nombre);
+                objetivoMaterialFacade.agregarMaterialToObjetivo(obj.getCodObjetivo(), materialList, cantidadList);
                 System.out.println("Creación de Objetivo realizada con éxito");
                 return 0;
             }catch(EntityExistsException e){

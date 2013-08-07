@@ -29,7 +29,7 @@
                                 </div>
                                 <div class="span7">
                                     <div class="span9">
-                                        <h:inputText  value="#{ingresarUsuarioManagedBean.userid}" label="RUT" >
+                                        <h:inputText  value="#{ingresarUsuarioManagedBean.newUser.rut}" label="RUT" >
                                             <f:validator validatorId="rutValidator" />
                                         </h:inputText>
                                     </div>
@@ -41,7 +41,7 @@
                                     Nombres
                                 </div>
                                 <div class="span7">
-                                    <h:inputText title="Ingrese solo letras" label="Nombre" value="#{ingresarUsuarioManagedBean.username}">
+                                    <h:inputText title="Ingrese solo letras" label="Nombre" value="#{ingresarUsuarioManagedBean.newUser.nombre}">
                                         <f:validator validatorId="nombreValidator" />
                                     </h:inputText>
                                 </div>
@@ -52,7 +52,7 @@
                                     Apellido Paterno
                                 </div>
                                 <div class="span7">
-                                    <h:inputText title="Ingrese solo letras" label="Apellido" value="#{ingresarUsuarioManagedBean.userlastname}">
+                                    <h:inputText title="Ingrese solo letras" label="Apellido" value="#{ingresarUsuarioManagedBean.newUser.apellido}">
                                         <f:validator validatorId="nombreValidator" />
                                     </h:inputText>
                                 </div>
@@ -71,7 +71,7 @@
                                     Correo
                                 </div>
                                 <div class="span7">
-                                    <h:inputText title="Ej: usuario@mail.com" id="correo" label="Correo" value="#{ingresarUsuarioManagedBean.usermail}">
+                                    <h:inputText title="Ej: usuario@mail.com" id="correo" label="Correo" value="#{ingresarUsuarioManagedBean.newUser.correo}">
                                         <f:validator validatorId="emailValidator" />
                                     </h:inputText>
                                 </div>
@@ -97,7 +97,7 @@
                                     Tipo de usuario
                                 </div>
                                 <div class="span7">
-                                    <h:selectOneMenu id="tipoUser" value="#{ingresarUsuarioManagedBean.userrole}" >
+                                    <h:selectOneMenu id="tipoUser" value="#{ingresarUsuarioManagedBean.newUser.tipo}" >
                                         <f:selectItems value="#{ingresarUsuarioManagedBean.tiposUsuarios}"/>
                                     </h:selectOneMenu>
                                 </div>

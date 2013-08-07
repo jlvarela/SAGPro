@@ -62,7 +62,7 @@ public class EstadisticaMensual implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "MES")
-    @Temporal(TemporalType.TIME)
+    @Temporal(TemporalType.DATE)
     private Date mes;
     @Basic(optional = false)
     @NotNull

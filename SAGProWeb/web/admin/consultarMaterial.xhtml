@@ -26,7 +26,7 @@
                                 </div>
                             </div>
                             <div class="span12" >
-                                <p:dataTable var="material" value="#{consultarMaterialManagedBean.listaMateriales}" rowKey="#{material.codMaterial}" selection="#{consultarMaterialManagedBean.selectedMaterial}" selectionMode="single" filteredValue="#{consultarMaterialManagedBean.selectedMaterials}">
+                                <p:dataTable var="material" value="#{consultarMaterialManagedBean.listaMateriales}" rowKey="#{material.codMaterial}" selection="#{consultarMaterialManagedBean.selectedMaterial}" selectionMode="single">
                                     <p:ajax event="rowSelect"  update=":form" />
                                     <f:facet name="header">  
                                         Materiales 

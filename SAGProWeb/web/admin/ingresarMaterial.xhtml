@@ -23,7 +23,7 @@
                                 Nombre del material
                             </div>
                             <div class="span7">
-                                <h:inputText value="#{ingresarMaterialManagedBean.nombreMaterial}"></h:inputText>
+                                <h:inputText value="#{ingresarMaterialManagedBean.newMaterial.nombreMaterial}"></h:inputText>
                             </div>
                         </div>
                         <div class="row-fluid">
@@ -31,7 +31,7 @@
                                 Unidad de producción
                             </div>
                             <div class="span7">
-                                <h:selectOneMenu id="medidaProd" value="#{ingresarMaterialManagedBean.medidaProduccionMaterial}" >
+                                <h:selectOneMenu id="medidaProd" value="#{ingresarMaterialManagedBean.newMaterial.medidaProduccionMaterial}" >
                                     <f:selectItems value="#{ingresarMaterialManagedBean.medidasProduccionMaterial}" />
                                 </h:selectOneMenu>
                             </div>
@@ -41,7 +41,7 @@
                                 Unidad de venta
                             </div>
                             <div class="span7">
-                                <h:selectOneMenu id="medidaVenta" value="#{ingresarMaterialManagedBean.medidaVentaMaterial}" >
+                                <h:selectOneMenu id="medidaVenta" value="#{ingresarMaterialManagedBean.newMaterial.medidaVentaMaterial}" >
                                     <f:selectItems value="#{ingresarMaterialManagedBean.medidasVentaMaterial}" />
                                 </h:selectOneMenu>
                             </div>

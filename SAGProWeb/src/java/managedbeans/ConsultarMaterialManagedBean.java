@@ -4,8 +4,9 @@
  */
 package managedbeans;
 
-import entities.Material;
+import pojoclass.Material;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -26,35 +27,12 @@ public class ConsultarMaterialManagedBean implements Serializable {
     @EJB
     private MaterialFacadeLocal materialFacade;
     
-    private String codMaterial;
-    private String nombreMaterial;
     private String medidaProduccionMaterial;
     private String medidaVentaMaterial;
     private String[] medidasVentaMaterial;
     private String[] medidasProduccionMaterial;
     private List<Material> listaMateriales;
     private Material selectedMaterial;
-    private List<Material> selectedMaterials;
-    private String text; 
-
-    public String getText() {
-        return text;
-    }
-
-    public void setText(String text) {
-        this.text = text;
-    }
-
-    public String getCodMaterial() {
-        return codMaterial;
-    }
-
-    public void setCodMaterial(String codMaterial) {
-        this.codMaterial = codMaterial;
-    }
-
-
-    
     
     public List<Material> getListaMateriales() {
         return listaMateriales;
@@ -72,14 +50,6 @@ public class ConsultarMaterialManagedBean implements Serializable {
         this.selectedMaterial = selectedMaterial;
     }
 
-    public List<Material>  getSelectedMaterials() {
-        return selectedMaterials;
-    }
-
-    public void setSelectedMaterials(List<Material>  selectedMaterials) {
-        this.selectedMaterials = selectedMaterials;
-    }
-
     public String[] getMedidasVentaMaterial() {
         return medidasVentaMaterial;
     }
@@ -94,14 +64,6 @@ public class ConsultarMaterialManagedBean implements Serializable {
 
     public void setMedidasProduccionMaterial(String[] medidasProduccionMaterial) {
         this.medidasProduccionMaterial = medidasProduccionMaterial;
-    }
-
-    public String getNombreMaterial() {
-        return nombreMaterial;
-    }
-
-    public void setNombreMaterial(String nombreMaterial) {
-        this.nombreMaterial = nombreMaterial;
     }
 
     public String getMedidaProduccionMaterial() {
@@ -127,11 +89,20 @@ public class ConsultarMaterialManagedBean implements Serializable {
     public void init() {
         String[] valuesVentas = materialFacade.getValuesVentaMaterial();
         String[] valuesProduc = materialFacade.getValuesProducMaterial();
+        
         if (valuesVentas != null && valuesProduc != null){
             medidasVentaMaterial = valuesVentas;
             medidasProduccionMaterial = valuesProduc;
         }
-        listaMateriales = materialFacade.findAll();
+        List<entities.Material> materialEntitiesList = materialFacade.findAll();
+        ArrayList<Material> materialList = new ArrayList();
+        
+        for (entities.Material matEntitie : materialEntitiesList){
+            materialList.add(util.MappingFromEntitieToPojo.materialFromEntityToPojo(matEntitie));
+        }
+        
+        listaMateriales = materialList;
+        
     }
     
      public void modificarMaterial(){

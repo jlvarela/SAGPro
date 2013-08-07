@@ -4,12 +4,9 @@
  */
 package managedbeans;
 
-import entities.User;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
-import javax.inject.Named;
-import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.application.ViewHandler;
 import javax.faces.bean.ManagedBean;
@@ -17,6 +14,7 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.component.UIViewRoot;
 import javax.faces.context.FacesContext;
 import sessionbeans.UserFacadeLocal;
+import pojoclass.Usuario;
 
 /**
  *
@@ -29,53 +27,10 @@ public class IngresarUsuarioManagedBean {
     @EJB
     private UserFacadeLocal userFacade;
     
-    private String userid;
-    private String username;
-    private String userlastname;
-    private String usermail;
-    private String userrole;
+    private Usuario newUser;
     private String[] tiposUsuarios;
-
-    public String getUserrole() {
-        return userrole;
-    }
-
-    public void setUserrole(String userrole) {
-        this.userrole = userrole;
-    }
-    
-
-    public String getUserid() {
-        return userid;
-    }
-
-    public void setUserid(String userid) {
-        this.userid = userid;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getUserlastname() {
-        return userlastname;
-    }
-
-    public void setUserlastname(String userlastname) {
-        this.userlastname = userlastname;
-    }
-
-    public String getUsermail() {
-        return usermail;
-    }
-
-    public void setUsermail(String usermail) {
-        this.usermail = usermail;
-    }
+    private List<Usuario> selectedUsers;
+    private Usuario selectUser;
 
     public String[] getTiposUsuarios() {
         return tiposUsuarios;
@@ -83,6 +38,30 @@ public class IngresarUsuarioManagedBean {
 
     public void setTiposUsuarios(String[] tiposUsuarios) {
         this.tiposUsuarios = tiposUsuarios;
+    }
+
+    public List<Usuario> getSelectedUsers() {
+        return selectedUsers;
+    }
+
+    public void setSelectedUsers(List<Usuario> selectedUsers) {
+        this.selectedUsers = selectedUsers;
+    }
+    
+    public Usuario getNewUser() {
+        return newUser;
+    }
+
+    public void setNewUser(Usuario newUser) {
+        this.newUser = newUser;
+    }
+
+    public Usuario getSelectUser() {
+        return selectUser;
+    }
+
+    public void setSelectUser(Usuario selectUser) {
+        this.selectUser = selectUser;
     }
     
     
@@ -94,20 +73,26 @@ public class IngresarUsuarioManagedBean {
     
     @PostConstruct
     public void init(){ 
-        String[] valuesUsuarios=userFacade.getValuesTiposUsuarios();
+        String[] valuesUsuarios = userFacade.getValuesTiposUsuarios();
                 
         if (valuesUsuarios != null ){
             tiposUsuarios = valuesUsuarios;
             
         }
         
+        newUser = new Usuario();
+        
     }
     
     public void ingresarUsuario(){
         
-        String rutUsuario= userid.substring(0, userid.length()-1);
+        String rutUsuario = newUser.getRut().toString().substring(0, newUser.getRut().toString().length() - 1);
         
-        int resp = userFacade.agregarUsuario(rutUsuario, username, userlastname, usermail,userrole);
+        int resp = userFacade.agregarUsuario(rutUsuario
+                , newUser.getNombre()
+                , newUser.getApellido()
+                , newUser.getCorreo()
+                , newUser.getTipo());
 
         FacesContext fcontext = FacesContext.getCurrentInstance();
         String viewId = fcontext.getViewRoot().getViewId();

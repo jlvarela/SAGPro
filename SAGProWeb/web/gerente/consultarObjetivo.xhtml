@@ -53,7 +53,20 @@
                             <div class="row-fluid" >
                                 <p:panel header="Datos del Objetivo">
                                     <h:panelGrid columns="2" columnClasses="column" cellpadding="5">
+                                        <h:outputText value="Nombre: " />
+                                        <p:inplace editor="true" >
+                                            <h:inputText value="#{consultarObjetivoManagedBean.selectedObjetivo.nombreObjetivo}" >
+                                                <f:validator validatorId="nombreValidator" />
+                                            </h:inputText>
+                                        </p:inplace>
                                         
+                                        <h:outputText value="Fecha inicial" />
+                                        <p:inplace editor="true" >
+                                            <h:inputText styleClass="span11"
+                                                         value="#{consultarObjetivoManagedBean.selectedObjetivo.fechaInicial}">
+                                                <f:attribute name="data-format" value="yyyy-MM-dd" />
+                                            </h:inputText>
+                                        </p:inplace>
                                     </h:panelGrid>
                                 </p:panel>
                             </div>

@@ -4,7 +4,7 @@
  */
 package managedbeans;
 
-import entities.User;
+import pojoclass.Usuario;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,12 +13,9 @@ import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.application.ViewHandler;
 import javax.faces.bean.ManagedBean;
-import javax.inject.Named;
 import javax.faces.bean.ViewScoped;
 import javax.faces.component.UIViewRoot;
 import javax.faces.context.FacesContext;
-import javax.faces.event.ActionEvent;
-import org.primefaces.event.SelectEvent;
 import sessionbeans.UserFacadeLocal;
 
 
@@ -35,14 +32,18 @@ public class ConsultarUsuarioManagedBean implements Serializable{
     @EJB
     private UserFacadeLocal userFacade;
     
-    private String userid;
-    private String username;
-    private String userlastname;
-    private String usermail;
-    private List<User> listaUsers;
-    private List<User> selectedUsers;
-    private User selectedUser;
+    private List<Usuario> listaUsers;
+    private List<Usuario> selectedUsers;
+    private Usuario selectedUser;
     private String[] tiposUsuarios;
+
+    public List<Usuario> getSelectedUsers() {
+        return selectedUsers;
+    }
+
+    public void setSelectedUsers(List<Usuario> selectedUsers) {
+        this.selectedUsers = selectedUsers;
+    }
 
     public String[] getTiposUsuarios() {
         return tiposUsuarios;
@@ -51,68 +52,22 @@ public class ConsultarUsuarioManagedBean implements Serializable{
     public void setTiposUsuarios(String[] tiposUsuarios) {
         this.tiposUsuarios = tiposUsuarios;
     }
-    
-    
 
-    public User getSelectedUser() {
-        return selectedUser;
-    }
-
-    public void setSelectedUser(User selectedUser) {
-        this.selectedUser = selectedUser;
-    }
-    
-    
-
-    public String getUserid() {
-        return userid;
-    }
-
-    public void setUserid(String userid) {
-        this.userid = userid;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getUserlastname() {
-        return userlastname;
-    }
-
-    public void setUserlastname(String userlastname) {
-        this.userlastname = userlastname;
-    }
-
-    public String getUsermail() {
-        return usermail;
-    }
-
-    public void setUsermail(String usermail) {
-        this.usermail = usermail;
-    }
-
-    public List<User> getListaUsers() {
+    public List<Usuario> getListaUsers() {
         return listaUsers;
     }
 
-    public void setListaUsers(List<User> listaUsers) {
+    public void setListaUsers(List<Usuario> listaUsers) {
         this.listaUsers = listaUsers;
     }
-
-    public List<User> getSelectedUsers() {
-        return selectedUsers;
+    
+    public Usuario getSelectedUser() {
+        return selectedUser;
     }
 
-    public void setSelectedUsers(List<User> selectedUsers) {
-        this.selectedUsers = selectedUsers;
+    public void setSelectedUser(Usuario selectedUser) {
+        this.selectedUser = selectedUser;
     }
-    
-    
 
     /**
      * Creates a new instance of ConsultarUsuarioManagedBean
@@ -125,20 +80,25 @@ public class ConsultarUsuarioManagedBean implements Serializable{
     @PostConstruct
     public void init(){ 
         String[] valuesUsuarios=userFacade.getValuesTiposUsuarios();
-        listaUsers=userFacade.findAll();
+        List<entities.User> listaUsersEntities = userFacade.findAll();
         
         if (valuesUsuarios != null ){
             tiposUsuarios = valuesUsuarios;
-            
         }
         
+        ArrayList<Usuario> usuarioList = new ArrayList();
+        
+        for (entities.User userEntity : listaUsersEntities )
+            usuarioList.add(util.MappingFromEntitieToPojo.usuarioFromEntityToPojo(userEntity));
+        
+        listaUsers = usuarioList;        
     }
     
     public void borrarUsuario(){
         //System.out.println(selectedUser.getRutUser());
-        String rut=(selectedUser.getRutUser()).toString();
+        String rut = (selectedUser.getRut()).toString();
         System.out.println(rut);
-        int resp=userFacade.eliminarUsuario(rut);
+        int resp = userFacade.eliminarUsuario(rut);
         FacesContext fcontext = FacesContext.getCurrentInstance();
         String viewId = fcontext.getViewRoot().getViewId();
         ViewHandler handler = fcontext.getApplication().getViewHandler();
@@ -155,7 +115,7 @@ public class ConsultarUsuarioManagedBean implements Serializable{
     
     
     public void modificarUsuario(){
-        int resp = userFacade.editarUsuario(selectedUser.getRutUser().toString(),selectedUser.getNombreUser(), selectedUser.getApellidoUser(), selectedUser.getEmailUser(), selectedUser.getRoleUser());
+        int resp = userFacade.editarUsuario(selectedUser.getRut().toString(),selectedUser.getNombre(), selectedUser.getApellido(), selectedUser.getCorreo(), selectedUser.getTipo());
         FacesContext fcontext = FacesContext.getCurrentInstance();
         String viewId = fcontext.getViewRoot().getViewId();
         ViewHandler handler = fcontext.getApplication().getViewHandler();

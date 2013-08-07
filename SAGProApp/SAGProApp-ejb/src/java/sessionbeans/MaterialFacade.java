@@ -92,7 +92,7 @@ public class MaterialFacade extends AbstractFacade<Material> implements Material
         return resultados != 0;
     }
     
-    private Boolean materialExists2(String material_name) {
+    private Boolean materialExistsByCode(String material_name) {
         int resultados;
         resultados = em.createNamedQuery("Material.findByCodMaterial")
                 .setParameter("codMaterial", Long.parseLong(material_name))
@@ -172,7 +172,7 @@ public class MaterialFacade extends AbstractFacade<Material> implements Material
     
     @Override
     public int editarMaterial(final String codMaterial, final String nombre_material, final String medida_produccion_material, final String medida_venta_material){
-        if (!materialExists2(codMaterial)) {
+        if (!materialExistsByCode(codMaterial)) {
             return -1;
             
         } else {

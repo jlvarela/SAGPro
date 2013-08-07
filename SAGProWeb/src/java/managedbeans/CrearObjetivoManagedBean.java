@@ -229,12 +229,32 @@ public class CrearObjetivoManagedBean implements Serializable{
             // Código de respuesta
             int resp;
             
+            /**
+            * Crear lista de código y cantidades de materiales.
+            * Para proveer de argumentos a objetivoMaterialFacade.agregarMaterialToObjetivo.
+            * De manera de agregar los materiales al objetivo creado.
+            **/
+           int [] codMaterialesArray = new int[selectedMateriales.size()];
+           int [] cantMaterialesArray = new int[selectedMateriales.size()];
+
+           /**
+            * Para cada material seleccionado.
+            *  Agregar valor de su código al arreglo de códigos.
+            *  Agregar valor de la cantidad del material al arreglo de cantidades.
+            * */
+           for(int i=0; i<selectedMateriales.size(); i++){
+               codMaterialesArray[i] = selectedMateriales.get(i).getIdMaterial().intValue();
+               cantMaterialesArray[i] = selectedMateriales.get(i).getCantidad();
+           }
+            
             // Solicitar a EJB Objetivo, la función aagregarObjetivo.
             resp = objetivoFacade.agregarObjetivo(nombreObjetivo
                 , descripcionObjetivo
                 , f_inicial
                 , f_final
-                , prioridadObjetivo);
+                , prioridadObjetivo
+                , codMaterialesArray
+                , cantMaterialesArray);
             
             // Contexto de PrimeFaces.
             FacesContext context = FacesContext.getCurrentInstance();
@@ -258,43 +278,10 @@ public class CrearObjetivoManagedBean implements Serializable{
                     context.addMessage(null, msj);
                     return;
                 }
+                msj.setSeverity(FacesMessage.SEVERITY_INFO);
+                msj.setDetail("Objetivo agregado con éxito");
+                context.addMessage(null, msj);
                 
-                /**
-                 * Crear lista de código y cantidades de materiales.
-                 * Para proveer de argumentos a objetivoMaterialFacade.agregarMaterialToObjetivo.
-                 * De manera de agregar los materiales al objetivo creado.
-                 **/
-                int [] codMaterialesArray = new int[selectedMateriales.size()];
-                int [] cantMaterialesArray = new int[selectedMateriales.size()];
-                
-                /**
-                 * Para cada material seleccionado.
-                 *  Agregar valor de su código al arreglo de códigos.
-                 *  Agregar valor de la cantidad del material al arreglo de cantidades.
-                 * */
-                for(int i=0; i<selectedMateriales.size(); i++){
-                    codMaterialesArray[i] = selectedMateriales.get(i).getIdMaterial().intValue();
-                    cantMaterialesArray[i] = selectedMateriales.get(i).getCantidad();
-                }
-
-                int resp2 ; // Respuesta de EJB
-                
-                // Se solicita a EJB ObjetivoMateial, la función agregarMaterialToObjetivo.
-                resp2 = objetivoMaterialFacade.agregarMaterialToObjetivo(obj.getCodObjetivo().intValue(), codMaterialesArray, cantMaterialesArray );
-                
-                // Si código de respuesta es cero. Operación satisfactoria.
-                if (resp2 == 0){
-                    // Informar a usuario mediante mensajes de PrimeFaces.
-                    msj.setSeverity(FacesMessage.SEVERITY_INFO);    // Severidad del mensaje.
-                    msj.setDetail("Objetivo agregado con éxito");   // Detalle del mensaje.
-                    context.addMessage(null, msj);                  // Agregar mensaje.
-                }
-                else{
-                    // Informar a usuario mediante mensajes de PrimeFaces.
-                    msj.setSeverity(FacesMessage.SEVERITY_ERROR);   // Severidad del mensaje.
-                    msj.setDetail("Objetivo imposible de agregar 2");   // Detalle del mensaje.
-                    context.addMessage(null, msj);                      // Agregar mensaje.
-                }
             }
             // Código -1: 
             else if(resp == -1){
