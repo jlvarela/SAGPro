@@ -3,119 +3,100 @@
 <ui:composition template ="/WEB-INF/templates/templateGerente.xhtml"
                 xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:h="http://java.sun.com/jsf/html"
-                xmlns:ui="http://java.sun.com/jsf/facelets">
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core">
 
     <ui:define name="cuerpo">
         <div class="span9">
             <fieldset style="padding: 20px">
+
                 <legend>Ver Estadísticas</legend>
-
-                <div class="row-fluid">
-                    <div class="span6">
-                        <div class="row-fluid">
-                            <div class="span7">
-                                1. Seleccionar los materiales
-                            </div>
-                        </div>
-
-                        <div class="row-fluid">
-                            <div class="span3">
-                                Material
-                            </div>
-                            <div class="span3">
-                                <select class="span12">
-                                    <option>Metal</option>
-                                    <option>Plástico</option>
-                                    <option>Vidrio</option>
-                                </select>
-                            </div>
-                            <div class="span3">
-                                <button  type="button" class="btn"><i class=" icon-plus"></i></button>
-                            </div>
-                        </div>
-
-                        <div class="row-fluid">
-                            <div class="span8">
-                                <table class="table table-bordered">
-                                    <thead>
-                                        <tr>
-                                            <th>Material</th>
-                                            <th><input type="checkbox"></input></th>
-                                        </tr>
-                                    </thead>
-
-                                    <tbody>
-                                        <tr>
-                                            <td>Metal</td>
-                                            <td><input type="checkbox"></input></td>
-                                        </tr>
-                                    </tbody>
-
-                                </table>
-                            </div>
-                        </div>
-                        
-                        <div class="row-fluid">
-                            <div class="span7">
-                                2. Seleccionar unidad de tiempo
-                            </div>
-                        </div>
-                        
-                        <div class="row-fluid">
-                            <div class="span3">
-                                Unidad
-                            </div>
-                            <div class="span3">
-                                <select class="span12">
-                                    <option>Día</option>
-                                    <option>Mes</option>
-                                    <option>Año</option>
-                                </select>
-                            </div>
-                        </div>
-                        
-                        <div class="row-fluid">
-                            <div class="span7">
-                                3. Seleccionar fecha
-                            </div>
-                        </div>
-                        
-                        <div class="row-fluid">
-                            <div class="span3">
-                                Fecha
-                            </div>
-                            <div class="span8">
-                                <div id="datetimepicker4" class="input-append" style="width:100%">
-                                    <input  class="span6" data-format="yyyy-MM-dd" type="text"></input>
-                                    <span class="add-on">
-                                        <i data-time-icon="icon-time" data-date-icon="icon-calendar">
-                                        </i>
-                                    </span>
+                <h:form>
+                    <div class="row-fluid">
+                        <div class="span6">
+                            <div class="row-fluid">
+                                <div class="span7">
+                                    1. Seleccionar material
                                 </div>
                             </div>
-                        </div>
-                        
-                    </div>
-                    
-                    
-                    <div class="span6">
-                        <div class="row-fluid">
-                            <div class="span7">
-                                Datos Estadísticos
-                            </div>
-                        </div>
-                        <div class="row-fluid">
-                            <div class="10">
-                                <pre>
-Promedio:
-Desviación Estándar:
-Varianza:
-Normal:</pre>
-                            </div>
-                        </div>
-                    </div>
 
-                </div>
+
+                            <div class="row-fluid" style="margin-bottom: 10px">
+                                <div class="span8">
+
+                                    <p:dataTable var="material" rowKey="#{material.codMaterial}" selectionMode="single" value="#{consultarEstadisticasManagedBean.listaMateriales}">
+                                        <p:column headerText="Material" > 
+                                            <h:outputText value="#{material.nombreMaterial}" />  
+                                        </p:column> 
+                                        
+                                    </p:dataTable>    
+
+                                </div>
+                            </div>
+
+                            <div class="row-fluid">
+                                <div class="span7">
+                                    2. Seleccionar unidad de tiempo
+                                </div>
+                            </div>
+
+                            <div class="row-fluid">
+                                <div class="span3">
+                                    Unidad
+                                </div>
+                                <div class="span3">
+                                    <select class="span12">
+                                        <option>Día</option>
+                                        <option>Mes</option>
+                                        <option>Año</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="row-fluid">
+                                <div class="span7">
+                                    3. Seleccionar fecha
+                                </div>
+                            </div>
+
+                            <div class="row-fluid">
+                                <div class="span3">
+                                    Fecha
+                                </div>
+                                <div class="span8">
+                                    <div  class=" datetimepicker input-append " style="width:100%">
+                                        <input  class="span6" data-format="yyyy-MM-dd" type="text"></input>
+                                        <span class="add-on">
+                                            <i data-time-icon="icon-time" data-date-icon="icon-calendar">
+                                            </i>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+
+                        <div class="span6">
+                            
+                            <div class="row-fluid">
+                                
+                                    <p:panel header="Datos Estadisticos">
+                                        <h:panelGrid columns="1" columnClasses="column" cellpadding="5">
+                                        <h:outputText  value="Promedio:"/>
+                                        <h:outputText value="Desviación Estandar: " />
+                                        <h:outputText value="Varianza: " />
+                                        <h:outputText value="Normal: " />
+                                    </h:panelGrid>
+                                    </p:panel>
+                                    
+                                
+                            </div>
+                        </div>
+
+                    </div>
+                </h:form>
             </fieldset>
         </div>
     </ui:define>
