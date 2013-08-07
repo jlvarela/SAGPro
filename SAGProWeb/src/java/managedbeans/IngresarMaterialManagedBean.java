@@ -4,16 +4,14 @@
  */
 package managedbeans;
 
-import java.util.ArrayList;
+import java.io.Serializable;
 import pojoclass.Material;
-import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
-import javax.faces.event.ValueChangeEvent;
 import sessionbeans.MaterialFacadeLocal;
 
 /**
@@ -22,7 +20,7 @@ import sessionbeans.MaterialFacadeLocal;
  */
 @ManagedBean (name = "ingresarMaterialManagedBean")
 @ViewScoped
-public class IngresarMaterialManagedBean {
+public class IngresarMaterialManagedBean implements Serializable{
 
     /**
      * Creates a new instance of IngresarMaterialManagedBean

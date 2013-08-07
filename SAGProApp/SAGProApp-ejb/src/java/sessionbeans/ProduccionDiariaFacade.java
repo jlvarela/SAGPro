@@ -119,7 +119,16 @@ public class ProduccionDiariaFacade extends AbstractFacade<ProduccionDiaria> imp
 //            Logger.getLogger(ProduccionDiariaFacade.class.getName()).log(Level.SEVERE, null, ex);
 //            return -1;
         }
+    }
 
-
+    @Override
+    public List<ProduccionDiaria> bucarPorRango(final int cod_mat, final Date fecha_inicial, final Date fecha_final) {
+        List<ProduccionDiaria> lista;
+        lista = em.createQuery("SELECT p FROM ProduccionDiaria p WHERE p.produccionDiariaPK.codMaterial = :codMaterial and p.produccionDiariaPK.fechaDiariaEstadistica BETWEEN :fecha_inicial and :fecha_final")
+                .setParameter("fecha_inicial", fecha_inicial)
+                .setParameter("fecha_final", fecha_final)
+                .setParameter("codMaterial", cod_mat)
+                .getResultList();
+        return lista;
     }
 }
