@@ -3,38 +3,32 @@
 <ui:composition template ="/WEB-INF/templates/templateGerente.xhtml"
                 xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:h="http://java.sun.com/jsf/html"
-                xmlns:ui="http://java.sun.com/jsf/facelets">
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core">
 
     <ui:define name="cuerpo">
+        <h:form id="form">
         <div class="span9">
             <fieldset style="padding: 20px">
                 <legend>Ver Estadísticas</legend>
 
                 <div class="row-fluid">
-                    <div class="span6">
+                    <div class="span4">
                         <div class="row-fluid">
                             <div class="span7">
-                                1. Seleccionar los materiales
+                                1. Seleccionar material
                             </div>
                         </div>
                         <div class="row-fluid">
                             <div class="span8">
-                                <table class="table table-bordered">
-                                    <thead>
-                                        <tr>
-                                            <th>Material</th>
-                                            <th><input type="checkbox"></input></th>
-                                        </tr>
-                                    </thead>
-
-                                    <tbody>
-                                        <tr>
-                                            <td>Metal</td>
-                                            <td><input type="checkbox"></input></td>
-                                        </tr>
-                                    </tbody>
-
-                                </table>
+                                <h:selectOneMenu value="#{evolucionManagedBean.selectedMaterial}">
+                                    <f:selectItems var="material"
+                                                   value="#{evolucionManagedBean.listaMateriales}"
+                                                   itemLabel="#{material.nombreMaterial}"
+                                                   itemValue="#{material.codMaterial}"
+                                                   />
+                                </h:selectOneMenu>
                             </div>
                         </div>
                         
@@ -68,7 +62,7 @@
                                 Fecha
                             </div>
                             <div class="span8">
-                                <div id="datetimepicker4" class="input-append" style="width:100%">
+                                <div id="datetimepicker4" class="input-append datetimepicker" style="width:100%">
                                     <input  class="span6" data-format="yyyy-MM-dd" type="text"></input>
                                     <span class="add-on">
                                         <i data-time-icon="icon-time" data-date-icon="icon-calendar">
@@ -86,44 +80,45 @@
 
                         <div class="row-fluid">
                             <div class="span8">
-                                <table class="table table-bordered">
-                                    <thead>
-                                        <tr>
-                                            <th>Objetivo</th>
-                                            <th><input type="checkbox"></input></th>
-                                        </tr>
-                                    </thead>
-
-                                    <tbody>
-                                        <tr>
-                                            <td>Acme Inc</td>
-                                            <td><input type="checkbox"></input></td>
-                                        </tr>
-                                    </tbody>
-
-                                </table>
+                                <p:dataTable var="objetivo" value="#{evolucionManagedBean.listaObjetivos}" rowKey="#{objetivo.nombre}">
+                                    <p:ajax event="rowSelect"  update=":form" />
+                                    <f:facet name="header">  
+                                        Objetivo
+                                    </f:facet>  
+                                    <p:column headerText="Nombre">  
+                                        <h:outputText value="#{objetivo.nombre}" />  
+                                    </p:column>
+                                    <p:column>  
+                                        <p:selectBooleanCheckbox />
+                                    </p:column>  
+                                </p:dataTable>
                             </div>
                         </div>
                     </div>
                     
-                    
-                    <div class="span6">
+                    <div class="span8">
                         <div class="row-fluid">
                             <div class="span7">
                                 Datos Estadísticos
                             </div>
                         </div>
                         <div class="row-fluid">
-                            <div class="10">
-                                <pre>
-AQUÍ VA UN GRÁFICO</pre>
+                                <f:view contentType="text/html">
+                                        <p:lineChart 
+                                            xaxisLabel="Mes"
+                                            yaxisLabel="Cantidad"
+                                            value="#{evolucionManagedBean.model}"
+                                            legendPosition="e" 
+                                            animate="true"
+                                            zoom="true"
+                                            title="Producción"/> 
+                                </f:view>
                             </div>
-                        </div>
                     </div>
-
                 </div>
             </fieldset>
         </div>
+        </h:form>
     </ui:define>
 
     <ui:define name="menu">

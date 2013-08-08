@@ -4,11 +4,13 @@
  */
 package pojoclass;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Jose
  */
-public class Material {
+public class Material implements Serializable {
     
     private Integer codMaterial;
     private String nombreMaterial;

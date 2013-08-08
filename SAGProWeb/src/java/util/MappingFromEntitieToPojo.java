@@ -4,6 +4,8 @@
  */
 package util;
 
+import pojoclass.Objetivo;
+
 /**
  *
  * @author Jose
@@ -41,6 +43,14 @@ public class MappingFromEntitieToPojo {
         usuarioPojo.setTipo(userEntity.getRoleUser());
         
         return usuarioPojo;
+    }
+
+    public static Objetivo objetivoFromEntityToPojo(entities.Objetivo objEntity) {
+        pojoclass.Objetivo objetivoPojo = new pojoclass.Objetivo();
+        
+        objetivoPojo.setNombre(objEntity.getNombreObjetivo());
+        
+        return objetivoPojo;
     }
             
 }

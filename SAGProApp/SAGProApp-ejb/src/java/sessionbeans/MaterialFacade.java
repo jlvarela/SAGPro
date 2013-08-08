@@ -20,9 +20,6 @@ import javax.persistence.PersistenceContext;
  */
 @Stateless
 public class MaterialFacade extends AbstractFacade<Material> implements MaterialFacadeLocal {
-    @EJB
-    private StadisticPlannerLocal stadisticPlanner;
-
     private final String[] medidasVentasValues = {"Ton", "m3"};
     private final String[] medidasProducValues = {"Ton", "m3"};
     @PersistenceContext(unitName = "SAGProApp-ejbPU")
@@ -55,7 +52,6 @@ public class MaterialFacade extends AbstractFacade<Material> implements Material
      */
     @Override
     public int agregarMaterial(final String nombre_material, final String medida_produccion_material, final String medida_venta_material) {
-        stadisticPlanner.doMonthlyStadistic();
         if (!materialExists(nombre_material)) {
             try {
                 Material material = new Material();

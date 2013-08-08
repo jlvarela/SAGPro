@@ -35,7 +35,7 @@ public class StadisticPlanner implements StadisticPlannerLocal {
     }
     
     //@Schedule ( dayOfMonth = "Last", month = "*", hour = "23", minute = "50", second = "0" )
-    @Schedule(minute="*/1",hour="*", persistent=false)
+    @Schedule(hour="*/1", persistent=false)
     @Override
     public void doMonthlyStadistic() {
         
