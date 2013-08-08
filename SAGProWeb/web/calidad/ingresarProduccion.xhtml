@@ -17,14 +17,13 @@
                 xmlns:c="http://java.sun.com/jsp/jstl/core"
                 xmlns:p="http://primefaces.org/ui">
     <ui:define name="cuerpo">
-        <!--<h:form>-->
+        <h:form id="form">
             <div class="span9">
                 <fieldset style="padding: 20px">
                     <legend>Ingresar Producción</legend>
                     <p:messages  autoUpdate="true" closable="true" showDetail="true" showSummary="false" />
                     <div class="row-fluid">
-                        <h:form id="form1">
-                        <p:messages autoUpdate="true" closable="true" showDetail="true" showSummary="false" />
+                        
                         <div class="span5">
                             <div class="row-fluid">
                                 <div class="span9">
@@ -68,8 +67,6 @@
                                 </div>
                             </div>
                         </div>
-                        </h:form>
-                        <h:form id="form2">
                         <div class="span6">
                             <div class="row-fluid">
                                 <div class="span9">
@@ -80,7 +77,7 @@
                             <div class="row-fluid">
                                 <div class="span12">
                                     <p:dataTable var="produccionDiaria" value="#{ingresarProduccionManagedBean.listaProduccionDiaria}" rowKey="#{produccionDiaria.produccionDiariaPK}" >
-                                        <p:ajax event="rowSelect"  update=":form2" />
+                                        <p:ajax event="rowSelect"  update=":form" />
                                         <f:facet name="header">  
                                             Materiales 
                                         </f:facet>  
@@ -99,14 +96,10 @@
                                 </div>
                             </div>
                         </div>
-                        </h:form>
                     </div>
-
-
                 </fieldset>
             </div>
-
-        <!--</h:form>-->
+        </h:form>
     </ui:define>
 
 

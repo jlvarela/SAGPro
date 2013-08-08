@@ -106,12 +106,13 @@
                                 <f:view contentType="text/html">
                                         <p:lineChart 
                                             xaxisLabel="Mes"
-                                            yaxisLabel="Cantidad"
+                                            yaxisLabel="Cantidad [#{evolucionManagedBean.selectedMaterial.medidaProduccionMaterial}]"
                                             value="#{evolucionManagedBean.model}"
                                             legendPosition="e" 
                                             animate="true"
                                             zoom="true"
-                                            title="Producción"/> 
+                                            minY="0"
+                                            title="Producción #{evolucionManagedBean.selectedMaterial.nombreMaterial}"/> 
                                 </f:view>
                             </div>
                     </div>

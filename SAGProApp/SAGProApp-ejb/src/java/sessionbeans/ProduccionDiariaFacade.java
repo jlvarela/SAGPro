@@ -5,6 +5,7 @@
 package sessionbeans;
 
 import entities.ProduccionDiaria;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -41,7 +42,13 @@ public class ProduccionDiariaFacade extends AbstractFacade<ProduccionDiaria> imp
     @Override
     public int agregarProduccionDiaria(final int codMaterial, final int cantidadMaterial) {
         if (codMaterial > 0 && cantidadMaterial > 0) {
-            ProduccionDiaria prod = new ProduccionDiaria(new Date(), codMaterial);
+            Calendar cal = Calendar.getInstance();
+            cal.set(Calendar.HOUR_OF_DAY, 0);
+            cal.clear(Calendar.MINUTE);
+            cal.clear(Calendar.SECOND);
+            cal.clear(Calendar.MILLISECOND);
+            
+            ProduccionDiaria prod = new ProduccionDiaria(cal.getTime(), codMaterial);
             prod.setProduccionMaterial(cantidadMaterial);
             create(prod);
             return 0;

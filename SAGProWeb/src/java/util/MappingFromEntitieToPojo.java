@@ -5,6 +5,7 @@
 package util;
 
 import pojoclass.Objetivo;
+import pojoclass.ProduccionDiaria;
 
 /**
  *
@@ -51,6 +52,15 @@ public class MappingFromEntitieToPojo {
         objetivoPojo.setNombre(objEntity.getNombreObjetivo());
         
         return objetivoPojo;
+    }
+    
+    public static ProduccionDiaria produccionFromEntityToPojo(entities.ProduccionDiaria prdEntity){
+        pojoclass.ProduccionDiaria producPojo = new ProduccionDiaria();
+        producPojo.setFecha(prdEntity.getProduccionDiariaPK().getFechaDiariaEstadistica());
+        producPojo.setCodMaterial(prdEntity.getProduccionDiariaPK().getCodMaterial());
+        producPojo.setCantidad(prdEntity.getProduccionMaterial());
+        
+        return producPojo;
     }
             
 }
