@@ -22,12 +22,13 @@
                         </div>
                         <div class="row-fluid">
                             <div class="span8">
-                                <h:selectOneMenu value="#{evolucionManagedBean.selectedMaterial}">
+                                <h:selectOneMenu valueChangeListener="#{evolucionManagedBean.handleMaterialSelectChange}" >
                                     <f:selectItems var="material"
                                                    value="#{evolucionManagedBean.listaMateriales}"
                                                    itemLabel="#{material.nombreMaterial}"
                                                    itemValue="#{material.codMaterial}"
                                                    />
+                                    <f:ajax event="change" execute="@form" render="chart"/>
                                 </h:selectOneMenu>
                             </div>
                         </div>
@@ -44,7 +45,6 @@
                             </div>
                             <div class="span3">
                                 <select class="span12">
-                                    <option>Día</option>
                                     <option>Mes</option>
                                     <option>Año</option>
                                 </select>
@@ -58,17 +58,15 @@
                         </div>
                         
                         <div class="row-fluid">
-                            <div class="span3">
+                            <div class="span2">
                                 Fecha
                             </div>
-                            <div class="span8">
-                                <div id="datetimepicker4" class="input-append datetimepicker" style="width:100%">
-                                    <input  class="span6" data-format="yyyy-MM-dd" type="text"></input>
-                                    <span class="add-on">
-                                        <i data-time-icon="icon-time" data-date-icon="icon-calendar">
-                                        </i>
-                                    </span>
-                                </div>
+                            <div class="span2">
+                                <h:inputText styleClass="monthpicker"
+                                       value="#{evolucionManagedBean.formattedDate}"
+                                       valueChangeListener="#{evolucionManagedBean.handleDateSelectChange}">
+                                    <f:ajax event="change" execute="@form" render="chart"/>
+                                </h:inputText>
                             </div>
                         </div>
                         
@@ -81,7 +79,7 @@
                         <div class="row-fluid">
                             <div class="span8">
                                 <p:dataTable var="objetivo" value="#{evolucionManagedBean.listaObjetivos}" rowKey="#{objetivo.nombre}">
-                                    <p:ajax event="rowSelect"  update=":form" />
+                                    <p:ajax event="rowSelect"  />
                                     <f:facet name="header">  
                                         Objetivo
                                     </f:facet>  
@@ -104,8 +102,8 @@
                         </div>
                         <div class="row-fluid">
                                 <f:view contentType="text/html">
-                                        <p:lineChart 
-                                            xaxisLabel="Mes"
+                                        <p:lineChart id="chart"
+                                            xaxisLabel="#{evolucionManagedBean.nameOfMonth}"
                                             yaxisLabel="Cantidad [#{evolucionManagedBean.selectedMaterial.medidaProduccionMaterial}]"
                                             value="#{evolucionManagedBean.model}"
                                             legendPosition="e" 
