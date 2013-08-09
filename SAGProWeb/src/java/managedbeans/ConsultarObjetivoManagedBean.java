@@ -4,14 +4,18 @@
  */
 package managedbeans;
 
-import entities.Objetivo;
+import pojoclass.Objetivo;
+import entities.Material;
+/*import entities.Objetivo;*/
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import sessionbeans.MaterialFacadeLocal;
 import sessionbeans.ObjetivoFacadeLocal;
 
 /**
@@ -24,9 +28,16 @@ public class ConsultarObjetivoManagedBean implements Serializable {
     @EJB
     private ObjetivoFacadeLocal objetivoFacade;
     
+    @EJB
+    private MaterialFacadeLocal materialFacade;
+    
+    private List<Material> listaMaterialObjetivo;
+    private List<Material> listaMaterial;
     private List<Objetivo> listaObjetivos;
     private Objetivo selectedObjetivo;
     private SimpleDateFormat sdf;
+    
+    
     
 
     /**
@@ -34,6 +45,7 @@ public class ConsultarObjetivoManagedBean implements Serializable {
      */
     public ConsultarObjetivoManagedBean() {
         sdf = new SimpleDateFormat("dd/MM/YYYY");
+        
     }
     
     /**
@@ -42,7 +54,34 @@ public class ConsultarObjetivoManagedBean implements Serializable {
      */
     @PostConstruct
     public void init(){
-        listaObjetivos = objetivoFacade.findAll();
+        /*listaObjetivos = objetivoFacade.findAll();*/
+        //listaMaterial = materialFacade.findAll ();
+        List<entities.Objetivo> listaObjetivosEntities= objetivoFacade.findAll();
+        
+        ArrayList<Objetivo> objetivoList = new ArrayList();
+        
+        for (entities.Objetivo objetivoEntity : listaObjetivosEntities )
+            objetivoList.add(util.MappingFromEntitieToPojo.objetivoFromEntityToPojo(objetivoEntity));
+        
+        listaObjetivos = objetivoList;
+    }
+
+    public List<Material> getListaMaterialObjetivo() {
+        return listaMaterialObjetivo;
+    }
+
+    public void setListaMaterialObjetivo(List<Material> listaMaterialObjetivo) {
+        this.listaMaterialObjetivo = listaMaterialObjetivo;
+    }
+
+    
+    
+    public List<Material> getListaMaterial() {
+        return listaMaterial;
+    }
+
+    public void setListaMaterial(List<Material> listaMaterial) {
+        this.listaMaterial = listaMaterial;
     }
 
     public List<Objetivo> getListaObjetivos() {
@@ -69,4 +108,35 @@ public class ConsultarObjetivoManagedBean implements Serializable {
         this.sdf = sdf;
     }
     
+   public String verPrioridadTabla(Short prioridad){
+        if(prioridad==0){
+            return "Baja";
+        }else if(prioridad==1){
+            return "Media";
+        }else if(prioridad==2){
+            return "Alta";
+        }else if(prioridad==null) {
+            return null;
+        }
+        return null;
+        
+    }
+   
+   public String verPrioridadDatos(Short prioridad){
+        if(prioridad==0 && selectedObjetivo != null){
+            System.out.println(selectedObjetivo.getPrioridad());
+            System.out.println();
+            return "Baja";
+        }else if(prioridad==1){
+            return "Media";
+        }else if(prioridad==2){
+            return "Alta";
+        }else if(prioridad==null) {
+            return null;
+        }
+        return null;
+        
+    }
+   
+         
 }
