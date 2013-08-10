@@ -24,10 +24,8 @@
                             <div class="row-fluid">
                                 <div class="span8">
                                     <div class="input-append datetimepicker" style="width:100%">
-                                        <!--                                    <input  class="span11" data-format="yyyy-MM-dd" type="text"></input>-->
-                                        <h:inputText styleClass="span11"
-                                                     value="#{consultarProduccionManagedBean.fecha}">
-                                            <f:attribute name="data-format" value="yyyy-MM-dd" />
+                                        <h:inputText id="fecha_input" styleClass="fecha_input" value="#{consultarProduccionManagedBean.fecha}">
+                                            <f:ajax event="click"   listener="#{consultarProduccionManagedBean.cambiarFecha}" render="form:prod"/>
                                         </h:inputText>
                                         <span class="add-on">
                                             <i data-time-icon="icon-time" data-date-icon="icon-calendar">
@@ -35,50 +33,51 @@
                                         </span>
                                     </div>
                                 </div>
+                                
                             </div>
 
 
-                            <div class="span12" >
-                                <p:dataTable var="produccionDiaria" value="#{consultarProduccionManagedBean.listaProduccionDiaria}" rowKey="#{produccionDiaria.produccionDiariaPK.codMaterial}" selection="#{consultarProduccionManagedBean.selectedProduccionDiaria}" selectionMode="single" filteredValue="#{consultarProduccionManagedBean.selectedProduccionesDiarias}">
-                                    <p:ajax event="rowSelect" listener="#{consultarProduccionManagedBean.cambiarFecha()}"  update=":form" />
+                            <div class="span12"  >
+                                <p:dataTable id="prod" var="produccionDiaria" value="#{consultarProduccionManagedBean.listaProduccionDiaria}" rowKey="#{produccionDiaria.codMaterial}" selection="#{consultarProduccionManagedBean.selectedProduccionDiaria}" selectionMode="single" >
+                                    <f:ajax event="rowSelect"  render=":form:muestra" />
                                     <f:facet name="header">  
                                         Producción diaria
                                     </f:facet>  
                                     <p:column headerText="Material">  
-                                        <h:outputText value="#{produccionDiaria.material.nombreMaterial}" />  
+                                        <h:outputText value="#{produccionDiaria.nombreMaterial}"  />  
                                     </p:column>  
 
                                     <p:column headerText="Cantidad">  
-                                        <h:outputText value="#{produccionDiaria.produccionMaterial}" />  
+                                        <h:outputText value="#{produccionDiaria.cantidad}" />  
                                     </p:column>  
 
                                     <p:column headerText="Unidad">  
-                                        <h:outputText value="#{produccionDiaria.material.medidaProduccionMaterial}" />  
+                                        <h:outputText value="#{produccionDiaria.nombreUnidadMaterial}" />  
                                     </p:column>  
                                 </p:dataTable>  
 
 
                             </div>
                         </div>
-                        <div class="span6">
+                        <div class="span6" id="datos"  >
                             <div class="row-fluid">
                                 <div class="span12">
                                     2. Detalle del material
                                 </div>
                             </div>
-                            <div class="row-fluid" >
-                                <p:panel header="Datos del Material">
+                            <div class="row-fluid"  >
+                                <p:panel id="muestra" header="Datos del Material" >
                                     <h:panelGrid columns="2" columnClasses="column" cellpadding="5">
                                         <h:outputText value="Material: " />  
-                                        <h:outputText value="#{consultarProduccionManagedBean.selectedProduccionDiaria.material.nombreMaterial}"/>  
+                                        <h:outputText value="#{consultarProduccionManagedBean.selectedProduccionDiaria.nombreMaterial}" />  
 
                                         <h:outputText value="Cantidad: " />  
                                         <p:inplace editor="true">  
-                                            <p:inputText value="#{consultarProduccionManagedBean.selectedProduccionDiaria.produccionMaterial}"/>  
+                                            <p:inputText value="#{consultarProduccionManagedBean.selectedProduccionDiaria.cantidad}"/>  
                                         </p:inplace>
                                         
                                         <h:outputText value="Unidad: " />  
-                                        <h:outputText value="#{consultarProduccionManagedBean.selectedProduccionDiaria.material.medidaProduccionMaterial}" />
+                                        <h:outputText value="#{consultarProduccionManagedBean.selectedProduccionDiaria.nombreUnidadMaterial}" />
 
                                     </h:panelGrid>
                                 </p:panel>
@@ -87,8 +86,9 @@
                                 <div class="control-group" >
                                     <div class="controls pull-right">
                                         
-                                        <p:commandButton action="#{consultarProduccionManagedBean.modificarProduccion()}" ajax="false"  value="Editar" icon="ui-icon-pencil"/>
-                                        <button type="button" class="btn"><i class="icon-trash"></i> Eliminar</button>
+                                        <p:commandButton onclick="editarConfirm.show();" value="Editar" icon="ui-icon-pencil" />
+                                        <p:commandButton onclick="eliminarConfirm.show();" value="Eliminar" icon="ui-icon-trash"  />
+                                        
                                     </div>
                                 </div>
                             </div>
@@ -97,6 +97,20 @@
 
                 </fieldset>
             </div>
+            
+            <p:confirmDialog  widgetVar="editarConfirm"  header="Editar Producción" message="¿Desea guardar los cambios hechos a la producción?"  >  
+            <div class="controls pull-right">
+                <p:commandButton value="Aceptar" action="#{consultarProduccionManagedBean.modificarProduccion()}"  ajax="false" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />  
+                <p:commandButton value="Cancelar"  onclick="editarConfirm.hide();" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />  
+            </div>
+            </p:confirmDialog>
+            
+            <p:confirmDialog  widgetVar="eliminarConfirm"  header="Eliminar Producción" message="¿Desea eliminar esta producción?"  >  
+            <div class="controls pull-right">
+                <p:commandButton value="Aceptar"   ajax="false" styleClass="ui-confirmdialog-yes" icon="ui-icon-check"/>  
+                <p:commandButton value="Cancelar"  onclick="eliminarConfirm.hide();" styleClass="ui-confirmdialog-no" icon="ui-icon-close"/> 
+            </div>
+            </p:confirmDialog>
 
         </h:form>
   </ui:define>

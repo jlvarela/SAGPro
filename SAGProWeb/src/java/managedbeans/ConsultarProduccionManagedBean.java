@@ -4,10 +4,12 @@
  */
 package managedbeans;
 
+import pojoclass.ProduccionDiaria;
 import entities.Material;
-import entities.ProduccionDiaria;
+//import entities.ProduccionDiaria;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
@@ -19,6 +21,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ValueChangeEvent;
+import org.primefaces.event.SelectEvent;
 import sessionbeans.MaterialFacadeLocal;
 import sessionbeans.ProduccionDiariaFacadeLocal;
 
@@ -30,7 +33,7 @@ import sessionbeans.ProduccionDiariaFacadeLocal;
 @ViewScoped
 public class ConsultarProduccionManagedBean {
 
-     public String getCodMaterial() {
+    public String getCodMaterial() {
         return codMaterial;
     }
 
@@ -41,7 +44,6 @@ public class ConsultarProduccionManagedBean {
     private ProduccionDiariaFacadeLocal produccionDiariaFacade;
     @EJB
     private MaterialFacadeLocal materialFacade;
-    
     private List<Material> listaMateriales;
     private String cantidad;
     private Material materialSelected;
@@ -56,20 +58,27 @@ public class ConsultarProduccionManagedBean {
      */
     public ConsultarProduccionManagedBean() {
     }
-    
+
     @PostConstruct
-    public void init()
-    {
+    public void init() {
+        selectedProduccionDiaria=null;
         Date f = new Date();
-//        SimpleDateFormat df = new SimpleDateFormat("MM/dd/yyyy");
-//         try {
-//             f = new Date(df.parse(fecha).getTime());
-             listaProduccionDiaria = produccionDiariaFacade.buscarPorFecha(f);
-//         } catch (ParseException ex) {
-//             Logger.getLogger(ConsultarProduccionManagedBean.class.getName()).log(Level.SEVERE, null, ex);
-//             
-//         }
-        //listaMateriales = materialFacade.findAll();
+
+        //listaProduccionDiaria = produccionDiariaFacade.buscarPorFecha(f);
+        //listaProduccionDiaria = produccionDiariaFacade.findAll();
+
+        /**
+         * Llenando lista de produccion para ser mostrada en tabla*
+         */
+        List<entities.ProduccionDiaria> listaProduccionDiariaEntities = produccionDiariaFacade.buscarPorFecha(f);
+
+        ArrayList<ProduccionDiaria> produccionDiariaList = new ArrayList();
+
+        for (entities.ProduccionDiaria produccionDiariaEntity : listaProduccionDiariaEntities) {
+            produccionDiariaList.add(util.MappingFromEntitieToPojo.produccionFromEntityToPojo(produccionDiariaEntity));
+        }
+
+        listaProduccionDiaria = produccionDiariaList;
     }
 
     public ProduccionDiaria getSelectedProduccionDiaria() {
@@ -88,8 +97,6 @@ public class ConsultarProduccionManagedBean {
         this.selectedProduccionesDiarias = selectedProduccionesDiarias;
     }
 
-    
-    
     public List<Material> getListaMateriales() {
         return listaMateriales;
     }
@@ -106,8 +113,6 @@ public class ConsultarProduccionManagedBean {
         this.listaProduccionDiaria = listaProduccionDiaria;
     }
 
-    
-    
     public String getCantidad() {
         return cantidad;
     }
@@ -115,11 +120,11 @@ public class ConsultarProduccionManagedBean {
     public void setCantidad(String cantidad) {
         this.cantidad = cantidad;
     }
-    
-    public void materialSelectCantidadListener(ValueChangeEvent event){
+
+    public void materialSelectCantidadListener(ValueChangeEvent event) {
         String idMatSelect = (String) event.getNewValue();
-        for(Material material: listaMateriales){
-            if(material.getCodMaterial().equals(Integer.parseInt(idMatSelect))){
+        for (Material material : listaMateriales) {
+            if (material.getCodMaterial().equals(Integer.parseInt(idMatSelect))) {
                 this.materialSelected = material;
                 System.out.println("prueba: " + material.getCodMaterial());
                 codMaterial = idMatSelect;
@@ -136,8 +141,6 @@ public class ConsultarProduccionManagedBean {
         this.materialSelected = materialSelected;
     }
 
-
-
     public String getFecha() {
         return fecha;
     }
@@ -145,29 +148,43 @@ public class ConsultarProduccionManagedBean {
     public void setFecha(String fecha) {
         this.fecha = fecha;
     }
-    
-    public void modificarProduccion(){
+
+    public void modificarProduccion() {
         int resp;
-        
-        resp = produccionDiariaFacade.editarProduccion(selectedProduccionDiaria.getProduccionDiariaPK().getCodMaterial(), selectedProduccionDiaria.getProduccionDiariaPK().getFechaDiariaEstadistica(), selectedProduccionDiaria.getProduccionMaterial());
+
+        resp = produccionDiariaFacade.editarProduccion(selectedProduccionDiaria.getCodMaterial(), selectedProduccionDiaria.getFecha(), selectedProduccionDiaria.getCantidad());
         FacesContext fcontext = FacesContext.getCurrentInstance();
         if (resp == 0) {
             fcontext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "", "Material editado con éxito"));
         } else if (resp == -1) {
+            selectedProduccionDiaria = null;
             fcontext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "", "Error en la edición del material"));
         }
     }
-   
-    public void cambiarFecha(){
+
+    public void cambiarFecha() {
+        
+        System.out.println("y la fecha es "+ fecha);
+        
         Date f;
         SimpleDateFormat df = new SimpleDateFormat("MM/dd/yyyy");
-         try {
-             f = new Date(df.parse(fecha).getTime());
-             listaProduccionDiaria = produccionDiariaFacade.buscarPorFecha(f);
-         } catch (ParseException ex) {
-             Logger.getLogger(ConsultarProduccionManagedBean.class.getName()).log(Level.SEVERE, null, ex);
-         }
+        try {
+            f = new Date(df.parse(fecha).getTime());
+
+            List<entities.ProduccionDiaria> listaProduccionDiariaEntities = produccionDiariaFacade.buscarPorFecha(f);
+
+            ArrayList<ProduccionDiaria> produccionDiariaList = new ArrayList();
+
+            for (entities.ProduccionDiaria produccionDiariaEntity : listaProduccionDiariaEntities) {
+                produccionDiariaList.add(util.MappingFromEntitieToPojo.produccionFromEntityToPojo(produccionDiariaEntity));
+            }
+
+            listaProduccionDiaria = produccionDiariaList;
+
+        } catch (ParseException ex) {
+            Logger.getLogger(ConsultarProduccionManagedBean.class.getName()).log(Level.SEVERE, null, ex);
+        }
         //listaMateriales = materialFacade.findAll();
-        
+
     }
 }

@@ -73,7 +73,8 @@ public class MappingFromEntitieToPojo {
         producPojo.setFecha(prdEntity.getProduccionDiariaPK().getFechaDiariaEstadistica());
         producPojo.setCodMaterial(prdEntity.getProduccionDiariaPK().getCodMaterial());
         producPojo.setCantidad(prdEntity.getProduccionMaterial());
-        
+        producPojo.setNombreMaterial(prdEntity.getMaterial().getNombreMaterial());
+        producPojo.setNombreUnidadMaterial(prdEntity.getMaterial().getMedidaProduccionMaterial());
         return producPojo;
     }
             

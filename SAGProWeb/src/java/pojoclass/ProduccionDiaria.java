@@ -14,7 +14,25 @@ public class ProduccionDiaria {
     private Date fecha;
     private Integer codMaterial;
     private Integer cantidad;
+    private String nombreMaterial;
+    private String nombreUnidadMaterial;
 
+    public String getNombreUnidadMaterial() {
+        return nombreUnidadMaterial;
+    }
+
+    public void setNombreUnidadMaterial(String nombreUnidadMaterial) {
+        this.nombreUnidadMaterial = nombreUnidadMaterial;
+    }
+
+    public String getNombreMaterial() {
+        return nombreMaterial;
+    }
+
+    public void setNombreMaterial(String nombreMaterial) {
+        this.nombreMaterial = nombreMaterial;
+    }   
+    
     public Date getFecha() {
         return fecha;
     }
