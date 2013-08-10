@@ -13,8 +13,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.validator.FacesValidator;
 import javax.faces.validator.Validator;
 import javax.faces.validator.ValidatorException;
-import javax.validation.ConstraintValidator;
-import javax.validation.ConstraintValidatorContext;
+
 
 /**
  *
@@ -29,7 +28,6 @@ public class nombreValidator implements Validator{
         Pattern pattern = Pattern.compile("[a-zA-Z ]+");
         
         Matcher matcher = pattern.matcher((CharSequence)value);
-        System.out.println("Este es el valor: "+(CharSequence)value);
         HtmlInputText htmlInputText = (HtmlInputText) uIComponent;
         String label;
         

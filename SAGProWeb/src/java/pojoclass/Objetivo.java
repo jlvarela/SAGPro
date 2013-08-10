@@ -7,7 +7,6 @@ package pojoclass;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
-import pojoclass.Material;
 /**
  *
  * @author Jose
@@ -20,15 +19,15 @@ public class Objetivo implements Serializable{
     private String descripcion;
     private Date fechaInicial;
     private Date fechaLimite;
-    private List<Material> materialList;
+    private List<SelectedMaterial> materialList;
     
     
 
-    public List<Material> getMaterialList() {
+    public List<SelectedMaterial> getMaterialList() {
         return materialList;
     }
 
-    public void setMaterialList(List<Material> materialList) {
+    public void setMaterialList(List<SelectedMaterial> materialList) {
         this.materialList = materialList;
     }
 
@@ -41,8 +40,6 @@ public class Objetivo implements Serializable{
     public void setCodObjetivo(Integer codObjetivo) {
         this.codObjetivo = codObjetivo;
     }
-    
-    
 
     public Short getPrioridad() {
         return prioridad;
@@ -84,4 +81,18 @@ public class Objetivo implements Serializable{
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }   
+
+    public void removeMaterial(SelectedMaterial item) {
+        this.materialList.remove(item);
+    }
+    
+    public boolean isMaterialInObjetivo(SelectedMaterial sm){
+        if ( materialList.contains(sm) )
+            return true;
+        return false;
+    }
+    
+    public void addMaterial(SelectedMaterial sm){
+        materialList.add(sm);
+    }
 }

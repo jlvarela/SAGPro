@@ -4,11 +4,13 @@
  */
 package pojoclass;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Jose
  */
-public class Usuario {
+public class Usuario implements Serializable{
     private Long rut;
     private String nombre;
     private String apellido;

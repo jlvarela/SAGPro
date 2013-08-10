@@ -23,7 +23,7 @@
                             <div class="span12">
                                 <!--<h:form id="form">-->  
                                 <p:dataTable var="obj" value="#{consultarObjetivoManagedBean.listaObjetivos}" rowKey="#{obj.codObjetivo}"  selection="#{consultarObjetivoManagedBean.selectedObjetivo}" selectionMode="single"  > 
-                                    <p:ajax event="rowSelect"  update=":form" />
+                                    <p:ajax event="rowSelect"  update=":form" listener="#{consultarObjetivoManagedBean.handleRowSelect}"/>
                                     <p:column headerText="Nombre" filterBy="#{obj.nombre}"> 
                                         <h:outputText value="#{obj.nombre}" />  
                                     </p:column>  
@@ -37,7 +37,7 @@
                                     </p:column>
 
                                     <p:column headerText="Prioridad">
-                                        <h:outputText value="#{obj.prioridad}" />
+                                        <h:outputText value="#{consultarObjetivoManagedBean.verPrioridadTabla(obj.prioridad)}" />
                                     </p:column>
                                 </p:dataTable>
                             </div>
@@ -58,18 +58,18 @@
                                             </p:inplace>
 
                                             <h:outputText value="Prioridad: " />
-                                            <p:inplace editor="true" >
-                                                <h:selectOneMenu  styleClass="span12">
-                                                    <f:selectItems />
+                                            <p:inplace editor="true" label="#{consultarObjetivoManagedBean.verPrioridad()}">
+                                                <h:selectOneMenu value="#{consultarObjetivoManagedBean.selectedObjetivo.prioridad}"
+                                                                 styleClass="span12">
+                                                    <f:selectItem itemLabel="Baja" itemValue="0" />
+                                                    <f:selectItem itemLabel="Media" itemValue="1" />
+                                                    <f:selectItem itemLabel="Alta" itemValue="2" />
                                                 </h:selectOneMenu>
                                             </p:inplace>
 
-
-
                                             <h:outputText value="Descripción: " />
-                                            <p:inplace editor="true" >
-                                                <h:inputText value="#{consultarObjetivoManagedBean.selectedObjetivo.descripcion}" >
-                                                </h:inputText>
+                                            <p:inplace editor="true" emptyLabel="Sin descripción">
+                                                <h:inputText value="#{consultarObjetivoManagedBean.selectedObjetivo.descripcion}" />
                                             </p:inplace>
 
 
@@ -115,48 +115,52 @@
 
                                     </div>
 
-
-
-
                                     <div class="row-fluid">
                                         <div class="span3">
                                             Material
                                         </div>
                                         <div class="span3">
-                                            <h:selectOneMenu  styleClass="span12">
+                                            <h:selectOneMenu value="#{consultarObjetivoManagedBean.tempSelectedMaterial}" styleClass="span12">
                                                 <f:selectItems value="#{consultarObjetivoManagedBean.listaMaterial}" var="material" itemLabel="#{material.nombreMaterial}"/>
-
                                             </h:selectOneMenu>
-
                                         </div>
 
                                         <div class="span3">
-                                            <p:inputText styleClass="span11" type="number"></p:inputText>
+                                            <p:inputText styleClass="span11" 
+                                                         value="#{consultarObjetivoManagedBean.cantSelectedMaterial}"
+                                                        title="Cantidad"
+                                                        type="number">
+                                                <f:attribute name="min" value="0" />
+                                            </p:inputText>
                                         </div>
 
                                         <div class="span3">
-                                            <p:commandButton icon="ui-icon-plus" ></p:commandButton>
+                                            <p:commandButton action="#{consultarObjetivoManagedBean.addMaterialObjetivo}"
+                                                 icon="ui-icon-plus"
+                                                 update="materialObjetivoTabla" />
                                         </div>
                                     </div>
                                     <div class="row-fluid">
-                                        <p:dataTable var="materialObjetivo" value="#{consultarObjetivoManagedBean.selectedObjetivo.materialList}" >
+                                        <p:dataTable var="materialObjetivo"
+                                                     rowKey="#{materialObjetivo.codMaterial}"
+                                                     value="#{consultarObjetivoManagedBean.selectedObjetivo.materialList}"
+                                                     id="materialObjetivoTabla" >
+                                            
                                             <p:column headerText="Material">
                                                 <h:outputText value="#{materialObjetivo.nombreMaterial}" />
 
                                             </p:column>
 
                                             <p:column headerText="Cantidad">
-                                                <h:outputText  />
+                                                <h:outputText value="#{materialObjetivo.cantidad}" />
 
-                                            </p:column>
+                                            </p:column>                                                
+                                            <p:column>
                                                 <p:commandButton icon="ui-icon-close"
                                                          styleClass="btn"
                                                          title="Borrar"
-                                                         update="materialObjetivoTabla">
-                                                </p:commandButton>
-                                                
-                                            <p:column>
-
+                                                         actionListener="#{consultarObjetivoManagedBean.removeMaterialObjetivo(materialObjetivo)}"
+                                                         update="materialObjetivoTabla"/>
                                             </p:column>
                                         </p:dataTable>
                                     </div>

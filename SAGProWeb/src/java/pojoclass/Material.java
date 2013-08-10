@@ -5,6 +5,7 @@
 package pojoclass;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 /**
  *
@@ -48,6 +49,39 @@ public class Material implements Serializable {
     public void setMedidaVentaMaterial(String medidaVentaMaterial) {
         this.medidaVentaMaterial = medidaVentaMaterial;
     }
-    
-    
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 41 * hash + Objects.hashCode(this.codMaterial);
+        hash = 41 * hash + Objects.hashCode(this.nombreMaterial);
+        hash = 41 * hash + Objects.hashCode(this.medidaProduccionMaterial);
+        hash = 41 * hash + Objects.hashCode(this.medidaVentaMaterial);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Material other = (Material) obj;
+        if (!Objects.equals(this.codMaterial, other.codMaterial)) {
+            return false;
+        }
+        if (!Objects.equals(this.nombreMaterial, other.nombreMaterial)) {
+            return false;
+        }
+        if (!Objects.equals(this.medidaProduccionMaterial, other.medidaProduccionMaterial)) {
+            return false;
+        }
+        if (!Objects.equals(this.medidaVentaMaterial, other.medidaVentaMaterial)) {
+            return false;
+        }
+        return true;
+    }
+
 }

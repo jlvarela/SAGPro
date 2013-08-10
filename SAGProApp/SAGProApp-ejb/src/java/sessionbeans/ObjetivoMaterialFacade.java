@@ -5,6 +5,7 @@
 package sessionbeans;
 
 import entities.ObjetivoMaterial;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
@@ -54,21 +55,11 @@ public class ObjetivoMaterialFacade extends AbstractFacade<ObjetivoMaterial> imp
         else if (!isObjetivo(codObjetivo))
             return -5;
         else{
-            // Definir objeto de transacción
-            //EntityTransaction et = getEntityManager().getTransaction();
-            
-            // Comienza la transacción
-            //et.begin();
-            {
-                for(int i=0; i < materialList.length; i++){
-                    ObjetivoMaterial om = new ObjetivoMaterial(codObjetivo, materialList[i]);
-                    om.setCantidadObjetivo(cantidadList[i]);
-                    create(om);
-                }
+            for(int i=0; i < materialList.length; i++){
+                ObjetivoMaterial om = new ObjetivoMaterial(codObjetivo, materialList[i]);
+                om.setCantidadObjetivo(cantidadList[i]);
+                create(om);
             }
-            //et.commit();
-            
-            
         }
         
         return 0;
@@ -105,5 +96,14 @@ public class ObjetivoMaterialFacade extends AbstractFacade<ObjetivoMaterial> imp
     private Boolean isObjetivo(final int codObjetivo) {
         return codObjetivo > 0;
     }
+
+    @Override
+    public List<ObjetivoMaterial> buscarPorObjetivo(Integer codObjetivo) {
+        return em.createNamedQuery("ObjetivoMaterial.findByCodObjetivo")
+                .setParameter("codObjetivo", codObjetivo)
+                .getResultList();
+    }
+    
+    
     
 }

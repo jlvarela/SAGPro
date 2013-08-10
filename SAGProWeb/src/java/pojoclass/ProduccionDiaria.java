@@ -4,13 +4,14 @@
  */
 package pojoclass;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  *
  * @author Jose
  */
-public class ProduccionDiaria {
+public class ProduccionDiaria implements Serializable{
     private Date fecha;
     private Integer codMaterial;
     private Integer cantidad;

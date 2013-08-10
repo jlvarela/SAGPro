@@ -6,6 +6,7 @@ package managedbeans;
 
 import entities.Material;
 import entities.Objetivo;
+import pojoclass.SelectedMaterial;
 import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -35,63 +36,7 @@ public class CrearObjetivoManagedBean implements Serializable{
     private ObjetivoFacadeLocal objetivoFacade;
     @EJB
     private MaterialFacadeLocal materialFacade;
-    
-    public class SelectedMaterial{
-        private Integer idMaterial;
-        public int cantidad;
-        public String nombreMaterial;
         
-        public SelectedMaterial () {
-            
-        }
-
-        public String getNombreMaterial() {
-            return nombreMaterial;
-        }
-
-        public void setNombreMaterial(String nombreMaterial) {
-            this.nombreMaterial = nombreMaterial;
-        }
-
-        public Integer getIdMaterial() {
-            return idMaterial;
-        }
-
-        public void setIdMaterial(Integer idMaterial) {
-            this.idMaterial = idMaterial;
-        }
-
-        public int getCantidad() {
-            return cantidad;
-        }
-
-        public void setCantidad(int cantidad) {
-            this.cantidad = cantidad;
-        }
-
-        @Override
-        public int hashCode() {
-            int hash = 7;
-            return hash;
-        }
-
-        @Override
-        public boolean equals(Object obj) {
-            if (obj == null) {
-                return false;
-            }
-            if (getClass() != obj.getClass()) {
-                return false;
-            }
-            final SelectedMaterial other = (SelectedMaterial) obj;
-            if (this.idMaterial != other.idMaterial) {
-                return false;
-            }
-            return true;
-        }
-        
-    }
-    
     private List<SelectedMaterial> selectedMateriales;
     private List<Material> listaMateriales;
     private String nombreObjetivo;
@@ -191,14 +136,14 @@ public class CrearObjetivoManagedBean implements Serializable{
     
     public void addMaterialObjetivo(){
         SelectedMaterial newmaterial = new SelectedMaterial();
-        newmaterial.setIdMaterial(codMaterialSelected);
+        newmaterial.setCodMaterial(codMaterialSelected);
         
         // Si el elemento seleccionado se encuentra en la lista. Reemplazar su Cantidad.
         int index;
         index = selectedMateriales.indexOf(newmaterial);
         if( index != -1){
             SelectedMaterial obj = selectedMateriales.get(index);
-            obj.cantidad = cantMaterialSelected;
+            obj.setCantidad(cantMaterialSelected);
         }
         // Si no, añadir a la lista.
         else{
@@ -243,7 +188,7 @@ public class CrearObjetivoManagedBean implements Serializable{
             *  Agregar valor de la cantidad del material al arreglo de cantidades.
             * */
            for(int i=0; i<selectedMateriales.size(); i++){
-               codMaterialesArray[i] = selectedMateriales.get(i).getIdMaterial().intValue();
+               codMaterialesArray[i] = selectedMateriales.get(i).getCodMaterial().intValue();
                cantMaterialesArray[i] = selectedMateriales.get(i).getCantidad();
            }
             
