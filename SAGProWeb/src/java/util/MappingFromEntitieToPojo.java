@@ -4,11 +4,9 @@
  */
 package util;
 
-import java.util.ArrayList;
-import java.util.List;
-import pojoclass.Material;
 import pojoclass.Objetivo;
 import pojoclass.ProduccionDiaria;
+import pojoclass.SelectedMaterial;
 
 /**
  *
@@ -59,13 +57,15 @@ public class MappingFromEntitieToPojo {
         objetivoPojo.setFechaLimite(objEntity.getFechaLimite());
         objetivoPojo.setDescripcion(objEntity.getDescripcionObjetivo());
         
-        List<entities.Material> materialListEntity = objEntity.getMaterialList();
-        ArrayList<Material> materialObjetivoList = new ArrayList();
-        for(entities.Material materialEntity: materialListEntity){
-            materialObjetivoList.add(materialFromEntityToPojo(materialEntity));
-        }
-        objetivoPojo.setMaterialList(materialObjetivoList);
         return objetivoPojo;
+    }
+    
+    public static SelectedMaterial selectedMaterialFromMaterialObjetivoToPojo(entities.ObjetivoMaterial om){
+        pojoclass.SelectedMaterial sm = new SelectedMaterial();
+        sm.setCodMaterial(om.getMaterial().getCodMaterial());
+        sm.setNombreMaterial(om.getMaterial().getNombreMaterial());
+        sm.setCantidad(om.getCantidadObjetivo());
+        return sm;
     }
     
     public static ProduccionDiaria produccionFromEntityToPojo(entities.ProduccionDiaria prdEntity){

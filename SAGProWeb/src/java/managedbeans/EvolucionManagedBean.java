@@ -289,7 +289,7 @@ public class EvolucionManagedBean implements Serializable{
     }
     
     public String getNameOfMonth(){
-        return selectedDate.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.ENGLISH);
+        return selectedDate.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.forLanguageTag("ES"));
     }
 
     /**

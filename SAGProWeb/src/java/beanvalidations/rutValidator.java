@@ -52,18 +52,14 @@ public class rutValidator implements Validator {
         Matcher matcher = pattern.matcher((CharSequence)value);
         HtmlInputText htmlInputText = (HtmlInputText) uIComponent;
         String label;
-        
-        
-        
+                
         if (htmlInputText.getLabel()==null||htmlInputText.getLabel().trim().equals("")){
             label = htmlInputText.getId();
         }
         else{
             label = htmlInputText.getLabel();
         }
-        
-        
-        
+
         if(!matcher.matches()){
   
             if ((CharSequence)value ==""){
