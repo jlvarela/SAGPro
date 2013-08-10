@@ -5,7 +5,8 @@
 package managedbeans;
 
 import pojoclass.Objetivo;
-import entities.Material;
+import pojoclass.Material;
+/*import entities.Material;*/
 /*import entities.Objetivo;*/
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
@@ -54,16 +55,29 @@ public class ConsultarObjetivoManagedBean implements Serializable {
      */
     @PostConstruct
     public void init(){
-        /*listaObjetivos = objetivoFacade.findAll();*/
-        //listaMaterial = materialFacade.findAll ();
-        List<entities.Objetivo> listaObjetivosEntities= objetivoFacade.findAll();
         
+        /*Llenando la lista de objetivos*/
+        List<entities.Objetivo> listaObjetivosEntities= objetivoFacade.findAll();
         ArrayList<Objetivo> objetivoList = new ArrayList();
         
         for (entities.Objetivo objetivoEntity : listaObjetivosEntities )
             objetivoList.add(util.MappingFromEntitieToPojo.objetivoFromEntityToPojo(objetivoEntity));
         
         listaObjetivos = objetivoList;
+        
+        /*Llenando la lista de materiales*/
+        List <entities.Material> listaMaterialEntities= materialFacade.findAll();
+        ArrayList<Material> materialList =new ArrayList();
+        
+        for(entities.Material materialEntity :listaMaterialEntities)
+            materialList.add(util.MappingFromEntitieToPojo.materialFromEntityToPojo(materialEntity));
+        
+        listaMaterial = materialList;
+        
+        
+        
+        
+        
     }
 
     public List<Material> getListaMaterialObjetivo() {
@@ -138,5 +152,9 @@ public class ConsultarObjetivoManagedBean implements Serializable {
         
     }
    
-         
+   public void Imprimir(){
+       System.out.println(selectedObjetivo.getNombre());
+   }
+   
+   
 }

@@ -21,6 +21,8 @@ public class Objetivo implements Serializable{
     private Date fechaInicial;
     private Date fechaLimite;
     private List<Material> materialList;
+    
+    
 
     public List<Material> getMaterialList() {
         return materialList;

@@ -22,7 +22,7 @@
                             </div>
                             <div class="span12">
                                 <!--<h:form id="form">-->  
-                                <p:dataTable var="obj" value="#{consultarObjetivoManagedBean.listaObjetivos}" rowKey="#{obj.codObjetivo}"  selection="#{consultarObjetivoManagedBean.selectedObjetivo}" selectionMode="single"> 
+                                <p:dataTable var="obj" value="#{consultarObjetivoManagedBean.listaObjetivos}" rowKey="#{obj.codObjetivo}"  selection="#{consultarObjetivoManagedBean.selectedObjetivo}" selectionMode="single"  > 
                                     <p:ajax event="rowSelect"  update=":form" />
                                     <p:column headerText="Nombre" filterBy="#{obj.nombre}"> 
                                         <h:outputText value="#{obj.nombre}" />  
@@ -139,9 +139,9 @@
                                         </div>
                                     </div>
                                     <div class="row-fluid">
-                                        <p:dataTable var="material" value="#{consultarObjetivoManagedBean.selectedObjetivo.listaMaterialObjetivo}" >
+                                        <p:dataTable var="materialObjetivo" value="#{consultarObjetivoManagedBean.selectedObjetivo.materialList}" >
                                             <p:column headerText="Material">
-                                                <h:outputText  />
+                                                <h:outputText value="#{materialObjetivo.nombreMaterial}" />
 
                                             </p:column>
 
