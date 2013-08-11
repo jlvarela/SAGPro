@@ -15,28 +15,17 @@ import javax.persistence.NoResultException;
 import javax.persistence.NonUniqueResultException;
 import javax.persistence.PersistenceContext;
 
-
 /**
  *
  * @author Jose
  */
 @Stateless
 public class UserFacade extends AbstractFacade<User> implements UserFacadeLocal {
-    private final String[] tiposUsuariosValues={"Admin", "Calidad", "Gerencia"};
+
+    private final String[] tiposUsuariosValues = {"Admin", "Calidad", "Gerencia"};
     @PersistenceContext(unitName = "SAGProApp-ejbPU")
     private EntityManager em;
 
-    @Override
-    public String[] getTiposUsuariosValues() {
-        return tiposUsuariosValues;
-    }
-    
-    @Override
-    public String[] getValuesTiposUsuarios() {
-        return getTiposUsuariosValues();
-    }
-    
-    
     @Override
     protected EntityManager getEntityManager() {
         return em;
@@ -45,30 +34,30 @@ public class UserFacade extends AbstractFacade<User> implements UserFacadeLocal 
     public UserFacade() {
         super(User.class);
     }
-    
+
     @Override
-    public User buscarPorRut(final String userRut) {
-       try{
-           User usuario = (User) em.createNamedQuery("User.findByRutUser")
-                   .setParameter("rutUser", Long.parseLong(userRut))
-                   .getSingleResult();
-           System.out.println("Usuario: '"+userRut+"' se ha encontrado con éxito");
-           return usuario;
-                   
-        }
-       catch(NoResultException e){
-           System.out.println("Usuario: '"+userRut+"' no se encuentra registrado");
-           return null;
-       }
-       catch(NonUniqueResultException e){
-           System.out.println("Usuario: '"+userRut+"', por alguna razón inesperada, se encuentra repetido");
-           return null;
-       }
+    public String[] getTiposUsuariosValues() {
+        return tiposUsuariosValues;
     }
 
     @Override
-    public List<User> findAll() {
-        return super.findAll(); //To change body of generated methods, choose Tools | Templates.
+    public String[] getValuesTiposUsuarios() {
+        return getTiposUsuariosValues();
+    }
+
+    @Override
+    public void create(User entity) {
+        super.create(entity); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void edit(User entity) {
+        super.edit(entity); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void remove(User entity) {
+        super.remove(entity); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
@@ -77,86 +66,37 @@ public class UserFacade extends AbstractFacade<User> implements UserFacadeLocal 
     }
 
     @Override
-    public void create(User entity) {
-        super.create(entity); //To change body of generated methods, choose Tools | Templates.
+    public List<User> findAll() {
+        return super.findAll(); //To change body of generated methods, choose Tools | Templates.
     }
-    
-    /**
-     *
-     * @param usuario_rut
-     * @return
-     */
-    @Override
-    public int eliminarUsuario(final String usuario_rut) {
 
-        if (!usuarioExists(usuario_rut)) {
-            return -1;
-            
-        } else {
-            try {
-                User usuario=buscarPorRut(usuario_rut);
-                remove(usuario);
-                System.out.println("eliminación del usuario realizada con éxito");
-                return 0;
-            } catch (EntityExistsException e) {
-                System.out.println("Eliminando Usuario: Error -> " + e.getMessage());
-                return -1;
-            }
+    @Override
+    public User buscarPorRut(final String userRut) {
+        try {
+            User usuario = (User) em.createNamedQuery("User.findByRutUser")
+                    .setParameter("rutUser", Long.parseLong(userRut))
+                    .getSingleResult();
+            System.out.println("Usuario: '" + userRut + "' se ha encontrado con éxito");
+            return usuario;
+
+        } catch (NoResultException e) {
+            System.out.println("Usuario: '" + userRut + "' no se encuentra registrado");
+            return null;
+        } catch (NonUniqueResultException e) {
+            System.out.println("Usuario: '" + userRut + "', por alguna razón inesperada, se encuentra repetido");
+            return null;
         }
     }
-    
-    @Override
-    public int editarUsuario(final String usuario_rut, final String nombre, final String apellido, final String correo, final String rol){
-        if (!usuarioExists(usuario_rut)) {
-            return -1;
-            
-        } else {
-            try {
-                User usuario=buscarPorRut(usuario_rut);
-                usuario.setNombreUser(nombre);
-                usuario.setApellidoUser(apellido);
-                usuario.setEmailUser(correo);
-                usuario.setRoleUser(rol);
-                edit(usuario);
-                System.out.println("edición del usuario realizada con éxito");
-                return 0;
-            } catch (EntityExistsException e) {
-                System.out.println("Editando Usuario: Error -> " + e.getMessage());
-                return -1;
-            }
-        }
-    }
-    
-    private Boolean usuarioExists(String usuario_rut) {
-        int resultados;
-        resultados = em.createNamedQuery("User.findByRutUser")
-                .setParameter("rutUser", Long.parseLong(usuario_rut))
-                .getResultList().size();
 
-        return resultados != 0;
-    }
-    
-    
-
-    @Override
-    public void remove(User entity) {
-        super.remove(entity); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void edit(User entity) {
-        super.edit(entity); //To change body of generated methods, choose Tools | Templates.
-    }
-    
-    public String md5(String password){
-        char[] HEXADECIMAL = { '0', '1', '2', '3','4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f' };
+    public String md5(String password) {
+        char[] HEXADECIMAL = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'};
         try {
             MessageDigest md = MessageDigest.getInstance("MD5");
             byte[] bytes = md.digest(password.getBytes());
             StringBuilder sb = new StringBuilder(2 * bytes.length);
             for (int i = 0; i < bytes.length; i++) {
-                int low = (int)(bytes[i] & 0x0f);
-                int high = (int)((bytes[i] & 0xf0) >> 4);
+                int low = (int) (bytes[i] & 0x0f);
+                int high = (int) ((bytes[i] & 0xf0) >> 4);
                 sb.append(HEXADECIMAL[high]);
                 sb.append(HEXADECIMAL[low]);
             }
@@ -166,34 +106,74 @@ public class UserFacade extends AbstractFacade<User> implements UserFacadeLocal 
             return null;
         }
     }
-    
-    
 
-    
     @Override
-    public int agregarUsuario(final String rut, final String nombre, final String apellido, final String correo,final String rol){
+    public int agregarUsuario(final String rut, final String nombre, final String apellido, final String correo, final String rol) {
         /* el password por defecto es el rut sin digito verificador*/
-        if (!usuarioExists(rut)){
-            try{
-            User usuario= new User();
-            usuario.setRutUser(Long.valueOf(rut));
-            usuario.setNombreUser(nombre);
-            usuario.setApellidoUser(apellido);
-            usuario.setEmailUser(correo);
-            usuario.setPasswordUser(md5(rut));
-            usuario.setRoleUser(rol);
-            create(usuario);
-            System.out.println("Creación del usuario realizada con éxito");
-            return 0;
-            }
-            catch (EntityExistsException e){
+        if (buscarPorRut(rut)==null) {
+            try {
+                User usuario = new User();
+                usuario.setRutUser(Long.valueOf(rut));
+                usuario.setNombreUser(nombre);
+                usuario.setApellidoUser(apellido);
+                usuario.setEmailUser(correo);
+                usuario.setPasswordUser(md5(rut));
+                usuario.setRoleUser(rol);
+                create(usuario);
+                System.out.println("Creación del usuario realizada con éxito");
+                return 0;
+            } catch (EntityExistsException e) {
                 System.out.println("Ingresando Usuario: Error -> " + e.getMessage());
                 return -1;
             }
-        }
-        else{
+        } else {
             System.out.println("entro aca");
             return -1;
-        }   
+        }
+    }
+
+    @Override
+    public int editarUsuario(final String usuario_rut, final String nombre, final String apellido, final String correo, final String rol) {
+        User usuario = buscarPorRut(usuario_rut);
+        if (usuario == null) {
+            return -1;
+
+        } else {
+            try {
+                usuario.setNombreUser(nombre);
+                usuario.setApellidoUser(apellido);
+                usuario.setEmailUser(correo);
+                usuario.setRoleUser(rol);
+                edit(usuario);
+                System.out.println("Edición del usuario realizada con éxito");
+                return 0;
+            } catch (EntityExistsException e) {
+                System.out.println("Editando Usuario: Error -> " + e.getMessage());
+                return -1;
+            }
+        }
+    }
+
+    /**
+     *
+     * @param usuario_rut
+     * @return
+     */
+    @Override
+    public int eliminarUsuario(final String usuario_rut) {
+        User usuario = buscarPorRut(usuario_rut);
+        if (usuario == null) {
+            return -1;
+
+        } else {
+            try {
+                remove(usuario);
+                System.out.println("Eliminación del usuario realizada con éxito");
+                return 0;
+            } catch (EntityExistsException e) {
+                System.out.println("Eliminando Usuario: Error -> " + e.getMessage());
+                return -1;
+            }
+        }
     }
 }
