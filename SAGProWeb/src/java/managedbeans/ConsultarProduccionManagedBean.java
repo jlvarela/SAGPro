@@ -61,8 +61,10 @@ public class ConsultarProduccionManagedBean {
 
     @PostConstruct
     public void init() {
-        selectedProduccionDiaria=null;
+        
         Date f = new Date();
+        
+        
 
         //listaProduccionDiaria = produccionDiariaFacade.buscarPorFecha(f);
         //listaProduccionDiaria = produccionDiariaFacade.findAll();
