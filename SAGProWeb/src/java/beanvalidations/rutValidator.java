@@ -48,6 +48,7 @@ public class rutValidator implements Validator {
     @Override
     public void validate(FacesContext facesContext, UIComponent uIComponent, Object value)throws 
             ValidatorException{
+        System.out.println("llega aca");
         Pattern pattern = Pattern.compile("\\d+[kK]*");
         Matcher matcher = pattern.matcher((CharSequence)value);
         HtmlInputText htmlInputText = (HtmlInputText) uIComponent;
@@ -61,7 +62,7 @@ public class rutValidator implements Validator {
         }
 
         if(!matcher.matches()){
-  
+            
             if ((CharSequence)value ==""){
                 FacesMessage facesMessage = new FacesMessage(FacesMessage.SEVERITY_ERROR, "",label + ": Campo Obligatorio Vacío");
                 throw new ValidatorException(facesMessage);
