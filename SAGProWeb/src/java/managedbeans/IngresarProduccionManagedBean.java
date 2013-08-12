@@ -28,20 +28,12 @@ import sessionbeans.ProduccionDiariaFacadeLocal;
 @ViewScoped
 public class IngresarProduccionManagedBean {
 
-     public String getCodMaterial() {
-        return codMaterial;
-    }
-
-    public void setCodMaterial(String codMaterial) {
-        this.codMaterial = codMaterial;
-    }
     @EJB
-    private ProduccionDiariaFacadeLocal produccionDiariaFacade;
+    private ProduccionDiariaFacadeLocal produccionDiariaFacade;                     //  Para obtener la lista de producciones diarias.
     @EJB
-    private MaterialFacadeLocal materialFacade;
-    
-    private List<Material> listaMateriales;
-    private String cantidad;
+    private MaterialFacadeLocal materialFacade;                                     //  Para obtener la lista de materiales.
+    private List<Material> listaMateriales;                                         // Listado de Materiales
+    private String cantidad;                                                        // Cantidad de producción diaria ingresada
     private Material materialSelected;
     private String codMaterial;
     private List<ProduccionDiaria> listaProduccionDiaria;
@@ -51,13 +43,20 @@ public class IngresarProduccionManagedBean {
      */
     public IngresarProduccionManagedBean() {
     }
-    
+
     @PostConstruct
-    public void init()
-    {
+    public void init() {
         Date hoy = new Date();
         listaMateriales = materialFacade.findAll();
         listaProduccionDiaria = produccionDiariaFacade.buscarPorFecha(hoy);
+    }
+
+    public String getCodMaterial() {
+        return codMaterial;
+    }
+
+    public void setCodMaterial(String codMaterial) {
+        this.codMaterial = codMaterial;
     }
 
     public List<Material> getListaMateriales() {
@@ -76,26 +75,12 @@ public class IngresarProduccionManagedBean {
         this.listaProduccionDiaria = listaProduccionDiaria;
     }
 
-    
-    
     public String getCantidad() {
         return cantidad;
     }
 
     public void setCantidad(String cantidad) {
         this.cantidad = cantidad;
-    }
-    
-    public void materialSelectCantidadListener(ValueChangeEvent event){
-        String idMatSelect = (String) event.getNewValue();
-        for(Material material: listaMateriales){
-            if(material.getCodMaterial().equals(Integer.parseInt(idMatSelect))){
-                this.materialSelected = material;
-                System.out.println("prueba: " + material.getCodMaterial());
-                codMaterial = idMatSelect;
-                break;
-            }
-        }
     }
 
     public Material getMaterialSelected() {
@@ -105,8 +90,24 @@ public class IngresarProduccionManagedBean {
     public void setMaterialSelected(Material materialSelected) {
         this.materialSelected = materialSelected;
     }
-    
-    public void ingresarProduccion(){
+
+    public void materialSelectCantidadListener(ValueChangeEvent event) {
+        String idMatSelect = (String) event.getNewValue();
+        for (Material material : listaMateriales) {
+            if (material.getCodMaterial().equals(Integer.parseInt(idMatSelect))) {
+                this.materialSelected = material;
+                System.out.println("prueba: " + material.getCodMaterial());
+                codMaterial = idMatSelect;
+                break;
+            }
+        }
+    }
+
+    /**
+     * Ingresa una producción
+     *
+     */
+    public void ingresarProduccion() {
         // Validar entradas
         // Fin Validar entradas
         FacesContext fcontext = FacesContext.getCurrentInstance();
@@ -115,16 +116,14 @@ public class IngresarProduccionManagedBean {
         UIViewRoot root = handler.createView(fcontext, viewId);
         root.setViewId(viewId);
         fcontext.setViewRoot(root);
-        
-        
+
+
         int resp = produccionDiariaFacade.agregarProduccionDiaria(Integer.parseInt(this.codMaterial), Integer.parseInt(this.cantidad));
         //FacesContext fcontext = FacesContext.getCurrentInstance();
         if (resp == 0) {
             fcontext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "", "Producción agregado con éxito"));
         } else if (resp == -1) {
             fcontext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "", "Ha ocurrido un error"));
-        }        
+        }
     }
-    
-    
 }
