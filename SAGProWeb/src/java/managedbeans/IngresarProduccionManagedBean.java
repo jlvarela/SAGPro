@@ -4,9 +4,11 @@
  */
 package managedbeans;
 
-import entities.Material;
-import entities.ProduccionDiaria;
-import java.util.Date;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Calendar;
+import pojoclass.Material;
+import pojoclass.ProduccionDiaria;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -26,7 +28,7 @@ import sessionbeans.ProduccionDiariaFacadeLocal;
  */
 @ManagedBean(name = "ingresarProduccionManagedBean")
 @ViewScoped
-public class IngresarProduccionManagedBean {
+public class IngresarProduccionManagedBean implements Serializable{
 
      public String getCodMaterial() {
         return codMaterial;
@@ -55,9 +57,40 @@ public class IngresarProduccionManagedBean {
     @PostConstruct
     public void init()
     {
-        Date hoy = new Date();
-        listaMateriales = materialFacade.findAll();
-        listaProduccionDiaria = produccionDiariaFacade.buscarPorFecha(hoy);
+        // Fecha actual
+        Calendar hoy = Calendar.getInstance();
+        hoy.set(Calendar.HOUR_OF_DAY, 0);
+        hoy.clear(Calendar.MINUTE);
+        hoy.clear(Calendar.SECOND);
+        hoy.clear(Calendar.MILLISECOND);
+        
+        // Lista de materiales del tipo entities.
+        List<entities.Material> listaMaterialesEntity = materialFacade.findAll();
+        // Lista de Producciones diarias, de la fecha actual. Son entity class.
+        List<entities.ProduccionDiaria> listaProduccionDiariaEntity = produccionDiariaFacade.buscarPorFecha(hoy.getTime());
+        
+        // Array de materiales. POJO Class
+        ArrayList<Material> arrayListMaterial = new ArrayList();
+        
+        // Array de producciones. POJO Class
+        ArrayList<ProduccionDiaria> arrayListProdDiaria = new ArrayList();
+        
+        // Para cada entidad, mappear a POJO Class
+        for( entities.ProduccionDiaria p : listaProduccionDiariaEntity ){
+            System.out.println("asf " + p.getProduccionDiariaPK().getCodMaterial());
+            arrayListProdDiaria.add(util.MappingFromEntitieToPojo.produccionFromEntityToPojo(p));
+        }
+        
+        listaProduccionDiaria = arrayListProdDiaria;
+        
+        // Para cada entidad material, mappear a POJO Class
+        for( entities.Material p: listaMaterialesEntity ){
+            arrayListMaterial.add(util.MappingFromEntitieToPojo.materialFromEntityToPojo(p));
+        }
+        
+        listaMateriales = arrayListMaterial;
+        
+        this.materialSelected = listaMateriales.get(0);
     }
 
     public List<Material> getListaMateriales() {
@@ -76,8 +109,6 @@ public class IngresarProduccionManagedBean {
         this.listaProduccionDiaria = listaProduccionDiaria;
     }
 
-    
-    
     public String getCantidad() {
         return cantidad;
     }
@@ -91,7 +122,6 @@ public class IngresarProduccionManagedBean {
         for(Material material: listaMateriales){
             if(material.getCodMaterial().equals(Integer.parseInt(idMatSelect))){
                 this.materialSelected = material;
-                System.out.println("prueba: " + material.getCodMaterial());
                 codMaterial = idMatSelect;
                 break;
             }
@@ -116,14 +146,16 @@ public class IngresarProduccionManagedBean {
         root.setViewId(viewId);
         fcontext.setViewRoot(root);
         
-        
-        int resp = produccionDiariaFacade.agregarProduccionDiaria(Integer.parseInt(this.codMaterial), Integer.parseInt(this.cantidad));
+        int resp = produccionDiariaFacade.agregarProduccionDiaria(Integer.parseInt(this.codMaterial)
+                , Integer.parseInt(this.cantidad));
         //FacesContext fcontext = FacesContext.getCurrentInstance();
         if (resp == 0) {
             fcontext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "", "Producción agregado con éxito"));
         } else if (resp == -1) {
             fcontext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "", "Ha ocurrido un error"));
-        }        
+        }
+        
+        init();
     }
     
     

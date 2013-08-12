@@ -38,7 +38,7 @@ public class ProduccionDiaria implements Serializable {
     @NotNull
     @Column(name = "PRODUCCION_MATERIAL")
     private int produccionMaterial;
-    @JoinColumn(name = "COD_MATERIAL", referencedColumnName = "COD_MATERIAL", insertable = false, updatable = false)
+    @JoinColumn(name = "COD_MATERIAL", nullable=false, referencedColumnName = "COD_MATERIAL", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private Material material;
 
