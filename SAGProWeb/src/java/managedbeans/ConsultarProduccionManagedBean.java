@@ -33,13 +33,6 @@ import sessionbeans.ProduccionDiariaFacadeLocal;
 @ViewScoped
 public class ConsultarProduccionManagedBean {
 
-    public String getCodMaterial() {
-        return codMaterial;
-    }
-
-    public void setCodMaterial(String codMaterial) {
-        this.codMaterial = codMaterial;
-    }
     @EJB
     private ProduccionDiariaFacadeLocal produccionDiariaFacade;
     @EJB
@@ -61,13 +54,7 @@ public class ConsultarProduccionManagedBean {
 
     @PostConstruct
     public void init() {
-        
         Date f = new Date();
-        
-        
-
-        //listaProduccionDiaria = produccionDiariaFacade.buscarPorFecha(f);
-        //listaProduccionDiaria = produccionDiariaFacade.findAll();
 
         /**
          * Llenando lista de produccion para ser mostrada en tabla*
@@ -82,6 +69,14 @@ public class ConsultarProduccionManagedBean {
 
         listaProduccionDiaria = produccionDiariaList;
         
+    }
+
+    public String getCodMaterial() {
+        return codMaterial;
+    }
+
+    public void setCodMaterial(String codMaterial) {
+        this.codMaterial = codMaterial;
     }
 
     public ProduccionDiaria getSelectedProduccionDiaria() {
@@ -124,18 +119,6 @@ public class ConsultarProduccionManagedBean {
         this.cantidad = cantidad;
     }
 
-    public void materialSelectCantidadListener(ValueChangeEvent event) {
-        String idMatSelect = (String) event.getNewValue();
-        for (Material material : listaMateriales) {
-            if (material.getCodMaterial().equals(Integer.parseInt(idMatSelect))) {
-                this.materialSelected = material;
-                System.out.println("prueba: " + material.getCodMaterial());
-                codMaterial = idMatSelect;
-                break;
-            }
-        }
-    }
-
     public Material getMaterialSelected() {
         return materialSelected;
     }
@@ -152,6 +135,22 @@ public class ConsultarProduccionManagedBean {
         this.fecha = fecha;
     }
 
+    public void materialSelectCantidadListener(ValueChangeEvent event) {
+        String idMatSelect = (String) event.getNewValue();
+        for (Material material : listaMateriales) {
+            if (material.getCodMaterial().equals(Integer.parseInt(idMatSelect))) {
+                this.materialSelected = material;
+                System.out.println("prueba: " + material.getCodMaterial());
+                codMaterial = idMatSelect;
+                break;
+            }
+        }
+    }
+
+    /**
+     * Modifica la cantidad 
+     *
+     */
     public void modificarProduccion() {
         int resp;
 
@@ -165,10 +164,14 @@ public class ConsultarProduccionManagedBean {
         }
     }
 
+    /**
+     * Genera una lista de producciones ingresadas para una fecha dada.
+     *
+     */
     public void cambiarFecha() {
-        
-        System.out.println("y la fecha es "+ fecha);
-        
+
+        System.out.println("y la fecha es " + fecha);
+
         Date f;
         SimpleDateFormat df = new SimpleDateFormat("MM/dd/yyyy");
         try {
