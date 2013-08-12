@@ -10,6 +10,7 @@ import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
@@ -39,7 +40,7 @@ public class ProduccionDiaria implements Serializable {
     @Column(name = "PRODUCCION_MATERIAL")
     private int produccionMaterial;
     @JoinColumn(name = "COD_MATERIAL", referencedColumnName = "COD_MATERIAL", insertable = false, updatable = false)
-    @ManyToOne(optional = false)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     private Material material;
 
     public ProduccionDiaria() {
