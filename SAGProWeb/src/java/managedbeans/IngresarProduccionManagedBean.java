@@ -11,8 +11,10 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
+import javax.faces.application.ViewHandler;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.component.UIViewRoot;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ValueChangeEvent;
 import sessionbeans.MaterialFacadeLocal;
@@ -107,8 +109,16 @@ public class IngresarProduccionManagedBean {
     public void ingresarProduccion(){
         // Validar entradas
         // Fin Validar entradas
-        int resp = produccionDiariaFacade.agregarProduccionDiaria(Integer.parseInt(this.codMaterial), Integer.parseInt(this.cantidad));
         FacesContext fcontext = FacesContext.getCurrentInstance();
+        String viewId = fcontext.getViewRoot().getViewId();
+        ViewHandler handler = fcontext.getApplication().getViewHandler();
+        UIViewRoot root = handler.createView(fcontext, viewId);
+        root.setViewId(viewId);
+        fcontext.setViewRoot(root);
+        
+        
+        int resp = produccionDiariaFacade.agregarProduccionDiaria(Integer.parseInt(this.codMaterial), Integer.parseInt(this.cantidad));
+        //FacesContext fcontext = FacesContext.getCurrentInstance();
         if (resp == 0) {
             fcontext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "", "Producción agregado con éxito"));
         } else if (resp == -1) {
