@@ -80,7 +80,7 @@ public class StadisticPlanner implements StadisticPlannerLocal {
         for (Material mat : listaMaterial){
             System.out.println("StadisticPlanner : ".concat(mat.getNombreMaterial()).concat(" Empieza"));
             // Obtener las produccione del mes para dicho material
-            listaProduccion = produccionDiariaFacade.bucarPorRango(mat.getCodMaterial(), f_inicial, f_final);
+            listaProduccion = produccionDiariaFacade.buscarPorRango(mat.getCodMaterial(), f_inicial, f_final);
 
             // Si no hay producción. Terminar
             if ( listaProduccion.isEmpty() ) {

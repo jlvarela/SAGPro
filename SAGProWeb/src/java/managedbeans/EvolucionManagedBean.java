@@ -211,7 +211,7 @@ public class EvolucionManagedBean implements Serializable{
         int acumulado;
         acumulado = 0;
         for ( int i = 0; i < lastDay ; i++ ){
-            // Bucar si se produjo algo en día i.
+            // Buscar si se produjo algo en día i.
             index = isDateInProduccionList(month.getTime(), prodDiariaList);
             // Si dicho día se produjo, incrementar acumulado.
             if ( index != -1 ){
@@ -238,7 +238,7 @@ public class EvolucionManagedBean implements Serializable{
         
         // Invocar método de EJB produccionDiariaFacade, buscarPorRango, para encontrar
         // todas las producciones dentro del intervalo.
-        prodDiariaEntityList = produccionDiariaFacade.bucarPorRango(codMaterial, f_inicial, f_final);
+        prodDiariaEntityList = produccionDiariaFacade.buscarPorRango(codMaterial, f_inicial, f_final);
         
         /// Lista de producciones diarias de clase POJO.
         ArrayList<ProduccionDiaria> prodDiariaList = new ArrayList();
