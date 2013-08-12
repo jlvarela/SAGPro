@@ -35,11 +35,11 @@ import sessionbeans.ProduccionDiariaFacadeLocal;
 @ViewScoped
 public class EvolucionManagedBean implements Serializable{
     @EJB
-    private ProduccionDiariaFacadeLocal produccionDiariaFacade;
+    private ProduccionDiariaFacadeLocal produccionDiariaFacade;                     //  Para obtener la lista de producciones diarias.
     @EJB
-    private ObjetivoFacadeLocal objetivoFacade;
+    private ObjetivoFacadeLocal objetivoFacade;                                     //  Para obtener la lista de objetivos.
     @EJB
-    private MaterialFacadeLocal materialFacade;
+    private MaterialFacadeLocal materialFacade;                                     //  Para obtener la lista de materiales.
     
     private final DateFormat dayFormat = new SimpleDateFormat("dd");                // DateFormat para días
     private DateFormat monthFormat = new SimpleDateFormat("MM/yyyy");               // DateFormat para mes
@@ -47,7 +47,7 @@ public class EvolucionManagedBean implements Serializable{
     private List<Objetivo> objectiveList;                                           // Listado de Objetivos
     private Material selectedMaterial;                                              // Material seleccionado
     private CartesianChartModel model;                                              // Modelo del gráfico
-    private Calendar selectedDate;                                                      // Fecha seleccionada
+    private Calendar selectedDate;                                                  // Fecha seleccionada
     private String formattedDate;                                                   // Fecha seleccionada con formato
     
     /**
@@ -72,7 +72,6 @@ public class EvolucionManagedBean implements Serializable{
     public void setFormattedDate(String formattedDate) {
         this.formattedDate = formattedDate;
     }
-
     
     public DateFormat getMonthFormat() {
         return monthFormat;
@@ -117,14 +116,14 @@ public class EvolucionManagedBean implements Serializable{
     
     @PostConstruct
     public void init(){
-        rellenarListas();
-        selectedDate = Calendar.getInstance();
-        createLinearChart(selectedDate);
-        formattedDate = monthFormat.format(selectedDate.getTime());
+        rellenarListas();                                           //  Rellenar listas de objetivo y material.
+        selectedDate = Calendar.getInstance();                      //  Fecha actual.
+        createLinearChart(selectedMaterial, selectedDate);                            //  Crear gráfico con fecha actual.
+        formattedDate = monthFormat.format(selectedDate.getTime()); //  Aplicar formato para mostrar mes como string.
     }
     
     /**
-     * 
+     *  Rellena las listas de objetivo y materiales.
      */
     private void rellenarListas(){
         // Lista de Materiales para selección
@@ -158,9 +157,9 @@ public class EvolucionManagedBean implements Serializable{
     }
     
     /**
-     * 
+     *  Crea gráfico en base 
      */
-    private void createLinearChart(Calendar date){
+    private void createLinearChart(Material material, Calendar date){
         model = new CartesianChartModel();
         
         Calendar month = (Calendar)date.clone();
@@ -202,10 +201,10 @@ public class EvolucionManagedBean implements Serializable{
         f_inicial = month.getTime();
         
         List<ProduccionDiaria> prodDiariaList;
-        prodDiariaList = getListaProduccionDiaria(selectedMaterial.getCodMaterial(), f_inicial, f_final);
+        prodDiariaList = getListaProduccionDiaria(material.getCodMaterial(), f_inicial, f_final);
                
         LineChartSeries line = new LineChartSeries();
-        line.setLabel("Evolucion ".concat(selectedMaterial.getNombreMaterial()));
+        line.setLabel("Evolucion ".concat(material.getNombreMaterial()));
 
         // Creando puntos de la función
         int index;
@@ -216,37 +215,62 @@ public class EvolucionManagedBean implements Serializable{
             index = isDateInProduccionList(month.getTime(), prodDiariaList);
             // Si dicho día se produjo, incrementar acumulado.
             if ( index != -1 ){
-                acumulado += prodDiariaList.get(index).getCantidad();   // Incrementar acumulado.
+                acumulado += prodDiariaList.get(index).getCantidad();                   // Incrementar acumulado.
             }
             line.set(String.valueOf(month.get(Calendar.DAY_OF_MONTH)), acumulado);      // Agregar punto.
-            month.add(Calendar.DAY_OF_MONTH, 1);                          // Incrementar día del Calendario.
+            month.add(Calendar.DAY_OF_MONTH, 1);                                        // Incrementar día del Calendario.
         }
         model.addSeries(line);
     }
     
+    /**
+     * Obtener la lista de producciones diarias en base a un determinado material y
+     * a un intervalo de fechas.
+     * Para esto se invocan los métodos del EJB produccionDiariaFacade.
+     * 
+     * @param codMaterial   int Código del material a buscar.
+     * @param f_inicial Date    Fecha inicial del intervalo.
+     * @param f_final   Date    Fecha final del intervalo.
+     * @return  List<ProduccionDiaria>  Lista de producciones diarias.
+     */
     private List<ProduccionDiaria> getListaProduccionDiaria(int codMaterial, Date f_inicial, Date f_final){
-        List<entities.ProduccionDiaria> prodDiariaEntityList;
+        List<entities.ProduccionDiaria> prodDiariaEntityList;   // Lista final de producciones diarias
+        
+        // Invocar método de EJB produccionDiariaFacade, buscarPorRango, para encontrar
+        // todas las producciones dentro del intervalo.
         prodDiariaEntityList = produccionDiariaFacade.bucarPorRango(codMaterial, f_inicial, f_final);
         
+        /// Lista de producciones diarias de clase POJO.
         ArrayList<ProduccionDiaria> prodDiariaList = new ArrayList();
+        
+        // Para cada producción encontrada.
         for(entities.ProduccionDiaria prodEntity : prodDiariaEntityList){
+            // Mapping de clase Entity a POJO
             prodDiariaList.add(util.MappingFromEntitieToPojo.produccionFromEntityToPojo(prodEntity));
         }
         
-        return prodDiariaList;
+        return prodDiariaList;      // Retornar lista de Producciones diarias.
     }
     
     /**
+     * Buscar si en una fecha, ingresada como parámetro, se registró alguna producción.
+     * Se busca la producción en la lista, en caso de encontrar se retorna su índice en la Lista.
+     * En caso de no encontrar se retorna -1.
      * 
-     * @param fecha
-     * @param lista
+     * @param fecha Date    Fecha en la que se busca la producción.
+     * @param lista List<produccionDiaria>  Lista de producciones en la que se debe buscar.
      * @return int Index del objeto en la lista. -1 si no e encuentra.
      */
     private int isDateInProduccionList(Date fecha, List<ProduccionDiaria> lista ){
+        // Para cada producción en la lista
         for ( int i=0; i<lista.size(); i++ ){
+            // Si la fecha de la producción equivale a la fecha ingresada como parámetro
             if ( lista.get(i).getFecha().compareTo(fecha) == 0 )
+                // Retornar el index en la lista de dicha producción.
                 return i;
         }
+        
+        // Si no se encuentra, retornar -1.
         return -1;
     }
         
@@ -265,49 +289,68 @@ public class EvolucionManagedBean implements Serializable{
                 break;
             }
         }
-        createLinearChart(selectedDate);
+        createLinearChart(selectedMaterial, selectedDate);
     }
     
     /**
+     * Listener del evento selección de fecha.
+     * Una vez se ha seleccionado una fecha para generar el gráfico,
+     * se obtiene la fecha ingresada y se crea el nuevo gráfico en base
+     * al material ya seleccionado y a la fecha nueva ingresada.
      * 
      * @param event 
      */
     public void handleDateSelectChange(ValueChangeEvent event){
-        String newDateString;
-        Date newDate;
+        String newDateString;                       // Nuevo string de la fecha.
+        Date newDate;                               // Nueva fecha en clase Date.
         
-        newDateString = (String) event.getNewValue();
+        newDateString = (String) event.getNewValue();   // Obtener el valor de la nueva fecha en string.
+        
         try {
-            newDate = monthFormat.parse(newDateString);
-            selectedDate.setTime(newDate);
+            newDate = monthFormat.parse(newDateString); //  Parsear string a Date de la fecha ingresada.
+            selectedDate.setTime(newDate);              //  Setear la nueva fecha como la fecha seleccionada.
         }
         catch (ParseException pe){
-            System.out.println(pe.getMessage());
+            System.out.println(pe.getMessage());        // En caso de que el parseo sea erróneo, imprimir error por pantalla.
         }
         
-        createLinearChart(selectedDate);
+        createLinearChart(selectedMaterial, selectedDate);  // Crear nuevo gráfico.
     }
     
+    // Obtener nombre en español del mes seleccionado.
     public String getNameOfMonth(){
         return selectedDate.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.forLanguageTag("ES"));
     }
 
     /**
+     * Comparar el mes ingresado con el mes de la fecha actual.
+     * Para esto se considera también el año.
      * 
-     * @param month
-     * @return 
+     * Si el mes es posterior al actual, retornar 1.
+     * Si el mes es equivalente al actual, retornar 0.
+     * Si el mes es anterior al actual, retornar -1.
+     * 
+     * @param month Calendar    Mes ingresado a comparar.
+     * @return int  Si
      */
     private int compareSelectedMonthTodaysMonth(Calendar month) {
+        // Nueva fecha actual.
         Calendar today = Calendar.getInstance();
+        
+        // Si el mes y año son iguales. Retornar 0.
         if ( (month.get(Calendar.MONTH) == today.get(Calendar.MONTH))
                 && (month.get(Calendar.YEAR) == today.get(Calendar.YEAR) ) ){
             return 0;
         }
+        // Si año es mayor que el año actual. Retornar 1.
         else if ( (month.get(Calendar.YEAR) > today.get(Calendar.YEAR) ) )
             return 1;
+        // Si mes es mayor que el actual y año es el mismo. Retornar 1.
         else if ( (month.get(Calendar.MONTH) > today.get(Calendar.MONTH))
                 && (month.get(Calendar.YEAR) == today.get(Calendar.YEAR) ) )
             return 1;
+        
+        // Caso contrario, mes ingresado es anterior. retornar -1.
         return -1;
     }
 }

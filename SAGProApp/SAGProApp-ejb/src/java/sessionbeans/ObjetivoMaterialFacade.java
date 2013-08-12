@@ -1,14 +1,9 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package sessionbeans;
 
 import entities.ObjetivoMaterial;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
-import javax.persistence.EntityTransaction;
 import javax.persistence.PersistenceContext;
 
 /**
@@ -18,7 +13,7 @@ import javax.persistence.PersistenceContext;
 @Stateless
 public class ObjetivoMaterialFacade extends AbstractFacade<ObjetivoMaterial> implements ObjetivoMaterialFacadeLocal {
     @PersistenceContext(unitName = "SAGProApp-ejbPU")
-    private EntityManager em;
+    private EntityManager em;                           // Necesario para persistir y obtener entidades.
 
     @Override
     protected EntityManager getEntityManager() {
@@ -55,19 +50,24 @@ public class ObjetivoMaterialFacade extends AbstractFacade<ObjetivoMaterial> imp
         else if (!isObjetivo(codObjetivo))
             return -5;
         else{
+            //  Para cada material
             for(int i=0; i < materialList.length; i++){
+                // Relacionar material a objetivo.
                 ObjetivoMaterial om = new ObjetivoMaterial(codObjetivo, materialList[i]);
                 om.setCantidadObjetivo(cantidadList[i]);
                 create(om);
             }
         }
-        
         return 0;
     }
-
+    
+    /**
+     * Perisistir entidad ObjetivoMaterial.
+     * @param entity    ObjetivoMaterial    Entidad a persistir.
+     */
     @Override
     public void create(ObjetivoMaterial entity) {
-        super.create(entity); //To change body of generated methods, choose Tools | Templates.
+        super.create(entity);
     }
     
     /**
@@ -92,11 +92,24 @@ public class ObjetivoMaterialFacade extends AbstractFacade<ObjetivoMaterial> imp
         }
         return true;
     }
-
+    
+    /**
+     * Determinar si código de objetivo ingresado es válido.
+     * True si objetivo es válido. False caso contrario.
+     * 
+     * @param codObjetivo   int Código de objetivo ingresado.
+     * @return Boolean  
+     */
     private Boolean isObjetivo(final int codObjetivo) {
         return codObjetivo > 0;
     }
-
+    
+    /**
+     * Buscar todos los materiales relacionados con un objetivo específico
+     * ingresado como parámetro.
+     * @param codObjetivo Objetivo a buscar.
+     * @return List<ObjetivoMaterial>
+     */
     @Override
     public List<ObjetivoMaterial> buscarPorObjetivo(Integer codObjetivo) {
         return em.createNamedQuery("ObjetivoMaterial.findByCodObjetivo")

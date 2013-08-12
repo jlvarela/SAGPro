@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package sessionbeans;
 
 import entities.Objetivo;
@@ -20,9 +16,10 @@ import javax.persistence.PersistenceContext;
 @Stateless
 public class ObjetivoFacade extends AbstractFacade<Objetivo> implements ObjetivoFacadeLocal {
     @EJB
-    private ObjetivoMaterialFacadeLocal objetivoMaterialFacade;
+    private ObjetivoMaterialFacadeLocal objetivoMaterialFacade; // Necesario para agregar y consultar materiales de un objetivo.
+    
     @PersistenceContext(unitName = "SAGProApp-ejbPU")
-    private EntityManager em;  
+    private EntityManager em;                                   // Necesario para persistir los datos.
 
     @Override
     protected EntityManager getEntityManager() {
@@ -33,14 +30,23 @@ public class ObjetivoFacade extends AbstractFacade<Objetivo> implements Objetivo
         super(Objetivo.class);
     }
 
+    /**
+     * Persiste una nueva entidad en la base de datos.
+     * @param entity Objetivo   Entidad a persistir.
+     */
     @Override
     public void create(Objetivo entity) {
-        super.create(entity); //To change body of generated methods, choose Tools | Templates.
+        super.create(entity);
     }
 
+    /**
+     * Busca todos los objetivos ingresados en el sistema.
+     * Retorna la lista de EntityClass Objetivo encontrados.
+     * @return List<Objetivo>   Lista de objetivos.
+     */
     @Override
     public List<Objetivo> findAll() {
-        return super.findAll(); //To change body of generated methods, choose Tools | Templates.
+        return super.findAll();
     }
 
     /**
@@ -66,24 +72,31 @@ public class ObjetivoFacade extends AbstractFacade<Objetivo> implements Objetivo
             , final int [] materialList
             , final int [] cantidadList) {
         
+        // Si el objetivo ya existe, retornar -1.
         if (objetivoExists(nombre)){
             return -1;
         }
+        // Si las fechas no son válidas, retornar -2.
         else if ( !validarFechas(fecha_inicial, fecha_final) ){
             return -2;
         }
         else{
             try{
+                // Nuevo objetivo.
                 Objetivo obj = new Objetivo();
-                obj.setNombreObjetivo(nombre);
-                obj.setDescripcionObjetivo(descripcion);
-                obj.setPrioridadObjetivo(prioridad);
-                obj.setFechaInicial(fecha_inicial);
-                obj.setFechaLimite(fecha_final);
-                create(obj);
-                obj = buscarPorNombre(nombre);
+                obj.setNombreObjetivo(nombre);              //  Setear nombre.
+                obj.setDescripcionObjetivo(descripcion);    //  Setear descripción.
+                obj.setPrioridadObjetivo(prioridad);        //  Setear prioridad.
+                obj.setFechaInicial(fecha_inicial);         //  Setear fecha inicial.
+                obj.setFechaLimite(fecha_final);            //  Setear fecha final.
+                create(obj);                                //  Persistir objetivo.
+                obj = buscarPorNombre(nombre);              //  Buscar para obtener código.
+                
+                // Agregar materiales al objetivo.
                 objetivoMaterialFacade.agregarMaterialToObjetivo(obj.getCodObjetivo(), materialList, cantidadList);
                 System.out.println("Creación de Objetivo realizada con éxito");
+                
+                // Retornar código satisfactorio.
                 return 0;
             }catch(EntityExistsException e){
                 System.out.println("Ingresando objetivo:" + e.getMessage());
@@ -113,6 +126,7 @@ public class ObjetivoFacade extends AbstractFacade<Objetivo> implements Objetivo
     }
 
     /**
+     * Buscar objetivo según el nombre ingresado.
      * 
      * @param nombre
      * @return 
