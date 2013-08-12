@@ -14,11 +14,10 @@ import javax.persistence.PersistenceContext;
  * @author Jose
  */
 @Stateless
-public class MaterialFacade extends AbstractFacade<Material> implements MaterialFacadeLocal {
-    
+public class MaterialFacade extends AbstractFacade<Material> implements MaterialFacadeLocal {   
     private final String[] medidasVentasValues = {"Ton", "m3"}; //  Arreglo de medidas de venta.
     private final String[] medidasProducValues = {"Ton", "m3"}; //  Arreglo de medidas de producción.
-    
+
     @PersistenceContext(unitName = "SAGProApp-ejbPU")
     private EntityManager em;
 
@@ -30,6 +29,7 @@ public class MaterialFacade extends AbstractFacade<Material> implements Material
     public MaterialFacade() {
         super(Material.class);
     }
+
 
     /**
      * Obtiene la lista de todos los materiales.
@@ -49,17 +49,16 @@ public class MaterialFacade extends AbstractFacade<Material> implements Material
      */
     @Override
     public int agregarMaterial(final String nombre_material, final String medida_produccion_material, final String medida_venta_material) {
-        //  Si material no se ha ingresado previamente.
         if (!materialExists(nombre_material)) {
             try {
-                Material material = new Material();                                 // Nuevo material a ingresar.
-                material.setNombreMaterial(nombre_material);                        // Setear nombre del material.
-                material.setMedidaProduccionMaterial(medida_produccion_material);   // Setear medida de producción.
-                material.setMedidaVentaMaterial(medida_venta_material);             // Setear medida de venta.
-                create(material);                                                   // Crear material
+                Material material = new Material();
+                material.setNombreMaterial(nombre_material);
+                material.setMedidaProduccionMaterial(medida_produccion_material);
+                material.setMedidaVentaMaterial(medida_venta_material);
+                create(material);
                 System.out.println("Creación de material realizada con éxito");
-                return 0;                                                           // Retornar código satisfactorio.
-            } catch (EntityExistsException e) {                                     // Si entidad ya existe.
+                return 0;
+            } catch (EntityExistsException e) {
                 System.out.println("Ingresando Material: Error -> " + e.getMessage());
                 return -1;
             }
@@ -75,6 +74,16 @@ public class MaterialFacade extends AbstractFacade<Material> implements Material
     @Override
     public void create(Material entity) {
         super.create(entity);
+    }
+
+    @Override
+    public void edit(Material entity) {
+        super.edit(entity); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void remove(Material entity) {
+        super.remove(entity); //To change body of generated methods, choose Tools | Templates.
     }
 
     /**
@@ -150,39 +159,6 @@ public class MaterialFacade extends AbstractFacade<Material> implements Material
         }
     }
 
-    @Override
-    public void edit(Material entity) {
-        super.edit(entity); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void remove(Material entity) {
-        super.remove(entity); //To change body of generated methods, choose Tools | Templates.
-    }
-    
-    /**
-     * Eliminar un material por su código.
-     * @param material_id   Id del material a eliminar
-     * @return int  código de satisfacción de la transacción.
-     */
-    @Override
-    public int eliminarMaterial(final String material_id) {
-        // Buscar si material existe.
-        if (!materialExists(material_id)) {
-            return -1;
-
-        } else {
-            try {
-                Material material = buscarPorID(material_id);
-                remove(material);
-                System.out.println("Eliminación del material realizada con éxito");
-                return 0;
-            } catch (EntityExistsException e) {
-                System.out.println("Eliminando material: Error -> " + e.getMessage());
-                return -1;
-            }
-        }
-    }
     
     /**
      * Editar información de un material.
@@ -195,12 +171,12 @@ public class MaterialFacade extends AbstractFacade<Material> implements Material
      * @return 
      */
     @Override
-    public int editarMaterial(final String codMaterial, final String nombre_material, final String medida_produccion_material, final String medida_venta_material){
-        if (!materialExistsByCode(codMaterial)) {
+    public int editarMaterial(final String codMaterial, final String nombre_material, final String medida_produccion_material, final String medida_venta_material) {
+        Material material = buscarPorID(codMaterial);
+        if (material == null) {
             return -1;
         } else {
             try {
-                Material material=buscarPorID(codMaterial);
                 material.setNombreMaterial(nombre_material);
                 material.setMedidaProduccionMaterial(medida_produccion_material);
                 material.setMedidaVentaMaterial(medida_venta_material);
@@ -209,6 +185,29 @@ public class MaterialFacade extends AbstractFacade<Material> implements Material
                 return 0;
             } catch (EntityExistsException e) {
                 System.out.println("Editando material: Error -> " + e.getMessage());
+                return -1;
+            }
+        }
+    }
+
+    /**
+     * Eliminar un material por su código.
+     * @param material_id   Id del material a eliminar
+     * @return int  código de satisfacción de la transacción.
+     */
+    @Override
+    public int eliminarMaterial(final String material_id) {
+        Material material = buscarPorID(material_id);
+        if (material == null) {
+            return -1;
+
+        } else {
+            try {
+                remove(material);
+                System.out.println("Eliminación del material realizada con éxito");
+                return 0;
+            } catch (EntityExistsException e) {
+                System.out.println("Eliminando material: Error -> " + e.getMessage());
                 return -1;
             }
         }
