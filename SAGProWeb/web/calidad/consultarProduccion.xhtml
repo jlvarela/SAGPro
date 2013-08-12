@@ -46,7 +46,7 @@
                             <div class="span12"  >
                                 <p:dataTable id="prod" var="produccionDiaria" value="#{consultarProduccionManagedBean.listaProduccionDiaria}" rowKey="#{produccionDiaria.codMaterial}" selection="#{consultarProduccionManagedBean.selectedProduccionDiaria}" selectionMode="single" >
                                     <f:ajax event="rowSelect"  render=":form:muestra" />
-                                    <f:facet name="header">  
+                                    <f:facet name="header">
                                         Producción diaria
                                     </f:facet>  
                                     <p:column headerText="Material">  
@@ -81,7 +81,7 @@
 
                                         <h:outputText value="Cantidad: " />  
                                         <p:inplace editor="true">  
-                                            <!--<h:inputText value="#{consultarProduccionManagedBean.selectedProduccionDiaria.cantidad}"/>-->  
+                                            <h:inputText value="#{consultarProduccionManagedBean.selectedProduccionDiaria.cantidad}"/>  
                                         </p:inplace>
                                         
                                         <h:outputText value="Unidad: " />

@@ -81,6 +81,7 @@ public class ConsultarProduccionManagedBean {
         }
 
         listaProduccionDiaria = produccionDiariaList;
+        
     }
 
     public ProduccionDiaria getSelectedProduccionDiaria() {
@@ -186,7 +187,8 @@ public class ConsultarProduccionManagedBean {
         } catch (ParseException ex) {
             Logger.getLogger(ConsultarProduccionManagedBean.class.getName()).log(Level.SEVERE, null, ex);
         }
-        //listaMateriales = materialFacade.findAll();
+        
+        this.materialSelected = null;
 
     }
 }
