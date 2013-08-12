@@ -30,32 +30,18 @@ public class ProduccionDiariaFacade extends AbstractFacade<ProduccionDiaria> imp
         return em;
     }
 
-    @Override
-    public void create(ProduccionDiaria entity) {
-        super.create(entity); //To change body of generated methods, choose Tools | Templates.
-    }
-
     public ProduccionDiariaFacade() {
         super(ProduccionDiaria.class);
     }
 
     @Override
-    public int agregarProduccionDiaria(final int codMaterial, final int cantidadMaterial) {
-        if (codMaterial > 0 && cantidadMaterial > 0) {
-            Calendar cal = Calendar.getInstance();
-            cal.set(Calendar.HOUR_OF_DAY, 0);
-            cal.clear(Calendar.MINUTE);
-            cal.clear(Calendar.SECOND);
-            cal.clear(Calendar.MILLISECOND);
-            
-            ProduccionDiaria prod = new ProduccionDiaria(cal.getTime(), codMaterial);
-            prod.setProduccionMaterial(cantidadMaterial);
-            create(prod);
-            return 0;
-        } else {
-            return -1;  // Invalid arguments
-        }
+    public void create(ProduccionDiaria entity) {
+        super.create(entity); //To change body of generated methods, choose Tools | Templates.
+    }
 
+    @Override
+    public void edit(ProduccionDiaria entity) {
+        super.edit(entity); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
@@ -64,10 +50,16 @@ public class ProduccionDiariaFacade extends AbstractFacade<ProduccionDiaria> imp
     }
 
     @Override
-    public void edit(ProduccionDiaria entity) {
-        super.edit(entity); //To change body of generated methods, choose Tools | Templates.
+    public List<ProduccionDiaria> findAll() {
+        return super.findAll(); //To change body of generated methods, choose Tools | Templates.
     }
 
+    /**
+     * Busca la producción para los materiales ingresados en una fecha.
+     *
+     * @param produccion_fecha Fecha inicial del rango.
+     * @return
+     */
     @Override
     public List<ProduccionDiaria> buscarPorFecha(final Date produccion_fecha) {
         try {
@@ -83,6 +75,13 @@ public class ProduccionDiariaFacade extends AbstractFacade<ProduccionDiaria> imp
         }
     }
 
+    /**
+     * Busca la producción para un material dada una fecha.
+     *
+     * @param codMaterial Código del material.
+     * @param produccion_fecha Fecha inicial del rango.
+     * @return
+     */
     @Override
     public ProduccionDiaria buscarProduccion(final Date produccion_fecha, final int codMaterial) {
         try {
@@ -101,18 +100,63 @@ public class ProduccionDiariaFacade extends AbstractFacade<ProduccionDiaria> imp
         }
     }
 
+    /**
+     * Busca la producción para un material dado un rango de fechas.
+     *
+     * @param cod_mat Código del material.
+     * @param fecha_inicial Fecha inicial del rango.
+     * @param fecha_final Fecha final del rango.
+     * @return
+     */
     @Override
-    public List<ProduccionDiaria> findAll() {
-        return super.findAll(); //To change body of generated methods, choose Tools | Templates.
+    public List<ProduccionDiaria> buscarPorRango(final int cod_mat, final Date fecha_inicial, final Date fecha_final) {
+        List<ProduccionDiaria> lista;
+        lista = em.createQuery("SELECT p FROM ProduccionDiaria p WHERE p.produccionDiariaPK.codMaterial = :codMaterial and p.produccionDiariaPK.fechaDiariaEstadistica BETWEEN :fecha_inicial and :fecha_final")
+                .setParameter("fecha_inicial", fecha_inicial)
+                .setParameter("fecha_final", fecha_final)
+                .setParameter("codMaterial", cod_mat)
+                .getResultList();
+        return lista;
     }
 
+    /**
+     * Agregar una nueva producción diaria al sistema.
+     *
+     * @param codMaterial Código del material
+     * @param cantidadMaterial Cantidad del material.
+     * @return int Código de verificación de la transacción.
+     */
+    @Override
+    public int agregarProduccionDiaria(final int codMaterial, final int cantidadMaterial) {
+        if (codMaterial > 0 && cantidadMaterial > 0) {
+            Calendar cal = Calendar.getInstance();
+            cal.set(Calendar.HOUR_OF_DAY, 0);
+            cal.clear(Calendar.MINUTE);
+            cal.clear(Calendar.SECOND);
+            cal.clear(Calendar.MILLISECOND);
+
+            ProduccionDiaria prod = new ProduccionDiaria(cal.getTime(), codMaterial);
+            prod.setProduccionMaterial(cantidadMaterial);
+            create(prod);
+            return 0;
+        } else {
+            return -1;  // Invalid arguments
+        }
+
+    }
+
+    /**
+     * Editar información de una producción. Para esto se ingresa el código,
+     * nuevo nombre, medida de producción y venta.
+     *
+     * @param codMaterial Código del material
+     * @param produccionFecha Fecha de ingreso de la producción
+     * @param cantidad Cantidad del material.
+     * @return int Código de verificación de la transacción.
+     */
     @Override
     public int editarProduccion(final int codMaterial, final Date produccionFecha, final int cantidad) {
-//        Date fecha;
-//        SimpleDateFormat df = new SimpleDateFormat("MM/dd/yyyy");
         try {
-//            fecha = new Date(df.parse(produccionFecha).getTime());
-//            int materialid = Integer.parseInt(codMaterial);
             ProduccionDiaria produccion = buscarProduccion(produccionFecha, codMaterial);
             produccion.setProduccionMaterial(cantidad);
             edit(produccion);
@@ -121,21 +165,6 @@ public class ProduccionDiariaFacade extends AbstractFacade<ProduccionDiaria> imp
         } catch (EntityExistsException e) {
             System.out.println("Editando produccion: Error -> " + e.getMessage());
             return -1;
-
-//        } catch (ParseException ex) {
-//            Logger.getLogger(ProduccionDiariaFacade.class.getName()).log(Level.SEVERE, null, ex);
-//            return -1;
         }
-    }
-
-    @Override
-    public List<ProduccionDiaria> bucarPorRango(final int cod_mat, final Date fecha_inicial, final Date fecha_final) {
-        List<ProduccionDiaria> lista;
-        lista = em.createQuery("SELECT p FROM ProduccionDiaria p WHERE p.produccionDiariaPK.codMaterial = :codMaterial and p.produccionDiariaPK.fechaDiariaEstadistica BETWEEN :fecha_inicial and :fecha_final")
-                .setParameter("fecha_inicial", fecha_inicial)
-                .setParameter("fecha_final", fecha_final)
-                .setParameter("codMaterial", cod_mat)
-                .getResultList();
-        return lista;
     }
 }
