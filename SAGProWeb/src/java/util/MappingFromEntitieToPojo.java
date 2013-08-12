@@ -71,7 +71,7 @@ public class MappingFromEntitieToPojo {
     public static ProduccionDiaria produccionFromEntityToPojo(entities.ProduccionDiaria prdEntity){
         pojoclass.ProduccionDiaria producPojo = new ProduccionDiaria();
         producPojo.setFecha(prdEntity.getProduccionDiariaPK().getFechaDiariaEstadistica());
-        producPojo.setCodMaterial(prdEntity.getProduccionDiariaPK().getCodMaterial());
+        producPojo.setCodMaterial(prdEntity.getMaterial().getCodMaterial());
         producPojo.setCantidad(prdEntity.getProduccionMaterial());
         producPojo.setNombreMaterial(prdEntity.getMaterial().getNombreMaterial());
         producPojo.setNombreUnidadMaterial(prdEntity.getMaterial().getMedidaProduccionMaterial());
