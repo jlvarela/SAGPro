@@ -24,10 +24,9 @@ import javax.validation.ConstraintValidatorContext;
 @FacesValidator("rutValidator")
 public class rutValidator implements Validator {
     
-    public static boolean ValidarRut(String cadena)
+    public static boolean validateRut(String cadena)
     {
         int ultimoDigito= cadena.length()-1;
-        
         char dv=(char)cadena.charAt(ultimoDigito);
         int rut=Integer.parseInt(cadena.substring(0, ultimoDigito));
         
@@ -48,9 +47,11 @@ public class rutValidator implements Validator {
     @Override
     public void validate(FacesContext facesContext, UIComponent uIComponent, Object value)throws 
             ValidatorException{
-        System.out.println("llega aca");
         Pattern pattern = Pattern.compile("\\d+[kK]*");
-        Matcher matcher = pattern.matcher((CharSequence)value);
+        
+        Long valor=(Long)value;
+        String cadena=String.valueOf(valor);
+        Matcher matcher = pattern.matcher((CharSequence)cadena);
         HtmlInputText htmlInputText = (HtmlInputText) uIComponent;
         String label;
                 
@@ -62,8 +63,7 @@ public class rutValidator implements Validator {
         }
 
         if(!matcher.matches()){
-            
-            if ((CharSequence)value ==""){
+            if (value == null){
                 FacesMessage facesMessage = new FacesMessage(FacesMessage.SEVERITY_ERROR, "",label + ": Campo Obligatorio Vacío");
                 throw new ValidatorException(facesMessage);
             }
@@ -73,7 +73,7 @@ public class rutValidator implements Validator {
             }
         }else{
             /*si no es vacío y cumple el patron regular, se revisa la validez del rut*/
-            if(!ValidarRut((String)value)){
+            if(!validateRut((String)cadena)){
                 FacesMessage facesMessage = new FacesMessage(FacesMessage.SEVERITY_ERROR, "",label + ": el RUT ingresado no es válido");
                 throw new ValidatorException(facesMessage);
             }
