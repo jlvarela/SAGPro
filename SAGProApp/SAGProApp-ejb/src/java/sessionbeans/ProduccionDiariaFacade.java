@@ -5,6 +5,7 @@
 package sessionbeans;
 
 import entities.ProduccionDiaria;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -71,7 +72,7 @@ public class ProduccionDiariaFacade extends AbstractFacade<ProduccionDiaria> imp
 
         } catch (NoResultException e) {
             System.out.println("Producción: '" + produccion_fecha + "' no se encuentra registrado");
-            return null;
+            return new ArrayList<ProduccionDiaria>();
         }
     }
 

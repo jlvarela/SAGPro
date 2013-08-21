@@ -8,7 +8,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
 import pojoclass.Material;
-import pojoclass.ProduccionDiaria;
+import entities.ProduccionDiaria;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -49,6 +49,7 @@ public class IngresarProduccionManagedBean implements Serializable{
     @PostConstruct
     public void init()
     {
+        System.out.println("qwyriqryywyquw");
         // Fecha actual
         Calendar hoy = Calendar.getInstance();
         hoy.set(Calendar.HOUR_OF_DAY, 0);
@@ -59,21 +60,10 @@ public class IngresarProduccionManagedBean implements Serializable{
         // Lista de materiales del tipo entities.
         List<entities.Material> listaMaterialesEntity = materialFacade.findAll();
         // Lista de Producciones diarias, de la fecha actual. Son entity class.
-        List<entities.ProduccionDiaria> listaProduccionDiariaEntity = produccionDiariaFacade.buscarPorFecha(hoy.getTime());
+        listaProduccionDiaria = produccionDiariaFacade.buscarPorFecha(hoy.getTime());
         
         // Array de materiales. POJO Class
         ArrayList<Material> arrayListMaterial = new ArrayList();
-        
-        // Array de producciones. POJO Class
-        ArrayList<ProduccionDiaria> arrayListProdDiaria = new ArrayList();
-        
-        // Para cada entidad, mappear a POJO Class
-        for( entities.ProduccionDiaria p : listaProduccionDiariaEntity ){
-            System.out.println("asf " + p.getProduccionDiariaPK().getCodMaterial());
-            arrayListProdDiaria.add(util.MappingFromEntitieToPojo.produccionFromEntityToPojo(p));
-        }
-        
-        listaProduccionDiaria = arrayListProdDiaria;
         
         // Para cada entidad material, mappear a POJO Class
         for( entities.Material p: listaMaterialesEntity ){
@@ -152,14 +142,10 @@ public class IngresarProduccionManagedBean implements Serializable{
         
         int resp = produccionDiariaFacade.agregarProduccionDiaria(Integer.parseInt(this.codMaterial)
                 , Integer.parseInt(this.cantidad));
-
-        //FacesContext fcontext = FacesContext.getCurrentInstance();
         if (resp == 0) {
             fcontext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "", "Producción agregado con éxito"));
         } else if (resp == -1) {
             fcontext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "", "Ha ocurrido un error"));
         }
-       
-        init();
     }
 }

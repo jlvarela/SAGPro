@@ -41,11 +41,9 @@ public class Material implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "material")
     private List<ObjetivoMaterial> objetivoMaterialList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "material")
-    private Collection<ProduccionDiaria> produccionDiariaCollection;
+    private List<ProduccionDiaria> produccionDiariaCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "codMaterial")
-    private Collection<EstadisticaMensual> estadisticaMensualCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "codMaterial")
-    private Collection<TicketBascula> ticketBasculaCollection;
+    private List<EstadisticaMensual> estadisticaMensualCollection;
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -155,7 +153,7 @@ public class Material implements Serializable {
         return produccionDiariaCollection;
     }
 
-    public void setProduccionDiariaCollection(Collection<ProduccionDiaria> produccionDiariaCollection) {
+    public void setProduccionDiariaCollection(List<ProduccionDiaria> produccionDiariaCollection) {
         this.produccionDiariaCollection = produccionDiariaCollection;
     }
 
@@ -164,17 +162,8 @@ public class Material implements Serializable {
         return estadisticaMensualCollection;
     }
 
-    public void setEstadisticaMensualCollection(Collection<EstadisticaMensual> estadisticaMensualCollection) {
+    public void setEstadisticaMensualCollection(List<EstadisticaMensual> estadisticaMensualCollection) {
         this.estadisticaMensualCollection = estadisticaMensualCollection;
-    }
-
-    @XmlTransient
-    public Collection<TicketBascula> getTicketBasculaCollection() {
-        return ticketBasculaCollection;
-    }
-
-    public void setTicketBasculaCollection(Collection<TicketBascula> ticketBasculaCollection) {
-        this.ticketBasculaCollection = ticketBasculaCollection;
     }
 
     @XmlTransient

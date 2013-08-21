@@ -11,6 +11,7 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -76,7 +77,7 @@ public class Objetivo implements Serializable {
     @JoinTable(name = "objetivo_material", joinColumns = {
         @JoinColumn(name = "COD_OBJETIVO", referencedColumnName = "COD_OBJETIVO")}, inverseJoinColumns = {
         @JoinColumn(name = "COD_MATERIAL", referencedColumnName = "COD_MATERIAL")})
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, targetEntity = Material.class)
     private List<Material> materialList;
 
     public Objetivo() {

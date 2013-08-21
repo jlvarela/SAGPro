@@ -63,7 +63,8 @@
 
                             <div class="row-fluid">
                                 <div class="controls pull-right">
-                                    <p:commandButton action="#{ingresarProduccionManagedBean.ingresarProduccion()}" ajax="false" value="Ingresar" icon="ui-icon-check" />
+                                    <p:commandButton action="#{ingresarProduccionManagedBean.ingresarProduccion}" ajax="false" value="Ingresar" icon="ui-icon-check">
+                                    </p:commandButton>
                                 </div>
                             </div>
                         </div>
@@ -76,21 +77,21 @@
 
                             <div class="row-fluid">
                                 <div class="span12">
-                                    <p:dataTable var="produccionDiaria" value="#{ingresarProduccionManagedBean.listaProduccionDiaria}" rowKey="#{produccionDiaria.produccionDiariaPK}" >
+                                    <p:dataTable id="tabla" var="produccionDiaria" value="#{ingresarProduccionManagedBean.listaProduccionDiaria}" rowKey="#{produccionDiaria.produccionDiariaPK}" >
                                         <p:ajax event="rowSelect"  update=":form" />
                                         <f:facet name="header">  
                                             Materiales 
                                         </f:facet>  
                                         <p:column headerText="Material">  
-                                            <h:outputText value="#{produccionDiaria.nombreMaterial}" />  
+                                            <h:outputText value="#{produccionDiaria.material.nombreMaterial}" />  
                                         </p:column>  
 
                                         <p:column headerText="Cantidad">  
-                                            <h:outputText value="#{produccionDiaria.cantidad}" />  
+                                            <h:outputText value="#{produccionDiaria.produccionMaterial}" />  
                                         </p:column>  
 
                                         <p:column headerText="Unidad">  
-                                            <h:outputText value="#{produccionDiaria.nombreUnidadMaterial}" />  
+                                            <h:outputText value="#{produccionDiaria.material.medidaProduccionMaterial}" />  
                                         </p:column>  
                                     </p:dataTable>
                                 </div>
