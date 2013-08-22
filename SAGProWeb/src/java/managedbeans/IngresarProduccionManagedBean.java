@@ -49,7 +49,6 @@ public class IngresarProduccionManagedBean implements Serializable{
     @PostConstruct
     public void init()
     {
-        System.out.println("qwyriqryywyquw");
         // Fecha actual
         Calendar hoy = Calendar.getInstance();
         hoy.set(Calendar.HOUR_OF_DAY, 0);
