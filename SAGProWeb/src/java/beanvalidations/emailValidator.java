@@ -44,7 +44,7 @@ public class emailValidator implements Validator {
                 throw new ValidatorException(facesMessage);
             }
             else{
-                FacesMessage facesMessage = new FacesMessage(label + ": no es una dirección de email válido");
+                FacesMessage facesMessage = new FacesMessage(FacesMessage.SEVERITY_ERROR, "",label + ": dato ingresado no es una dirección de email válido");
                 throw new ValidatorException(facesMessage);
             }
         }
