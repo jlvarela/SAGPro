@@ -23,7 +23,7 @@
                             <div class="span12">
                                 <!--<h:form id="form">-->  
                                 <p:dataTable var="obj" value="#{consultarObjetivoManagedBean.listaObjetivos}" rowKey="#{obj.codObjetivo}"  selection="#{consultarObjetivoManagedBean.selectedObjetivo}" selectionMode="single"  > 
-                                    <p:ajax event="rowSelect"  update=":form" listener="#{consultarObjetivoManagedBean.handleRowSelect}"/>
+                                    <p:ajax event="rowSelect"  update=":form:objetivo_details,:form:materialObjetivoTabla,:form:fecha_inicial,:form:fecha_final" listener="#{consultarObjetivoManagedBean.handleRowSelect}"/>
                                     <p:column headerText="Nombre" filterBy="#{obj.nombre}"> 
                                         <h:outputText value="#{obj.nombre}" />  
                                     </p:column>  
@@ -48,7 +48,7 @@
 
                             <div class="row-fluid" >
                                 <div class="span6" style="margin-left: 2%">
-                                    <p:panel header="Datos del Objetivo">
+                                    <p:panel id="objetivo_details" header="Datos del Objetivo">
                                         <h:panelGrid columns="2" columnClasses="column" cellpadding="5">
                                             <h:outputText value="Nombre: " />
                                             <p:inplace editor="true" >
@@ -85,7 +85,7 @@
                                         <div class="span6">
                                             <div class="input-append datetimepicker">
 
-                                                <h:inputText value="#{consultarObjetivoManagedBean.selectedObjetivo.fechaInicial}"  >
+                                                <h:inputText id="fecha_inicial" value="#{consultarObjetivoManagedBean.selectedObjetivo.fechaInicial}"  >
                                                     <f:convertDateTime pattern="MM/dd/yyyy" />
                                                 </h:inputText>
                                                 <span class="add-on">
@@ -103,7 +103,7 @@
                                         <div class="span6">
                                             <div class="input-append datetimepicker">
 
-                                                <h:inputText value="#{consultarObjetivoManagedBean.selectedObjetivo.fechaLimite}">
+                                                <h:inputText id="fecha_final" value="#{consultarObjetivoManagedBean.selectedObjetivo.fechaLimite}">
                                                     <f:convertDateTime pattern="MM/dd/yyyy" />
                                                 </h:inputText>
                                                 <span class="add-on">
@@ -143,12 +143,11 @@
                                     <div class="row-fluid">
 
                                         <p:dataTable var="materialObjetivo"
-                                                     rowKey="#{materialObjetivo.codMaterial}"
                                                      value="#{consultarObjetivoManagedBean.selectedObjetivo.materialList}"
                                                      id="materialObjetivoTabla" >
 
                                             <p:column headerText="Material">
-                                                <h:outputText value="#{material.nombreMaterial}" />
+                                                <h:outputText value="#{materialObjetivo.nombreMaterial}" />
 
                                             </p:column>
 

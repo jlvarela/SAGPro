@@ -41,8 +41,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class EstadisticaMensual implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
-    @Basic(optional = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
     @Column(name = "COD_ESTADISTICA_MENSUAL")
     private Integer codEstadisticaMensual;
     @Basic(optional = false)

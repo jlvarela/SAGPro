@@ -175,7 +175,6 @@ public class ConsultarObjetivoManagedBean implements Serializable {
         
         // Para cada material relacionado con el objetivo seleccionado.
         for(entities.ObjetivoMaterial om : omList){
-            
             // Hacer mapping con clase POJO y añadirlo al array.
             smArray.add(util.MappingFromEntitieToPojo.selectedMaterialFromMaterialObjetivoToPojo(om));
         }

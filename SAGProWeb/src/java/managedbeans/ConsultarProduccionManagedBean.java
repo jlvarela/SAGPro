@@ -66,7 +66,7 @@ public class ConsultarProduccionManagedBean {
         for (entities.ProduccionDiaria produccionDiariaEntity : listaProduccionDiariaEntities) {
             produccionDiariaList.add(util.MappingFromEntitieToPojo.produccionFromEntityToPojo(produccionDiariaEntity));
         }
-
+        selectedProduccionDiaria = new pojoclass.ProduccionDiaria();
         listaProduccionDiaria = produccionDiariaList;
         
     }
