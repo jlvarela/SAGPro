@@ -58,7 +58,9 @@
                                     <h:panelGrid columns="2" columnClasses="column" cellpadding="5">
                                         <h:outputText value="Nombre: " />  
                                         <p:inplace editor="true">  
-                                            <p:inputText value="#{consultarMaterialManagedBean.selectedMaterial.nombreMaterial}" />  
+                                            <p:inputText label="Nombre" value="#{consultarMaterialManagedBean.selectedMaterial.nombreMaterial}">
+                                                <f:validator validatorId="nombreValidator" />
+                                            </p:inputText>  
                                         </p:inplace> 
                                         
                                         <h:outputText value="Unidad de producción: "/>  
