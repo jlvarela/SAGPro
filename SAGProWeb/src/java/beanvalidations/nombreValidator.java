@@ -45,7 +45,7 @@ public class nombreValidator implements Validator{
                 throw new ValidatorException(facesMessage);
             }
             else{
-                FacesMessage facesMessage = new FacesMessage(label + ": valor ingresado no es un nombre valido");
+                FacesMessage facesMessage = new FacesMessage(FacesMessage.SEVERITY_ERROR, "",label + ": valor ingresado no es un nombre válido");
                 throw new ValidatorException(facesMessage);
             }
             

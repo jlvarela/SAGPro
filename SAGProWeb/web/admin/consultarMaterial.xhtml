@@ -58,7 +58,9 @@
                                     <h:panelGrid columns="2" columnClasses="column" cellpadding="5">
                                         <h:outputText value="Nombre: " />  
                                         <p:inplace editor="true">  
-                                            <p:inputText value="#{consultarMaterialManagedBean.selectedMaterial.nombreMaterial}" />  
+                                            <p:inputText label="Nombre" value="#{consultarMaterialManagedBean.selectedMaterial.nombreMaterial}">
+                                                <f:validator validatorId="nombreValidator" />
+                                            </p:inputText>  
                                         </p:inplace> 
                                         
                                         <h:outputText value="Unidad de producción: "/>  
@@ -80,8 +82,8 @@
                             <div class="row-fluid">
                                 <div class="control-group" >
                                     <div class="controls pull-right">
-                                        <p:commandButton action="#{consultarMaterialManagedBean.modificarMaterial()}" ajax="false"  value="Editar" icon="ui-icon-pencil"/>
-                                        <button type="button" class="btn"><i class="icon-trash"></i> Eliminar</button>
+                                        <p:commandButton onclick="editarConfirm.show();"   value="Editar" icon="ui-icon-pencil" disabled="#{consultarMaterialManagedBean.selectedMaterial==null}"/>
+                                        <p:commandButton  onclick="eliminarConfirm.show();"  value="Eliminar" icon="ui-icon-trash" disabled="#{consultarMaterialManagedBean.selectedMaterial==null}"/>
                                     </div>
                                 </div>
                             </div>
@@ -90,6 +92,20 @@
 
                 </fieldset>
             </div>
+            
+            <p:confirmDialog widgetVar="editarConfirm"  header="Editar Material" message="¿Esta seguro de editar este material?" style="position: fixed" >  
+            <div class="controls pull-right">
+                <p:commandButton value="Aceptar" action="#{consultarMaterialManagedBean.modificarMaterial()}"  ajax="false" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />  
+                <p:commandButton value="Cancelar"  onclick="editarConfirm.hide();" styleClass="ui-confirmdialog-no" icon="ui-icon-close"/> 
+            </div>
+            </p:confirmDialog>
+            
+            <p:confirmDialog widgetVar="eliminarConfirm"  header="Eliminar Material" message="¿Esta seguro de eliminar este usuario?" style="position: fixed" >  
+            <div class="controls pull-right">
+                <p:commandButton value="Aceptar"  ajax="false" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />  
+                <p:commandButton value="Cancelar"  onclick="eliminarConfirm.hide();" styleClass="ui-confirmdialog-no" icon="ui-icon-close"/> 
+            </div>
+            </p:confirmDialog>
 
         </h:form>
     </ui:define>

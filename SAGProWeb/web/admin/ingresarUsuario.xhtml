@@ -29,67 +29,47 @@
                                 </div>
                                 <div class="span7">
                                     <div class="span9">
-                                        <h:inputText  value="#{ingresarUsuarioManagedBean.newUser.rut}" label="RUT" >
-                                            <f:validator validatorId="rutValidator" />
-                                        </h:inputText>
+                                        <h:inputText id="rut" value="#{ingresarUsuarioManagedBean.newUser.rut}" label="RUT">
+                                            <f:validator  validatorId="rutValidator" />
+                                       </h:inputText>
+                                        <p:watermark for="rut" value="161456788"/>
                                     </div>
                                 </div>
                             </div>
 
                             <div class="row-fluid">
                                 <div class="span5">
-                                    Nombres
+                                    Nombre
                                 </div>
                                 <div class="span7">
-                                    <h:inputText title="Ingrese solo letras" label="Nombre" value="#{ingresarUsuarioManagedBean.newUser.nombre}">
+                                    <h:inputText id="nombre" title="Ingrese solo letras" label="Nombre" value="#{ingresarUsuarioManagedBean.newUser.nombre}">
                                         <f:validator validatorId="nombreValidator" />
                                     </h:inputText>
+                                    <p:watermark for="nombre" value="Roberto"/>
                                 </div>
                             </div>
 
                             <div class="row-fluid">
                                 <div class="span5">
-                                    Apellido Paterno
+                                    Apellido
                                 </div>
                                 <div class="span7">
-                                    <h:inputText title="Ingrese solo letras" label="Apellido" value="#{ingresarUsuarioManagedBean.newUser.apellido}">
+                                    <h:inputText id="apellido" title="Ingrese solo letras" label="Apellido" value="#{ingresarUsuarioManagedBean.newUser.apellido}">
                                         <f:validator validatorId="nombreValidator" />
                                     </h:inputText>
+                                    <p:watermark for="apellido" value="Jara"/>
                                 </div>
                             </div>
-                            <div class="row-fluid">
-                                <div class="span5">
-                                    Apellido Materno
-                                </div>
-                                <div class="span7">
-                                    Aun no disponible en BD
-                                </div>
-                            </div>
-
+                          
                             <div class="row-fluid">
                                 <div class="span5">
                                     Correo
                                 </div>
                                 <div class="span7">
-                                    <h:inputText title="Ej: usuario@mail.com" id="correo" label="Correo" value="#{ingresarUsuarioManagedBean.newUser.correo}">
+                                    <h:inputText  title="Ej: usuario@mail.com" id="correo" label="Correo" value="#{ingresarUsuarioManagedBean.newUser.correo}">
                                         <f:validator validatorId="emailValidator" />
                                     </h:inputText>
-                                </div>
-                            </div>
-                            <div class="row-fluid">
-                                <div class="span5">
-                                    Teléfono
-                                </div>
-                                <div class="span7">
-                                    Aun no disponible en BD
-                                </div>
-                            </div>
-                            <div class="row-fluid">
-                                <div class="span5">
-                                    Dirección
-                                </div>
-                                <div class="span7">
-                                    Aun no disponible en BD
+                                    <p:watermark for="correo" value="Ej: usuario@mail.cl"/>
                                 </div>
                             </div>
                             <div class="row-fluid">

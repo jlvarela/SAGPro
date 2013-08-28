@@ -95,11 +95,11 @@ public class IngresarUsuarioManagedBean {
                 , newUser.getTipo());
 
         FacesContext fcontext = FacesContext.getCurrentInstance();
-        String viewId = fcontext.getViewRoot().getViewId();
+        /*String viewId = fcontext.getViewRoot().getViewId();
         ViewHandler handler = fcontext.getApplication().getViewHandler();
         UIViewRoot root = handler.createView(fcontext, viewId);
         root.setViewId(viewId);
-        fcontext.setViewRoot(root);
+        fcontext.setViewRoot(root);*/
         
         if (resp == 0) {
             fcontext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "", "Usuario agregado con éxito"));
