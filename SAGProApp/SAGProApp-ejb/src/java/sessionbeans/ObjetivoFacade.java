@@ -7,6 +7,7 @@ import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityExistsException;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 
 /**
@@ -107,7 +108,7 @@ public class ObjetivoFacade extends AbstractFacade<Objetivo> implements Objetivo
     
     /**
      * Determina si ya existe en el sistema un objetivo con el nombre
-     * ingresado como parámetro de ésta función.
+     * ingresado como parámetro de esta función.
      * @param obj_nombre    String Nombre del objetivo a buscar.
      * @return  Boolean Existencia del objetivo.
      */
@@ -160,5 +161,94 @@ public class ObjetivoFacade extends AbstractFacade<Objetivo> implements Objetivo
                 
         return true;                    // Fecha válida
     }
+    
+    /**
+     * 
+     * @param codigo_obj
+     * @param nombre_obj
+     * @param descripcion_obj
+     * @param fecha_inicial
+     * @param fecha_final
+     * @param prioridad_obj
+     * @param lista_materiales
+     * @param lista_cantidades
+     * @return 
+     */
+
+    @Override
+    public int editarObjetivo(final Integer codigo_obj
+            , final String nombre_obj
+            , final String descripcion_obj
+            , final Date fecha_inicial
+            , final Date fecha_final
+            , final short prioridad_obj
+            , int [] lista_materiales
+            , int [] lista_cantidades) {
+        Objetivo obj = buscarPorCodigo(codigo_obj);
+        
+        if ( obj == null ){
+            return -1;
+        }
+        else if ( !objetivoExists(obj.getNombreObjetivo()) ) {
+            return -1;
+        }
+        else{
+            int resp = objetivoMaterialFacade.deleteMaterialOfObjetivo(codigo_obj);
+            em.flush();
+            obj.setNombreObjetivo(nombre_obj);
+            obj.setDescripcionObjetivo(descripcion_obj);
+            obj.setFechaInicial(fecha_inicial);
+            obj.setFechaLimite(fecha_final);
+            obj.setPrioridadObjetivo(prioridad_obj);
+            edit(obj);
+            objetivoMaterialFacade.agregarMaterialToObjetivo(codigo_obj, lista_materiales, lista_cantidades);
+        }
+                
+        return 0;
+    }
+    
+    /**
+     * Busca un objetivo por el código ingresado como parámetro.
+     * @param cod_obj
+     * @return 
+     */
+    private Objetivo buscarPorCodigo(Integer cod_obj){
+        try {
+            Objetivo obj = (Objetivo) em.createNamedQuery("Objetivo.findByCodObjetivo")
+                .setParameter("codObjetivo", cod_obj)
+                .getSingleResult();
+            return obj;
+        }
+        catch (NoResultException ex){
+            return null;
+        }
+    }
+
+    @Override
+    public int eliminarObjetivo(final Integer codigo_obj) {
+        Objetivo obj;
+        obj = buscarPorCodigo(codigo_obj);
+        
+        if ( obj == null ){
+            return -1;
+        }
+        else{
+            remove(obj);
+            em.flush();
+        }
+        return 0;
+    }
+
+    @Override
+    public void remove(Objetivo entity) {
+        super.remove(entity); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void edit(Objetivo entity) {
+        super.edit(entity); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    
     
 }

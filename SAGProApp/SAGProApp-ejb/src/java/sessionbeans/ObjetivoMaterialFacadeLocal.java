@@ -32,5 +32,7 @@ public interface ObjetivoMaterialFacadeLocal {
     int agregarMaterialToObjetivo(final int codObjetivo, final int [] materialList, final int [] cantidadList);
 
     List<ObjetivoMaterial> buscarPorObjetivo(Integer codObjetivo);
+
+    int deleteMaterialOfObjetivo(final Integer cod_objt);
     
 }

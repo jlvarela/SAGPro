@@ -39,5 +39,9 @@ public interface ObjetivoFacadeLocal {
             , final int [] cantidadList);
 
     Objetivo buscarPorNombre(final String nombre);
+
+    int editarObjetivo(final Integer codigo_obj, final String nombre_obj, final String descripcion_obj, final Date fecha_inicial, final Date fecha_final, final short prioridad_obj, int [] lista_materiales, int [] lista_cantidades);
+
+    int eliminarObjetivo(final Integer codigo_obj);
     
 }

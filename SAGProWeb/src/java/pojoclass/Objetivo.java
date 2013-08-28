@@ -62,6 +62,7 @@ public class Objetivo implements Serializable{
     }
 
     public void setFechaInicial(Date fechaInicial) {
+        System.out.println("Nueva fecha inicial" + fechaInicial);
         this.fechaInicial = fechaInicial;
     }
 
@@ -70,6 +71,7 @@ public class Objetivo implements Serializable{
     }
 
     public void setFechaLimite(Date fechaLimite) {
+        System.out.println("Nueva fecha limite" + fechaLimite);
         this.fechaLimite = fechaLimite;
     }
     
@@ -83,9 +85,7 @@ public class Objetivo implements Serializable{
     }   
 
     public void removeMaterial(SelectedMaterial item) {
-        System.out.println("Eliminando");
         this.materialList.remove(item);
-        System.out.println("Eliminado");
     }
     
     public SelectedMaterial isMaterialInObjetivo(SelectedMaterial sm){

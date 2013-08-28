@@ -162,7 +162,7 @@ public class CrearObjetivoManagedBean implements Serializable{
     public void agregarObjetivo(){
         try{
             // Obtener tiempo, aplicando formato específico del calendario de jQuery (MM/dd/yyyy)
-            SimpleDateFormat df = new SimpleDateFormat("MM/dd/yyyy");
+            SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
             //Fecha inicial
             Date f_inicial = new Date(df.parse(initialDate).getTime());
             //Fecha final

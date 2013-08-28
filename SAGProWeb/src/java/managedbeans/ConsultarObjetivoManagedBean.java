@@ -13,8 +13,12 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
+import javax.faces.application.ViewHandler;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.component.UIViewRoot;
+import javax.faces.context.FacesContext;
 import org.primefaces.event.SelectEvent;
 import sessionbeans.MaterialFacadeLocal;
 import sessionbeans.ObjetivoFacadeLocal;
@@ -45,7 +49,7 @@ public class ConsultarObjetivoManagedBean implements Serializable {
      * Creates a new instance of ConsultarObjetivoManagedBean
      */
     public ConsultarObjetivoManagedBean() {
-        sdf = new SimpleDateFormat("dd/MM/YYYY");
+        sdf = new SimpleDateFormat("dd/MM/yyyy");
         
     }
     
@@ -235,5 +239,84 @@ public class ConsultarObjetivoManagedBean implements Serializable {
                 return mat;
         }
         return null;
+    }
+    
+    /**
+     * Elimina el objetivo seleccionado.
+     */
+    public void modificarObjetivo(){
+        FacesContext cont = FacesContext.getCurrentInstance();
+        FacesMessage msg = new FacesMessage();
+        if ( selectedObjetivo == null ){
+            msg.setSeverity(FacesMessage.SEVERITY_ERROR);
+            msg.setDetail("No ha seleccionado ningún objetivo");
+            cont.addMessage(null, msg);
+        }
+        else{
+            int resp;
+            
+            /**
+            * Crear lista de código y cantidades de materiales.
+            * Para proveer de argumentos a objetivoMaterialFacade.agregarMaterialToObjetivo.
+            * De manera de agregar los materiales al objetivo creado.
+            **/
+           int [] codMaterialesArray = new int[selectedObjetivo.getMaterialList().size()];
+           int [] cantMaterialesArray = new int[selectedObjetivo.getMaterialList().size()];
+
+           /**
+            * Para cada material seleccionado.
+            *  Agregar valor de su código al arreglo de códigos.
+            *  Agregar valor de la cantidad del material al arreglo de cantidades.
+            * */
+           for(int i=0; i<selectedObjetivo.getMaterialList().size(); i++){
+               codMaterialesArray[i] = selectedObjetivo.getMaterialList().get(i).getCodMaterial().intValue();
+               cantMaterialesArray[i] = selectedObjetivo.getMaterialList().get(i).getCantidad();
+           }
+            System.out.println("Prioridad " + selectedObjetivo.getPrioridad());
+            resp = objetivoFacade.editarObjetivo(
+                    selectedObjetivo.getCodObjetivo()
+                    , selectedObjetivo.getNombre()
+                    , selectedObjetivo.getDescripcion()
+                    , selectedObjetivo.getFechaInicial()
+                    , selectedObjetivo.getFechaLimite()
+                    , selectedObjetivo.getPrioridad()
+                    , codMaterialesArray
+                    , cantMaterialesArray);
+            
+            if (resp == 0){
+                msg.setSeverity(FacesMessage.SEVERITY_INFO);
+                msg.setDetail("El objetivo se ha editado con éxito");
+                cont.addMessage(null, msg);
+            }
+        }
+        String viewId = cont.getViewRoot().getViewId();
+        ViewHandler handler = cont.getApplication().getViewHandler();
+        UIViewRoot root = handler.createView(cont, viewId);
+        root.setViewId(viewId);
+        cont.setViewRoot(root);
+    }
+    
+    public void borrarObjetivo(){
+        FacesContext cont = FacesContext.getCurrentInstance();
+        FacesMessage msg = new FacesMessage();
+        
+        if ( selectedObjetivo == null ){
+            msg.setSeverity(FacesMessage.SEVERITY_ERROR);
+            msg.setDetail("No ha seleccionado ningún objetivo");
+            cont.addMessage(null, msg);
+        }
+        else{
+            int resp = objetivoFacade.eliminarObjetivo(selectedObjetivo.getCodObjetivo());
+            if (resp == 0){
+                msg.setSeverity(FacesMessage.SEVERITY_INFO);
+                msg.setDetail("El objetivo se ha eliminado con éxito");
+                cont.addMessage(null, msg);
+            }
+        }
+        String viewId = cont.getViewRoot().getViewId();
+        ViewHandler handler = cont.getApplication().getViewHandler();
+        UIViewRoot root = handler.createView(cont, viewId);
+        root.setViewId(viewId);
+        cont.setViewRoot(root);
     }
 }

@@ -77,7 +77,7 @@ public class Objetivo implements Serializable {
     @JoinTable(name = "objetivo_material", joinColumns = {
         @JoinColumn(name = "COD_OBJETIVO", referencedColumnName = "COD_OBJETIVO")}, inverseJoinColumns = {
         @JoinColumn(name = "COD_MATERIAL", referencedColumnName = "COD_MATERIAL")})
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, targetEntity = Material.class)
+    @ManyToMany()
     private List<Material> materialList;
 
     public Objetivo() {

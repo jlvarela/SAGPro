@@ -117,6 +117,51 @@ public class ObjetivoMaterialFacade extends AbstractFacade<ObjetivoMaterial> imp
                 .getResultList();
     }
     
+    /**
+     * Determina si ya existe en el sistema un objetivo con el código
+     * ingresado como parámetro de esta función.
+     * @param cod_obj Integer código del objetivo a buscar
+     * @return 
+     */
+    public Boolean objetivoExists(Integer cod_obj){
+        int resultados; // Cantidad de objetivos encontrados con dicho nombre.
+        
+        /**
+         * Solicitar a EntityManager, la búsqueda de objetivos con el nombre
+         * ingresado como argumento.
+         * */
+        resultados = em.createNamedQuery("Objetivo.findByCodObjetivo")
+                .setParameter("codObjetivo", cod_obj)
+                .getResultList().size();
+        
+        return resultados != 0; // Existencia del objetivo
+    }
+    
+    /**
+     * 
+     * @param cod_objt
+     * @return 
+     */
+    @Override
+    public int deleteMaterialOfObjetivo(final Integer cod_objt) {
+        if ( !objetivoExists(cod_objt) )
+            return -1;
+        else{
+            List<ObjetivoMaterial> omList = buscarPorObjetivo(cod_objt);
+            
+            for ( ObjetivoMaterial om : omList){
+                remove(om);
+            }
+            
+            return 0;
+        }
+    }
+
+    @Override
+    public void remove(ObjetivoMaterial entity) {
+        super.remove(entity); //To change body of generated methods, choose Tools | Templates.
+    }
+    
     
     
 }

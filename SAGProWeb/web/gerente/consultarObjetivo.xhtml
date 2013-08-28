@@ -23,7 +23,7 @@
                             <div class="span12">
                                 <!--<h:form id="form">-->  
                                 <p:dataTable var="obj" value="#{consultarObjetivoManagedBean.listaObjetivos}" rowKey="#{obj.codObjetivo}"  selection="#{consultarObjetivoManagedBean.selectedObjetivo}" selectionMode="single"  > 
-                                    <p:ajax event="rowSelect"  update=":form:objetivo_details,:form:materialObjetivoTabla,:form:fecha_inicial,:form:fecha_final,form:botones-accion" listener="#{consultarObjetivoManagedBean.handleRowSelect}"/>
+                                    <p:ajax event="rowSelect"  update=":form:objetivo_details,:form:materialObjetivoTabla,:form:fecha_inicial,:form:fecha_final,:form:boton_editar,:form:boton_borrar" listener="#{consultarObjetivoManagedBean.handleRowSelect}"/>
                                     <p:column headerText="Nombre" filterBy="#{obj.nombre}"> 
                                         <h:outputText value="#{obj.nombre}" />  
                                     </p:column>  
@@ -70,8 +70,6 @@
                                             <p:inplace editor="true" emptyLabel="Sin descripción">
                                                 <h:inputText value="#{consultarObjetivoManagedBean.selectedObjetivo.descripcion}" />
                                             </p:inplace>
-
-
                                         </h:panelGrid>
                                     </p:panel>
 
@@ -85,7 +83,7 @@
                                             <div class="input-append datetimepicker">
 
                                                 <h:inputText id="fecha_inicial" value="#{consultarObjetivoManagedBean.selectedObjetivo.fechaInicial}"  >
-                                                    <f:convertDateTime pattern="MM/dd/yyyy" />
+                                                    <f:convertDateTime pattern="dd/MM/yyyy" />
                                                 </h:inputText>
                                                 <span class="add-on">
                                                     <i data-time-icon="icon-time" data-date-icon="icon-calendar">
@@ -103,7 +101,7 @@
                                             <div class="input-append datetimepicker">
 
                                                 <h:inputText id="fecha_final" value="#{consultarObjetivoManagedBean.selectedObjetivo.fechaLimite}">
-                                                    <f:convertDateTime pattern="MM/dd/yyyy" />
+                                                    <f:convertDateTime pattern="dd/MM/yyyy" />
                                                 </h:inputText>
                                                 <span class="add-on">
                                                     <i data-time-icon="icon-time" data-date-icon="icon-calendar">
@@ -170,8 +168,8 @@
                             <div class="row-fluid" style="margin-top:3px">
                                 <div class="control-group" >
                                     <div class="controls pull-right">
-                                        <p:commandButton onclick="editarConfirm.show();"   value="Editar" icon="ui-icon-pencil" disabled="#{consultarObjetivoManagedBean.selectedObjetivo==null}"/>
-                                        <p:commandButton   onclick="eliminarConfirm.show();" value="Eliminar" icon="ui-icon-trash" disabled="#{consultarObjetivoManagedBean.selectedObjetivo==null}" />
+                                        <p:commandButton id="boton_editar" onclick="editarConfirm.show();"   value="Editar" icon="ui-icon-pencil" disabled="#{consultarObjetivoManagedBean.selectedObjetivo==null}"/>
+                                        <p:commandButton id="boton_borrar"  onclick="eliminarConfirm.show();" value="Eliminar" icon="ui-icon-trash" disabled="#{consultarObjetivoManagedBean.selectedObjetivo==null}" />
                                     </div>
                                 </div>
                             </div>
@@ -179,17 +177,19 @@
                     </div>
                 </fieldset>
             </div>
-            <div class="row-fluid" style="margin-top:3px">
-                <f:view id="botones-accion" >
-                    <div class="control-group" >
-                        <div class="controls pull-right">
-                            <p:commandButton onclick="editarConfirm.show();"   value="Editar" icon="ui-icon-pencil" disabled="#{consultarObjetivoManagedBean.selectedObjetivo == null}"/>
-                            <p:commandButton   onclick="eliminarConfirm.show();" value="Eliminar" icon="ui-icon-trash" disabled="#{consultarObjetivoManagedBean.selectedObjetivo == null}" />
-                        </div>
-                    </div>
-                </f:view>
+            <p:confirmDialog widgetVar="eliminarConfirm"  header="Eliminar Objetivo" message="¿Está seguro de eliminar este objetivo?" style="position: fixed" >  
+            <div class="controls pull-right">
+                <p:commandButton value="Aceptar" action="#{consultarObjetivoManagedBean.borrarObjetivo()}"  ajax="false" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />  
+                <p:commandButton value="Cancelar"  onclick="eliminarConfirm.hide();" styleClass="ui-confirmdialog-no" icon="ui-icon-close"/> 
             </div>
-            
+            </p:confirmDialog>
+
+            <p:confirmDialog  widgetVar="editarConfirm"  header="Editar Usuario" message="¿Desea guardar los cambios hechos al objetivo?" style="position:absolute; left:35%; top: 35%" >  
+            <div class="controls pull-right">
+                <p:commandButton value="Aceptar" action="#{consultarObjetivoManagedBean.modificarObjetivo()}"  ajax="false" styleClass="ui-confirmdialog-yes" icon="ui-icon-check"/>  
+                <p:commandButton value="Cancelar"  onclick="editarConfirm.hide();" styleClass="ui-confirmdialog-no" icon="ui-icon-close"/> 
+            </div>
+            </p:confirmDialog>
         </h:form>
     </ui:define>
 

@@ -67,7 +67,7 @@ public class ProduccionDiariaFacade extends AbstractFacade<ProduccionDiaria> imp
             List<ProduccionDiaria> produccionDiaria = (List<ProduccionDiaria>) em.createNamedQuery("ProduccionDiaria.findByFechaDiariaEstadistica")
                     .setParameter("fechaDiariaEstadistica", produccion_fecha)
                     .getResultList();
-            System.out.println("Producción: '" + produccion_fecha + "' se ha encontrado con éxito");
+            System.out.println("Se encontraron " + produccionDiaria.size() + " producciones.");
             return produccionDiaria;
 
         } catch (NoResultException e) {

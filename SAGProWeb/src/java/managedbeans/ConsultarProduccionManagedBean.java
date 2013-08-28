@@ -6,6 +6,7 @@ package managedbeans;
 
 import pojoclass.ProduccionDiaria;
 import entities.Material;
+import java.io.Serializable;
 //import entities.ProduccionDiaria;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -21,7 +22,6 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ValueChangeEvent;
-import org.primefaces.event.SelectEvent;
 import sessionbeans.MaterialFacadeLocal;
 import sessionbeans.ProduccionDiariaFacadeLocal;
 
@@ -31,7 +31,7 @@ import sessionbeans.ProduccionDiariaFacadeLocal;
  */
 @ManagedBean(name = "consultarProduccionManagedBean")
 @ViewScoped
-public class ConsultarProduccionManagedBean {
+public class ConsultarProduccionManagedBean implements Serializable {
 
     @EJB
     private ProduccionDiariaFacadeLocal produccionDiariaFacade;
