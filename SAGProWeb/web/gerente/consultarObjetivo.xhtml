@@ -23,7 +23,7 @@
                             <div class="span12">
                                 <!--<h:form id="form">-->  
                                 <p:dataTable var="obj" value="#{consultarObjetivoManagedBean.listaObjetivos}" rowKey="#{obj.codObjetivo}"  selection="#{consultarObjetivoManagedBean.selectedObjetivo}" selectionMode="single"  > 
-                                    <p:ajax event="rowSelect"  update=":form:objetivo_details,:form:materialObjetivoTabla,:form:fecha_inicial,:form:fecha_final" listener="#{consultarObjetivoManagedBean.handleRowSelect}"/>
+                                    <p:ajax event="rowSelect"  update=":form:objetivo_details,:form:materialObjetivoTabla,:form:fecha_inicial,:form:fecha_final,form:botones-accion" listener="#{consultarObjetivoManagedBean.handleRowSelect}"/>
                                     <p:column headerText="Nombre" filterBy="#{obj.nombre}"> 
                                         <h:outputText value="#{obj.nombre}" />  
                                     </p:column>  
@@ -53,7 +53,6 @@
                                             <h:outputText value="Nombre: " />
                                             <p:inplace editor="true" >
                                                 <h:inputText value="#{consultarObjetivoManagedBean.selectedObjetivo.nombre}" >
-                                                    <f:validator validatorId="nombreValidator" />
                                                 </h:inputText>
                                             </p:inplace>
 
@@ -120,8 +119,8 @@
                                             Material
                                         </div>
                                         <div class="span3">
-                                            <h:selectOneMenu value="#{consultarObjetivoManagedBean.tempSelectedMaterial}" styleClass="span12">
-                                                <f:selectItems value="#{consultarObjetivoManagedBean.listaMaterial}" var="material" itemLabel="#{material.nombreMaterial}"/>
+                                            <h:selectOneMenu value="#{consultarObjetivoManagedBean.codSelectedMaterial}" styleClass="span12">
+                                                <f:selectItems value="#{consultarObjetivoManagedBean.listaMaterial}" var="material" itemValue="#{material.codMaterial}" itemLabel="#{material.nombreMaterial}"/>
                                             </h:selectOneMenu>
                                         </div>
 
@@ -180,12 +179,16 @@
                     </div>
                 </fieldset>
             </div>
-            <p:confirmDialog widgetVar="editarConfirm"  header="Editar Objetivo" message="¿Esta seguro de guardar los cambios a  este objetivo?" style="position: fixed" >  
-            <div class="controls pull-right">
-                <p:commandButton value="Aceptar"   ajax="false" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />  
-                <p:commandButton value="Cancelar"  onclick="editarConfirm.hide();" styleClass="ui-confirmdialog-no" icon="ui-icon-close"/> 
+            <div class="row-fluid" style="margin-top:3px">
+                <f:view id="botones-accion" >
+                    <div class="control-group" >
+                        <div class="controls pull-right">
+                            <p:commandButton onclick="editarConfirm.show();"   value="Editar" icon="ui-icon-pencil" disabled="#{consultarObjetivoManagedBean.selectedObjetivo == null}"/>
+                            <p:commandButton   onclick="eliminarConfirm.show();" value="Eliminar" icon="ui-icon-trash" disabled="#{consultarObjetivoManagedBean.selectedObjetivo == null}" />
+                        </div>
+                    </div>
+                </f:view>
             </div>
-            </p:confirmDialog>
             
         </h:form>
     </ui:define>

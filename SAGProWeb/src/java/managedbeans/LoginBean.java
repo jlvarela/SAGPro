@@ -6,6 +6,8 @@ package managedbeans;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.el.ELContext;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
@@ -79,10 +81,12 @@ public class LoginBean implements Serializable {
         if (request.getUserPrincipal() != null) {
             try {
                 request.logout();
-                return "";
+                context.getExternalContext().redirect("/SAGProWeb/");
             } catch (ServletException e) {
                 System.out.println("No se pudo desloguear :( " + e.getMessage());
                 return "";
+            } catch (IOException ex) {
+                Logger.getLogger(LoginBean.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
         return "";

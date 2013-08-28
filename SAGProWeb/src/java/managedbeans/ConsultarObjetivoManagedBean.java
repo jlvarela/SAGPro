@@ -38,8 +38,8 @@ public class ConsultarObjetivoManagedBean implements Serializable {
     private List<Objetivo> listaObjetivos;                              //  Lista de objetivos.
     private Objetivo selectedObjetivo;                                  //  Objetivo seleccionado.
     private SimpleDateFormat sdf;                                       //  Formateador de fechas.
-    private Material tempSelectedMaterial;                              //  Material seleccionado.
-    private Integer cantSelectedMaterial;                               // Cantidad del material a añadir.
+    private Integer codSelectedMaterial;                                //  Código Material seleccionado.
+    private Integer cantSelectedMaterial;                               //  Cantidad del material a añadir.
     
     /**
      * Creates a new instance of ConsultarObjetivoManagedBean
@@ -56,7 +56,6 @@ public class ConsultarObjetivoManagedBean implements Serializable {
     @PostConstruct
     public void init(){
         rellenarListas();
-        tempSelectedMaterial = new Material();
     }
     
     /**
@@ -96,13 +95,14 @@ public class ConsultarObjetivoManagedBean implements Serializable {
         this.cantSelectedMaterial = cantSelectedMaterial;
     }
 
-    public Material getTempSelectedMaterial() {
-        return tempSelectedMaterial;
+    public Integer getCodSelectedMaterial() {
+        return codSelectedMaterial;
     }
 
-    public void setTempSelectedMaterial(Material tempSelectedMaterial) {
-        this.tempSelectedMaterial = tempSelectedMaterial;
+    public void setCodSelectedMaterial(Integer codSelectedMaterial) {
+        this.codSelectedMaterial = codSelectedMaterial;
     }
+    
     
     public List<Material> getListaMaterial() {
         return materialList;
@@ -208,12 +208,32 @@ public class ConsultarObjetivoManagedBean implements Serializable {
         SelectedMaterial sm = new SelectedMaterial();
         
         // Setear el codigo del nuevo material en base al material escogido.
-        sm.setCodMaterial(tempSelectedMaterial.getCodMaterial());
+        sm.setCodMaterial(codSelectedMaterial);
+        
+        Material buscar;
+        buscar = buscarMaterialEnLista(codSelectedMaterial);
         
         // Si material no está en la lista, sobre-escribir la cantidad.
-        if ( ! selectedObjetivo.isMaterialInObjetivo(sm) ){
+        if (buscar != null){
             sm.setCantidad(cantSelectedMaterial);           // Sobre-escribir cantidad.
+            sm.setNombreMaterial(buscar.getNombreMaterial());
             selectedObjetivo.addMaterial(sm);               // Añadir material.
         }
+    }
+    
+    /**
+     * Busca un material específico en la lista de materiales
+     * en base a su código.
+     * En caso de no encontrase, retorna null
+     * 
+     * @param codMaterial   int   Código del material a bsucar
+     * @return Material Material buscado
+     */
+    private Material buscarMaterialEnLista(int codMaterial){
+        for ( Material mat : materialList ){
+            if ( mat.getCodMaterial().equals(codMaterial) )
+                return mat;
+        }
+        return null;
     }
 }

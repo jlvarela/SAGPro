@@ -83,13 +83,17 @@ public class Objetivo implements Serializable{
     }   
 
     public void removeMaterial(SelectedMaterial item) {
+        System.out.println("Eliminando");
         this.materialList.remove(item);
+        System.out.println("Eliminado");
     }
     
-    public boolean isMaterialInObjetivo(SelectedMaterial sm){
-        if ( materialList.contains(sm) )
-            return true;
-        return false;
+    public SelectedMaterial isMaterialInObjetivo(SelectedMaterial sm){
+        int index;
+        index = materialList.indexOf(sm);
+        if ( index > 0 )
+            return materialList.get(index);
+        return null;
     }
     
     public void addMaterial(SelectedMaterial sm){
