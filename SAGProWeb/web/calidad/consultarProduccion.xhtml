@@ -28,6 +28,10 @@
                                 <div class="span7" style="margin-left: 11px">
                                     <div class="input-append datetimepicker" style="width:100%">
                                         <h:inputText  value="#{consultarProduccionManagedBean.fecha}">
+<<<<<<< HEAD
+                                          
+=======
+>>>>>>> 6449b18ef3f17c5e6cfa9f7c943f0d7f761c325f
                                         </h:inputText>
                                         <span class="add-on">
                                             <i data-time-icon="icon-time" data-date-icon="icon-calendar">
@@ -37,12 +41,24 @@
                                 </div>
                                 
                                 <div class="span3">
+<<<<<<< HEAD
+                                    <p:commandButton icon="ui-icon-search" value="Consulta" action="#{consultarProduccionManagedBean.cambiarFecha}"  update=":form:prod">
+                                    </p:commandButton>
+                                        
+=======
                                     <p:commandButton icon="ui-icon-search" value="Consulta" action="#{consultarProduccionManagedBean.cambiarFecha}" update="prod" />
+>>>>>>> 6449b18ef3f17c5e6cfa9f7c943f0d7f761c325f
                                 </div>
                             </div>
+<<<<<<< HEAD
+
+                            
+                            <div class="span12"   >
+=======
                             <div class="span12"  >
+>>>>>>> 6449b18ef3f17c5e6cfa9f7c943f0d7f761c325f
                                 <p:dataTable id="prod" var="produccionDiaria" value="#{consultarProduccionManagedBean.listaProduccionDiaria}" rowKey="#{produccionDiaria.codMaterial}" selection="#{consultarProduccionManagedBean.selectedProduccionDiaria}" selectionMode="single" >
-                                    <f:ajax event="rowSelect"  render=":form:muestra" />
+                                    <p:ajax event="rowSelect"  update=":form:muestra" />
                                     <f:facet name="header">
                                         Producción diaria
                                     </f:facet>  
@@ -61,6 +77,7 @@
 
 
                             </div>
+                            
                         </div>
                         <div class="span6" id="datos"  >
                             <div class="row-fluid">
@@ -68,15 +85,23 @@
                                     2. Detalle del material
                                 </div>
                             </div>
-                            <div class="row-fluid"  >
+                            <div class="row-fluid" >
                                 <p:panel id="muestra" header="Datos del Material" >
                                     <h:panelGrid columns="2" columnClasses="column" cellpadding="5">
                                         <h:outputText value="Material: " /> 
                                             <h:outputText value="#{consultarProduccionManagedBean.selectedProduccionDiaria.nombreMaterial}" /> 
+<<<<<<< HEAD
+                                        </p:inplace>
+
+                                        <h:outputText value="Cantidad: " />  
+                                        <p:inplace > 
+                                            <h:outputText  value="#{consultarProduccionManagedBean.selectedProduccionDiaria.cantidad}"/> 
+=======
                                         
                                             <h:outputText value="Cantidad: " />  
                                         <p:inplace editor="true">  
                                             <h:inputText value="#{consultarProduccionManagedBean.selectedProduccionDiaria.cantidad}"/>  
+>>>>>>> 6449b18ef3f17c5e6cfa9f7c943f0d7f761c325f
                                         </p:inplace>
                                         
                                         <h:outputText value="Unidad: " />
@@ -89,8 +114,8 @@
                                 <div class="control-group" >
                                     <div class="controls pull-right">
                                         
-                                        <p:commandButton onclick="editarConfirm.show();" value="Editar" icon="ui-icon-pencil" />
-                                        <p:commandButton onclick="eliminarConfirm.show();" value="Eliminar" icon="ui-icon-trash"  />
+                                        <p:commandButton onclick="editarConfirm.show();" value="Editar" icon="ui-icon-pencil" disabled="#{consultarProduccionManagedBean.selectedProduccionDiaria == null}"/>
+                                        <p:commandButton onclick="eliminarConfirm.show();" value="Eliminar" icon="ui-icon-trash" disabled="#{consultarProduccionManagedBean.selectedProduccionDiaria == null}" />
                                         
                                     </div>
                                 </div>

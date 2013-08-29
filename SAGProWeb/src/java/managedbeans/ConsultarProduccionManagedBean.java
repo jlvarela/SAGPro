@@ -65,6 +65,11 @@ public class ConsultarProduccionManagedBean implements Serializable {
         for (entities.ProduccionDiaria produccionDiariaEntity : listaProduccionDiariaEntities) {
             produccionDiariaList.add(util.MappingFromEntitieToPojo.produccionFromEntityToPojo(produccionDiariaEntity));
         }
+<<<<<<< HEAD
+        //selectedProduccionDiaria = new pojoclass.ProduccionDiaria();
+        //selectedProduccionDiaria.setCantidad(null);
+=======
+>>>>>>> 6449b18ef3f17c5e6cfa9f7c943f0d7f761c325f
         listaProduccionDiaria = produccionDiariaList;
         
     }
@@ -166,7 +171,6 @@ public class ConsultarProduccionManagedBean implements Serializable {
         SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
         try {
             f = new Date(df.parse(fecha).getTime());
-
             List<entities.ProduccionDiaria> listaProduccionDiariaEntities = produccionDiariaFacade.buscarPorFecha(f);
 
             ArrayList<ProduccionDiaria> produccionDiariaList = new ArrayList();
