@@ -14,6 +14,7 @@ import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -81,7 +82,8 @@ public class LoginBean implements Serializable {
         if (request.getUserPrincipal() != null) {
             try {
                 request.logout();
-                context.getExternalContext().redirect("/SAGProWeb/");
+                ExternalContext ext = context.getExternalContext();
+                context.getExternalContext().redirect(ext.getRequestContextPath());
             } catch (ServletException e) {
                 System.out.println("No se pudo desloguear :( " + e.getMessage());
                 return "";

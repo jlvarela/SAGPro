@@ -25,7 +25,7 @@
                                 <p:dataTable var="obj" value="#{consultarObjetivoManagedBean.listaObjetivos}" rowKey="#{obj.codObjetivo}"  selection="#{consultarObjetivoManagedBean.selectedObjetivo}" selectionMode="single"  > 
                                     <p:ajax event="rowSelect"  update=":form:objetivo_details,:form:materialObjetivoTabla,:form:fecha_inicial,:form:fecha_final,:form:boton_editar,:form:boton_borrar" listener="#{consultarObjetivoManagedBean.handleRowSelect}"/>
                                     <p:column headerText="Nombre" filterBy="#{obj.nombre}"> 
-                                        <h:outputText value="#{obj.nombre}" />  
+                                        <h:outputText value="#{obj.nombre}" />
                                     </p:column>  
 
                                     <p:column headerText="Fecha Inicial" filterBy="#{consultarObjetivoManagedBean.sdf.format(obj.fechaInicial)}">  

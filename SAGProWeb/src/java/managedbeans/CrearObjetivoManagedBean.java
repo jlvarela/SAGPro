@@ -169,7 +169,7 @@ public class CrearObjetivoManagedBean implements Serializable{
             Date f_final = new Date(df.parse(finishDate).getTime());
             
             // Validar Fechas ingresadas
-            validarFechas(f_inicial, f_final);
+            //validarFechas(f_inicial, f_final);
             
             // Código de respuesta
             int resp;

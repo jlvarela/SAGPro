@@ -23,8 +23,10 @@ import org.primefaces.model.chart.LineChartSeries;
 import pojoclass.Material;
 import pojoclass.Objetivo;
 import pojoclass.ProduccionDiaria;
+import pojoclass.SelectedMaterial;
 import sessionbeans.MaterialFacadeLocal;
 import sessionbeans.ObjetivoFacadeLocal;
+import sessionbeans.ObjetivoMaterialFacadeLocal;
 import sessionbeans.ProduccionDiariaFacadeLocal;
 
 /**
@@ -34,6 +36,8 @@ import sessionbeans.ProduccionDiariaFacadeLocal;
 @ManagedBean(name = "evolucionManagedBean")
 @ViewScoped
 public class EvolucionManagedBean implements Serializable{
+    @EJB
+    private ObjetivoMaterialFacadeLocal objetivoMaterialFacade;
     @EJB
     private ProduccionDiariaFacadeLocal produccionDiariaFacade;                     //  Para obtener la lista de producciones diarias.
     @EJB
@@ -45,6 +49,7 @@ public class EvolucionManagedBean implements Serializable{
     private DateFormat monthFormat = new SimpleDateFormat("MM/yyyy");               // DateFormat para mes
     private List<Material> materialList;                                            // Listado de Materiales
     private List<Objetivo> objectiveList;                                           // Listado de Objetivos
+    private List<String> objetivosSeleccionados;                                  // Lista de Objetivos seleccionados
     private Material selectedMaterial;                                              // Material seleccionado
     private CartesianChartModel model;                                              // Modelo del gráfico
     private Calendar selectedDate;                                                  // Fecha seleccionada
@@ -55,6 +60,14 @@ public class EvolucionManagedBean implements Serializable{
      */
     public EvolucionManagedBean() {
         
+    }
+
+    public List<String> getObjetivosSeleccionados() {
+        return objetivosSeleccionados;
+    }
+
+    public void setObjetivosSeleccionados(List<String> objetivosSeleccionados) {
+        this.objetivosSeleccionados = objetivosSeleccionados;
     }
 
     public Calendar getSelectedDate() {
@@ -88,8 +101,7 @@ public class EvolucionManagedBean implements Serializable{
     public void setModel(CartesianChartModel model) {
         this.model = model;
     }
-    
-    
+        
     public Material getSelectedMaterial() {
         return selectedMaterial;
     }
@@ -149,11 +161,31 @@ public class EvolucionManagedBean implements Serializable{
         
         // Mapping de clases Entity a POJO
         for (entities.Objetivo objEntity : objetivoEntitiesList){
-            objetivoList.add(util.MappingFromEntitieToPojo.objetivoFromEntityToPojo(objEntity));
+            Objetivo obj = util.MappingFromEntitieToPojo.objetivoFromEntityToPojo(objEntity);
+            
+            //  Buscar todos los materiales asociados al objetivo seleccionado.
+            //  Utilizar EJB objetivoMaterialFacade
+            List<entities.ObjetivoMaterial> omList = objetivoMaterialFacade.buscarPorObjetivo(obj.getCodObjetivo());
+
+            // Nuevo Array de Clases POJO SelectedMaterial 
+            ArrayList<SelectedMaterial> smArray = new ArrayList();
+
+            // Para cada material relacionado con el objetivo seleccionado.
+            for(entities.ObjetivoMaterial om : omList){
+                // Hacer mapping con clase POJO y añadirlo al array.
+                smArray.add(util.MappingFromEntitieToPojo.selectedMaterialFromMaterialObjetivoToPojo(om));
+            }
+
+            //  Setear al objetivo la nueva lista de clases SelectedMaterial, las cuales son los materiales
+            //  del objetivo seleccionado.
+            obj.setMaterialList(smArray);
+            
+            objetivoList.add(obj);
+            
         }
         
         // Actualizar lista de objetivos
-        objectiveList = objetivoList;        
+        objectiveList = objetivoList;
     }
     
     /**
@@ -220,7 +252,10 @@ public class EvolucionManagedBean implements Serializable{
             line.set(String.valueOf(month.get(Calendar.DAY_OF_MONTH)), acumulado);      // Agregar punto.
             month.add(Calendar.DAY_OF_MONTH, 1);                                        // Incrementar día del Calendario.
         }
+        
         model.addSeries(line);
+        
+        agregarObjetivosAChart(selectedMaterial);
     }
     
     /**
@@ -352,5 +387,69 @@ public class EvolucionManagedBean implements Serializable{
         
         // Caso contrario, mes ingresado es anterior. retornar -1.
         return -1;
+    }
+    
+    public void selectObjetivo(){
+        createLinearChart(selectedMaterial, selectedDate);
+    }
+    
+    private void agregarObjetivosAChart(Material material){
+        if (objetivosSeleccionados == null)
+            return;
+        
+        SelectedMaterial sm = new SelectedMaterial();
+        sm.setCodMaterial(material.getCodMaterial());
+        
+        Calendar month = (Calendar) selectedDate.clone();
+        // Final del calendario
+        int lastDay = month.getActualMaximum(Calendar.DAY_OF_MONTH);
+
+        // Agregar objetivos al gráfico.
+        for( int j=0; j<objetivosSeleccionados.size(); j++){
+            Objetivo obj = getObjFromSeleccionados(j);
+            if (obj == null)
+                continue;
+            List<SelectedMaterial> selectMatList = obj.getMaterialList();
+            int index = selectMatList.indexOf(sm);
+            if ( index >= 0  ){
+                LineChartSeries chart = new LineChartSeries();
+                SelectedMaterial smObj = selectMatList.get(index);
+                month.set(Calendar.DAY_OF_MONTH, 0);
+                for ( int i=0; i < lastDay; i++ ){
+                    chart.set(String.valueOf(month.get(Calendar.DAY_OF_MONTH)), smObj.getCantidad() );
+                    month.add(Calendar.DAY_OF_MONTH, 1);
+                }
+                chart.setLabel(obj.getNombre());
+                model.addSeries(chart);
+            }
+        }
+    }
+    
+    /**
+     * 
+     * @param month
+     * @param obj
+     * @return 
+     */
+    private Boolean estaObjetivoEnMes(Calendar month, Objetivo obj){
+        if (obj.getFechaInicial().before(month.getTime()) || obj.getFechaInicial().equals(month.getTime()))
+            if ( month.getTime().before(obj.getFechaLimite()) || month.getTime().before(obj.getFechaLimite()) )
+                return true;
+        return false;   
+    }
+    
+    /**
+     * 
+     * @param index
+     * @return 
+     */
+    private Objetivo getObjFromSeleccionados(int index){
+        String cod_objetivo = objetivosSeleccionados.get(index);
+        Integer codigo = Integer.parseInt(cod_objetivo);
+        for ( Objetivo obj: objectiveList ){
+            if ( obj.getCodObjetivo().compareTo(codigo) == 0 )
+                return obj;
+        }
+        return null;
     }
 }

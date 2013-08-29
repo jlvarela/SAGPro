@@ -77,18 +77,10 @@
 
                         <div class="row-fluid">
                             <div class="span8">
-                                <p:dataTable var="objetivo" value="#{evolucionManagedBean.listaObjetivos}" rowKey="#{objetivo.nombre}">
-                                    <p:ajax event="rowSelect"  />
-                                    <f:facet name="header">  
-                                        Objetivo
-                                    </f:facet>  
-                                    <p:column headerText="Nombre">  
-                                        <h:outputText value="#{objetivo.nombre}" />  
-                                    </p:column>
-                                    <p:column>  
-                                        <p:selectBooleanCheckbox />
-                                    </p:column>  
-                                </p:dataTable>
+                                <p:selectManyCheckbox value="#{evolucionManagedBean.objetivosSeleccionados}" layout="pageDirection">
+                                    <p:ajax event="change" listener="#{evolucionManagedBean.selectObjetivo}" update="chart"/>
+                                    <f:selectItems value="#{evolucionManagedBean.listaObjetivos}" var="objetivo" itemLabel="#{objetivo.nombre}" itemValue="#{objetivo.codObjetivo}"/>
+                                </p:selectManyCheckbox>
                             </div>
                         </div>
                     </div>

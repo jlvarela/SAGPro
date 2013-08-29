@@ -7,6 +7,7 @@ package pojoclass;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 /**
  *
  * @author Jose
@@ -62,7 +63,6 @@ public class Objetivo implements Serializable{
     }
 
     public void setFechaInicial(Date fechaInicial) {
-        System.out.println("Nueva fecha inicial" + fechaInicial);
         this.fechaInicial = fechaInicial;
     }
 
@@ -71,7 +71,6 @@ public class Objetivo implements Serializable{
     }
 
     public void setFechaLimite(Date fechaLimite) {
-        System.out.println("Nueva fecha limite" + fechaLimite);
         this.fechaLimite = fechaLimite;
     }
     
@@ -99,4 +98,27 @@ public class Objetivo implements Serializable{
     public void addMaterial(SelectedMaterial sm){
         materialList.add(sm);
     }
+
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 17 * hash + Objects.hashCode(this.codObjetivo);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Objetivo other = (Objetivo) obj;
+        if (this.codObjetivo == other.codObjetivo) {
+            return false;
+        }
+        return true;
+    }
+    
 }

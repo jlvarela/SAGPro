@@ -43,7 +43,6 @@ public class ConsultarProduccionManagedBean implements Serializable {
     private String codMaterial;
     private List<ProduccionDiaria> listaProduccionDiaria;
     private ProduccionDiaria selectedProduccionDiaria;
-    private List<ProduccionDiaria> selectedProduccionesDiarias;
     private String fecha;
 
     /**
@@ -66,8 +65,11 @@ public class ConsultarProduccionManagedBean implements Serializable {
         for (entities.ProduccionDiaria produccionDiariaEntity : listaProduccionDiariaEntities) {
             produccionDiariaList.add(util.MappingFromEntitieToPojo.produccionFromEntityToPojo(produccionDiariaEntity));
         }
+<<<<<<< HEAD
         //selectedProduccionDiaria = new pojoclass.ProduccionDiaria();
         //selectedProduccionDiaria.setCantidad(null);
+=======
+>>>>>>> 6449b18ef3f17c5e6cfa9f7c943f0d7f761c325f
         listaProduccionDiaria = produccionDiariaList;
         
     }
@@ -86,14 +88,6 @@ public class ConsultarProduccionManagedBean implements Serializable {
 
     public void setSelectedProduccionDiaria(ProduccionDiaria selectedProduccionDiaria) {
         this.selectedProduccionDiaria = selectedProduccionDiaria;
-    }
-
-    public List<ProduccionDiaria> getSelectedProduccionesDiarias() {
-        return selectedProduccionesDiarias;
-    }
-
-    public void setSelectedProduccionesDiarias(List<ProduccionDiaria> selectedProduccionesDiarias) {
-        this.selectedProduccionesDiarias = selectedProduccionesDiarias;
     }
 
     public List<Material> getListaMateriales() {
@@ -191,7 +185,5 @@ public class ConsultarProduccionManagedBean implements Serializable {
             Logger.getLogger(ConsultarProduccionManagedBean.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-        this.materialSelected = null;
-
     }
 }
