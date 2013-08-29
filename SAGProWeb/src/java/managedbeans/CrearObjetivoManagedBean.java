@@ -160,6 +160,7 @@ public class CrearObjetivoManagedBean implements Serializable{
     }
     
     public void agregarObjetivo(){
+        System.out.println("Al menos lo intento");
         try{
             // Obtener tiempo, aplicando formato específico del calendario de jQuery (MM/dd/yyyy)
             SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
@@ -200,7 +201,7 @@ public class CrearObjetivoManagedBean implements Serializable{
                 , prioridadObjetivo
                 , codMaterialesArray
                 , cantMaterialesArray);
-            
+            System.out.println("respuesta "+resp);
             // Contexto de PrimeFaces.
             FacesContext context = FacesContext.getCurrentInstance();
             
@@ -232,6 +233,11 @@ public class CrearObjetivoManagedBean implements Serializable{
             else if(resp == -1){
                 msj.setSeverity(FacesMessage.SEVERITY_ERROR);
                 msj.setDetail("Objetivo imposible de agregar");
+                context.addMessage(null, msj);
+            }
+            else if (resp == -2){
+                msj.setSeverity(FacesMessage.SEVERITY_ERROR);
+                msj.setDetail("La fecha inicial debe ser menor a la fecha final y mayor a la actual.");
                 context.addMessage(null, msj);
             }
         }

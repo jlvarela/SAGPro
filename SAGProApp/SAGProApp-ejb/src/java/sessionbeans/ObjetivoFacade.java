@@ -156,7 +156,7 @@ public class ObjetivoFacade extends AbstractFacade<Objetivo> implements Objetivo
             return false;               // Fecha inválida
         
         Date now = new Date();          // Fecha del momento
-        if(now.before(finicial))        // Si fecha del objetivo es anterior a hoy.
+        if(!now.before(finicial))        // Si fecha del objetivo es anterior a hoy.
             return false;               // Fecha inválida
                 
         return true;                    // Fecha válida
