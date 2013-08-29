@@ -43,7 +43,6 @@ public class ConsultarProduccionManagedBean implements Serializable {
     private String codMaterial;
     private List<ProduccionDiaria> listaProduccionDiaria;
     private ProduccionDiaria selectedProduccionDiaria;
-    private List<ProduccionDiaria> selectedProduccionesDiarias;
     private String fecha;
 
     /**
@@ -66,7 +65,6 @@ public class ConsultarProduccionManagedBean implements Serializable {
         for (entities.ProduccionDiaria produccionDiariaEntity : listaProduccionDiariaEntities) {
             produccionDiariaList.add(util.MappingFromEntitieToPojo.produccionFromEntityToPojo(produccionDiariaEntity));
         }
-        selectedProduccionDiaria = new pojoclass.ProduccionDiaria();
         listaProduccionDiaria = produccionDiariaList;
         
     }
@@ -85,14 +83,6 @@ public class ConsultarProduccionManagedBean implements Serializable {
 
     public void setSelectedProduccionDiaria(ProduccionDiaria selectedProduccionDiaria) {
         this.selectedProduccionDiaria = selectedProduccionDiaria;
-    }
-
-    public List<ProduccionDiaria> getSelectedProduccionesDiarias() {
-        return selectedProduccionesDiarias;
-    }
-
-    public void setSelectedProduccionesDiarias(List<ProduccionDiaria> selectedProduccionesDiarias) {
-        this.selectedProduccionesDiarias = selectedProduccionesDiarias;
     }
 
     public List<Material> getListaMateriales() {
@@ -173,7 +163,7 @@ public class ConsultarProduccionManagedBean implements Serializable {
         System.out.println("y la fecha es " + fecha);
 
         Date f;
-        SimpleDateFormat df = new SimpleDateFormat("MM/dd/yyyy");
+        SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
         try {
             f = new Date(df.parse(fecha).getTime());
 
@@ -191,7 +181,5 @@ public class ConsultarProduccionManagedBean implements Serializable {
             Logger.getLogger(ConsultarProduccionManagedBean.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-        this.materialSelected = null;
-
     }
 }

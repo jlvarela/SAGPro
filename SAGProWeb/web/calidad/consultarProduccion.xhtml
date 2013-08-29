@@ -25,7 +25,6 @@
                                 <div class="span7" style="margin-left: 11px">
                                     <div class="input-append datetimepicker" style="width:100%">
                                         <h:inputText  value="#{consultarProduccionManagedBean.fecha}">
-                                            
                                         </h:inputText>
                                         <span class="add-on">
                                             <i data-time-icon="icon-time" data-date-icon="icon-calendar">
@@ -36,13 +35,8 @@
                                 
                                 <div class="span3">
                                     <p:commandButton icon="ui-icon-search" value="Consulta" action="#{consultarProduccionManagedBean.cambiarFecha}" update="prod" />
-                                   
-                                    
                                 </div>
-                                
                             </div>
-
-
                             <div class="span12"  >
                                 <p:dataTable id="prod" var="produccionDiaria" value="#{consultarProduccionManagedBean.listaProduccionDiaria}" rowKey="#{produccionDiaria.codMaterial}" selection="#{consultarProduccionManagedBean.selectedProduccionDiaria}" selectionMode="single" >
                                     <f:ajax event="rowSelect"  render=":form:muestra" />
@@ -75,19 +69,15 @@
                                 <p:panel id="muestra" header="Datos del Material" >
                                     <h:panelGrid columns="2" columnClasses="column" cellpadding="5">
                                         <h:outputText value="Material: " /> 
-                                        <p:inplace>
                                             <h:outputText value="#{consultarProduccionManagedBean.selectedProduccionDiaria.nombreMaterial}" /> 
-                                        </p:inplace>
-
-                                        <h:outputText value="Cantidad: " />  
+                                        
+                                            <h:outputText value="Cantidad: " />  
                                         <p:inplace editor="true">  
                                             <h:inputText value="#{consultarProduccionManagedBean.selectedProduccionDiaria.cantidad}"/>  
                                         </p:inplace>
                                         
                                         <h:outputText value="Unidad: " />
-                                        <p:inplace>
                                             <h:outputText value="#{consultarProduccionManagedBean.selectedProduccionDiaria.nombreUnidadMaterial}" />
-                                        </p:inplace>
 
                                     </h:panelGrid>
                                 </p:panel>
