@@ -9,7 +9,9 @@ import javax.inject.Named;
 import java.io.Serializable;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
-import javax.enterprise.context.SessionScoped;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
 import sessionbeans.UserFacadeLocal;
@@ -18,8 +20,8 @@ import sessionbeans.UserFacadeLocal;
  *
  * @author Jose
  */
-@Named(value = "userManagedBean")
-@SessionScoped
+@ManagedBean(name = "userManagedBean")
+@ViewScoped
 public class UserManagedBean implements Serializable {
 
     @EJB

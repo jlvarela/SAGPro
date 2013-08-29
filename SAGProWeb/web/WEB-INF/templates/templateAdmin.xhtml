@@ -13,8 +13,8 @@
                 <div class="navbar-inner">
                     <div class="container pull-left">
                         <ul class="nav">
-                            <li><a href="/SAGProWeb/faces/admin/ingresarUsuario.xhtml"><i class="icon-user"></i>  Usuarios</a></li>
-                            <li><a href="/SAGProWeb/faces/admin/ingresarMaterial.xhtml"><i class="icon-leaf"></i>  Materiales</a></li>
+                            <li><h:commandLink action="#{navigationManagedBean.goToUsuarios()}"><i class="icon-user"></i>  Usuarios</h:commandLink></li>
+                            <li><h:commandLink action="#{navigationManagedBean.goToMaterial()}"><i class="icon-leaf"></i>  Materiales</h:commandLink></li>
                         </ul>
                     </div>
                     <div class="container pull-right">

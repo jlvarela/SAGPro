@@ -6,7 +6,9 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:f="http://java.sun.com/jsf/core">
-
+    <ui:define name="menu">
+        <ui:include src="/WEB-INF/templates/menuObjetivo.xhtml"></ui:include>
+    </ui:define>
     <ui:define name="cuerpo">
         <h:form id="form" >
             <div class="span9">
@@ -192,25 +194,5 @@
             </p:confirmDialog>
         </h:form>
     </ui:define>
-
-    <ui:define name="menu">
-        <div class="span2"><!--Menú de la pagina-->
-            <div class="accordion" >
-                <div id="menuLateral" class="accordion-group">
-                    <div class="accordion-heading">
-                        <a class="accordion-toggle" data-toggle="collapse" >Objetivos</a>
-
-                        <div class="accordion-body collapse in">
-                            <div class="accordion-inner nav nav-list">
-                                <li><a>Crear Objetivo</a></li>
-                                <li><a>Ver Objetivo</a></li>
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>		
-        </div>
-    </ui:define>  
 </ui:composition>
 
