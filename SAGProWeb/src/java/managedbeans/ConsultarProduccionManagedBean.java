@@ -172,6 +172,7 @@ public class ConsultarProduccionManagedBean implements Serializable {
             ArrayList<ProduccionDiaria> produccionDiariaList = new ArrayList();
 
             for (entities.ProduccionDiaria produccionDiariaEntity : listaProduccionDiariaEntities) {
+                System.out.println("cant"+produccionDiariaEntity.getProduccionMaterial());
                 produccionDiariaList.add(util.MappingFromEntitieToPojo.produccionFromEntityToPojo(produccionDiariaEntity));
             }
 
