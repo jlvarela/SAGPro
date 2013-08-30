@@ -119,21 +119,21 @@
                                             Material
                                         </div>
                                         <div class="span3">
-                                            <h:selectOneMenu value="#{consultarObjetivoManagedBean.codSelectedMaterial}" styleClass="span12">
+                                            <h:selectOneMenu value="#{consultarObjetivoManagedBean.smSeleccionado.codMaterial}" styleClass="span12">
                                                 <f:selectItems value="#{consultarObjetivoManagedBean.listaMaterial}" var="material" itemValue="#{material.codMaterial}" itemLabel="#{material.nombreMaterial}"/>
                                             </h:selectOneMenu>
                                         </div>
 
-                                        <div class="span3">
-                                            <p:inputText styleClass="span11" 
-                                                         value="#{consultarObjetivoManagedBean.cantSelectedMaterial}"
-                                                        title="Cantidad"
-                                                        type="number">
-                                                <f:attribute name="min" value="0" />
-                                            </p:inputText>
+                                        <div class="span4">
+                                            <p:spinner   styleClass="span11" 
+                                                         value="#{consultarObjetivoManagedBean.smSeleccionado.cantidad}"
+                                                    title="Cantidad"
+                                                    min="0"
+                                                    converterMessage="Debe ingresar un número entero y positivo"
+                                             />
                                         </div>
 
-                                        <div class="span3">
+                                        <div class="span2">
                                             <p:commandButton action="#{consultarObjetivoManagedBean.addMaterialObjetivo}"
                                                  icon="ui-icon-plus"
                                                  update="materialObjetivoTabla" />

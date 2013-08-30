@@ -44,6 +44,7 @@ public class ConsultarObjetivoManagedBean implements Serializable {
     private SimpleDateFormat sdf;                                       //  Formateador de fechas.
     private Integer codSelectedMaterial;                                //  Código Material seleccionado.
     private Integer cantSelectedMaterial;                               //  Cantidad del material a añadir.
+    private SelectedMaterial smSeleccionado;
     
     /**
      * Creates a new instance of ConsultarObjetivoManagedBean
@@ -60,6 +61,7 @@ public class ConsultarObjetivoManagedBean implements Serializable {
     @PostConstruct
     public void init(){
         rellenarListas();
+        smSeleccionado = new SelectedMaterial();
     }
     
     /**
@@ -89,6 +91,14 @@ public class ConsultarObjetivoManagedBean implements Serializable {
         // Acualizar lista de objetivos.
         listaObjetivos = objetivoList;
                 
+    }
+
+    public SelectedMaterial getSmSeleccionado() {
+        return smSeleccionado;
+    }
+
+    public void setSmSeleccionado(SelectedMaterial smSeleccionado) {
+        this.smSeleccionado = smSeleccionado;
     }
 
     public Integer getCantSelectedMaterial() {
@@ -208,21 +218,30 @@ public class ConsultarObjetivoManagedBean implements Serializable {
     
     // Añadir un nuevo material al objetivo seleccionado.
     public void addMaterialObjetivo(){
-        // Nuevo material
-        SelectedMaterial sm = new SelectedMaterial();
-        
-        // Setear el codigo del nuevo material en base al material escogido.
-        sm.setCodMaterial(codSelectedMaterial);
-        
-        Material buscar;
-        buscar = buscarMaterialEnLista(codSelectedMaterial);
-        
-        // Si material no está en la lista, sobre-escribir la cantidad.
-        if (buscar != null){
-            sm.setCantidad(cantSelectedMaterial);           // Sobre-escribir cantidad.
-            sm.setNombreMaterial(buscar.getNombreMaterial());
-            selectedObjetivo.addMaterial(sm);               // Añadir material.
+        FacesContext context = FacesContext.getCurrentInstance();
+        FacesMessage msg;
+        if ( smSeleccionado.getCantidad() <= 0 ){
+            msg = new FacesMessage();
+            msg.setSeverity(FacesMessage.SEVERITY_ERROR);
+            msg.setDetail("La cantidad de material debe ser positiva");
+            context.addMessage(null, msg);
+            return;
         }
+        int index;
+        index = selectedObjetivo.getMaterialList().indexOf(smSeleccionado);
+        if( index != -1){
+            SelectedMaterial obj = selectedObjetivo.getMaterialList().get(index);
+            obj.setCantidad(smSeleccionado.getCantidad());
+        }
+        // Si no, añadir a la lista.
+        else{
+            for(Material p: materialList)
+                if(p.getCodMaterial() == smSeleccionado.getCodMaterial())
+                    smSeleccionado.setNombreMaterial(p.getNombreMaterial());
+            selectedObjetivo.addMaterial(smSeleccionado);
+        }
+        
+        smSeleccionado = new SelectedMaterial();
     }
     
     /**
@@ -287,13 +306,24 @@ public class ConsultarObjetivoManagedBean implements Serializable {
                 msg.setSeverity(FacesMessage.SEVERITY_INFO);
                 msg.setDetail("El objetivo se ha editado con éxito");
                 cont.addMessage(null, msg);
+                
+                String viewId = cont.getViewRoot().getViewId();
+                ViewHandler handler = cont.getApplication().getViewHandler();
+                UIViewRoot root = handler.createView(cont, viewId);
+                root.setViewId(viewId);
+                cont.setViewRoot(root);
+            }
+            else if (resp == -1){
+                msg.setSeverity(FacesMessage.SEVERITY_ERROR);
+                msg.setDetail("Ya existe un objetivo con el nombre ingresado.");
+                cont.addMessage(null, msg);
+            }
+            else if (resp == -2){
+                msg.setSeverity(FacesMessage.SEVERITY_ERROR);
+                msg.setDetail("La fecha inicial debe ser menor a la fecha final y mayor a la actual.");
+                cont.addMessage(null, msg);
             }
         }
-        String viewId = cont.getViewRoot().getViewId();
-        ViewHandler handler = cont.getApplication().getViewHandler();
-        UIViewRoot root = handler.createView(cont, viewId);
-        root.setViewId(viewId);
-        cont.setViewRoot(root);
     }
     
     public void borrarObjetivo(){

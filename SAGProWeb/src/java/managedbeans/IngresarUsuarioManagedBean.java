@@ -4,6 +4,7 @@
  */
 package managedbeans;
 
+import java.io.Serializable;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -22,7 +23,7 @@ import pojoclass.Usuario;
  */
 @ManagedBean(name = "ingresarUsuarioManagedBean")
 @ViewScoped
-public class IngresarUsuarioManagedBean {
+public class IngresarUsuarioManagedBean implements Serializable{
     
     @EJB
     private UserFacadeLocal userFacade;

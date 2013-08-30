@@ -70,7 +70,7 @@ public class LoginBean implements Serializable {
                 redirectToMainPage(request);
                 
             } catch (ServletException e) {
-                context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error", "Login inválido"));
+                context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Usuario y/o contraseña incorrecta inválido", "Login inválido"));
                 System.out.println("Login Failed: " + e.getMessage());
             }
         } else {

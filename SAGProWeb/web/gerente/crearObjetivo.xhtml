@@ -44,7 +44,7 @@
                                 Material
                             </div>
                             <div class="span3">
-                                <h:selectOneMenu value="#{crearObjetivoManagedBean.codMaterialSelected}" 
+                                <h:selectOneMenu value="#{crearObjetivoManagedBean.smSeleccionado.codMaterial}" 
                                                  styleClass="span12" >
                                     <f:selectItems value="#{crearObjetivoManagedBean.listaMateriales}"
                                                    var="material"
@@ -53,12 +53,12 @@
                                 </h:selectOneMenu>
                             </div>
                             <div class="span3">
-                                <p:inputText styleClass="span11" 
-                                             value="#{crearObjetivoManagedBean.cantMaterialSelected}"
+                                <p:spinner   styleClass="span11" 
+                                             value=" #{crearObjetivoManagedBean.smSeleccionado.cantidad}"
                                              title="Cantidad"
-                                             type="number">
-                                    <f:attribute name="min" value="0" />
-                                </p:inputText>
+                                             min="0"
+                                             converterMessage="Debe ingresar un número entero y positivo"
+                                             />
                             </div>
                             <div class="span3">
                                 <p:commandButton action="#{crearObjetivoManagedBean.addMaterialObjetivo}"

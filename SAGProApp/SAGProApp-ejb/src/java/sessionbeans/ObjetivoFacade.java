@@ -192,6 +192,10 @@ public class ObjetivoFacade extends AbstractFacade<Objetivo> implements Objetivo
         else if ( !objetivoExists(obj.getNombreObjetivo()) ) {
             return -1;
         }
+        // Si las fechas no son válidas, retornar -2.
+        else if ( !validarFechas(fecha_inicial, fecha_final) ){
+            return -2;
+        }
         else{
             int resp = objetivoMaterialFacade.deleteMaterialOfObjetivo(codigo_obj);
             em.flush();

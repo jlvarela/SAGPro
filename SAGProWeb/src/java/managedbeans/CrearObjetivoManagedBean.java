@@ -44,8 +44,17 @@ public class CrearObjetivoManagedBean implements Serializable{
     private String finishDate;
     private Integer codMaterialSelected;
     private Integer cantMaterialSelected;
+    private SelectedMaterial smSeleccionado;
     private Short prioridadObjetivo;
     private String descripcionObjetivo;
+
+    public SelectedMaterial getSmSeleccionado() {
+        return smSeleccionado;
+    }
+
+    public void setSmSeleccionado(SelectedMaterial smSeleccionado) {
+        this.smSeleccionado = smSeleccionado;
+    }
 
     public String getDescripcionObjetivo() {
         return descripcionObjetivo;
@@ -119,8 +128,6 @@ public class CrearObjetivoManagedBean implements Serializable{
         this.listaMateriales = listaMateriales;
     }
     
-    
-    
     /**
      * Creates a new instance of CrearObjetivoManagedBean
      */
@@ -131,36 +138,47 @@ public class CrearObjetivoManagedBean implements Serializable{
     public void init (){
         listaMateriales = materialFacade.findAll();
         selectedMateriales = new ArrayList<>();
-        cantMaterialSelected = 0;
+        smSeleccionado = new SelectedMaterial();
     }
     
     public void addMaterialObjetivo(){
-        SelectedMaterial newmaterial = new SelectedMaterial();
-        newmaterial.setCodMaterial(codMaterialSelected);
         
+        FacesContext context = FacesContext.getCurrentInstance();
+        FacesMessage msg;
+        if ( smSeleccionado.getCantidad() <= 0 ){
+            msg = new FacesMessage();
+            msg.setSeverity(FacesMessage.SEVERITY_ERROR);
+            msg.setDetail("La cantidad de material debe ser positiva");
+            context.addMessage(null, msg);
+            return;
+        }
+                
         // Si el elemento seleccionado se encuentra en la lista. Reemplazar su Cantidad.
         int index;
-        index = selectedMateriales.indexOf(newmaterial);
+        index = selectedMateriales.indexOf(smSeleccionado);
         if( index != -1){
             SelectedMaterial obj = selectedMateriales.get(index);
-            obj.setCantidad(cantMaterialSelected);
+            obj.setCantidad(smSeleccionado.getCantidad());
         }
         // Si no, añadir a la lista.
         else{
             for(Material p: listaMateriales)
-                if(p.getCodMaterial() == codMaterialSelected)
-                    newmaterial.setNombreMaterial(p.getNombreMaterial());
-            newmaterial.setCantidad(cantMaterialSelected);
-            selectedMateriales.add(newmaterial);
+                if(p.getCodMaterial() == smSeleccionado.getCodMaterial())
+                    smSeleccionado.setNombreMaterial(p.getNombreMaterial());
+            selectedMateriales.add(smSeleccionado);
         }
+        
+        smSeleccionado = new SelectedMaterial();
     }
     
     public void removeMaterialObjetivo(SelectedMaterial item){
         selectedMateriales.remove(item);
     }
     
+    /**
+     * Crea el objetivo ingresado a través del EJB ObjetivoFacade
+     */
     public void agregarObjetivo(){
-        System.out.println("Al menos lo intento");
         try{
             // Obtener tiempo, aplicando formato específico del calendario de jQuery (MM/dd/yyyy)
             SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");

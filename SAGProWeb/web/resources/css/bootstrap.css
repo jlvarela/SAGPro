@@ -6196,3 +6196,7 @@ div.watermark {
 	opacity: .5;
 	-moz-opacity: .5;
 }
+
+.ui-spinner-input {
+   width:70%;
+}

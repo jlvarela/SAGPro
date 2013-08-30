@@ -38,13 +38,13 @@ public class LoginServlet extends HttpServlet {
         }
         else{
             if(request.isUserInRole("Admin")){
-                response.sendRedirect("faces/admin/index.xhtml");
+                response.sendRedirect("/SAGProWeb/faces/admin/consultarUsuario.xhtml");
             }
             else if (request.isUserInRole("Gerente")){
-                response.sendRedirect("faces/gerente/crearObjetivo.xhtml");
+                response.sendRedirect("/SAGProWeb/faces/gerente/consultarObjetivo.xhtml");
             }
             else if (request.isUserInRole("Calidad")){
-                response.sendRedirect("faces/calidad/ingresarProduccion.xhtml");
+                response.sendRedirect("/SAGProWeb/faces/calidad/ingresarProduccion.xhtml");
             }
         }
     }

@@ -38,7 +38,7 @@ public class MappingFromEntitieToPojo {
     static public pojoclass.Usuario usuarioFromEntityToPojo(entities.User userEntity){
         pojoclass.Usuario usuarioPojo = new pojoclass.Usuario();
         
-        usuarioPojo.setRut(userEntity.getRutUser());
+        usuarioPojo.setRut(userEntity.getRutUser().toString());
         usuarioPojo.setNombre(userEntity.getNombreUser());
         usuarioPojo.setApellido(userEntity.getApellidoUser());
         usuarioPojo.setCorreo(userEntity.getEmailUser());

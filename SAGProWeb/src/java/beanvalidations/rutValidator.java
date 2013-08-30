@@ -13,8 +13,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.validator.FacesValidator;
 import javax.faces.validator.Validator;
 import javax.faces.validator.ValidatorException;
-import javax.validation.ConstraintValidator;
-import javax.validation.ConstraintValidatorContext;
+
 
 /**
  *
@@ -47,14 +46,14 @@ public class rutValidator implements Validator {
     @Override
     public void validate(FacesContext facesContext, UIComponent uIComponent, Object value)throws 
             ValidatorException{
-        Pattern pattern = Pattern.compile("\\d+[kK]*");
+        Pattern pattern = Pattern.compile("\\b\\d{1,8}[K|k|0-9]");
         
-        Long valor=(Long)value;
-        String cadena=String.valueOf(valor);
+        //Long valor=(Long)value;
+        String cadena=String.valueOf(value);
         Matcher matcher = pattern.matcher((CharSequence)cadena);
         HtmlInputText htmlInputText = (HtmlInputText) uIComponent;
         String label;
-                
+
         if (htmlInputText.getLabel()==null||htmlInputText.getLabel().trim().equals("")){
             label = htmlInputText.getId();
         }
@@ -63,7 +62,7 @@ public class rutValidator implements Validator {
         }
 
         if(!matcher.matches()){
-            if (value == null){
+            if ((CharSequence)value ==""){
                 FacesMessage facesMessage = new FacesMessage(FacesMessage.SEVERITY_ERROR, "",label + ": Campo Obligatorio Vacío");
                 throw new ValidatorException(facesMessage);
             }
@@ -78,6 +77,5 @@ public class rutValidator implements Validator {
                 throw new ValidatorException(facesMessage);
             }
         }
-    }
-    
+    }    
 }
