@@ -25,10 +25,8 @@
                                 <div class="span7" style="margin-left: 11px">
                                     <div class="input-append datetimepicker" style="width:100%">
                                         <h:inputText  value="#{consultarProduccionManagedBean.fecha}">
-<<<<<<< HEAD
-                                          
-=======
->>>>>>> 6449b18ef3f17c5e6cfa9f7c943f0d7f761c325f
+
+
                                         </h:inputText>
                                         <span class="add-on">
                                             <i data-time-icon="icon-time" data-date-icon="icon-calendar">
@@ -38,22 +36,17 @@
                                 </div>
                                 
                                 <div class="span3">
-<<<<<<< HEAD
                                     <p:commandButton icon="ui-icon-search" value="Consulta" action="#{consultarProduccionManagedBean.cambiarFecha}"  update=":form:prod">
                                     </p:commandButton>
                                         
-=======
-                                    <p:commandButton icon="ui-icon-search" value="Consulta" action="#{consultarProduccionManagedBean.cambiarFecha}" update="prod" />
->>>>>>> 6449b18ef3f17c5e6cfa9f7c943f0d7f761c325f
+
                                 </div>
                             </div>
-<<<<<<< HEAD
+
 
                             
                             <div class="span12"   >
-=======
-                            <div class="span12"  >
->>>>>>> 6449b18ef3f17c5e6cfa9f7c943f0d7f761c325f
+
                                 <p:dataTable id="prod" var="produccionDiaria" value="#{consultarProduccionManagedBean.listaProduccionDiaria}" rowKey="#{produccionDiaria.codMaterial}" selection="#{consultarProduccionManagedBean.selectedProduccionDiaria}" selectionMode="single" >
                                     <p:ajax event="rowSelect"  update=":form:muestra" />
                                     <f:facet name="header">
@@ -87,23 +80,12 @@
                                     <h:panelGrid columns="2" columnClasses="column" cellpadding="5">
                                         <h:outputText value="Material: " /> 
                                             <h:outputText value="#{consultarProduccionManagedBean.selectedProduccionDiaria.nombreMaterial}" /> 
-<<<<<<< HEAD
-                                        </p:inplace>
-
                                         <h:outputText value="Cantidad: " />  
-                                        <p:inplace > 
-                                            <h:outputText  value="#{consultarProduccionManagedBean.selectedProduccionDiaria.cantidad}"/> 
-=======
-                                        
-                                            <h:outputText value="Cantidad: " />  
-                                        <p:inplace editor="true">  
-                                            <h:inputText value="#{consultarProduccionManagedBean.selectedProduccionDiaria.cantidad}"/>  
->>>>>>> 6449b18ef3f17c5e6cfa9f7c943f0d7f761c325f
+                                        <p:inplace emptyLabel="Sin descripción"> 
+                                            <!--<h:inputText value="#{consultarProduccionManagedBean.selectedProduccionDiaria.cantidad}"/>--> 
                                         </p:inplace>
-                                        
                                         <h:outputText value="Unidad: " />
                                             <h:outputText value="#{consultarProduccionManagedBean.selectedProduccionDiaria.nombreUnidadMaterial}" />
-
                                     </h:panelGrid>
                                 </p:panel>
                             </div>
