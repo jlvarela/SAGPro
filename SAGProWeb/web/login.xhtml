@@ -2,7 +2,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:f="http://java.sun.com/jsf/core">
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
     <h:head>
         <title>SAGPro</title>
         <link rel="icon" href="#{request.contextPath}/resources/img/logo.png" type="image/png"/>
@@ -43,6 +44,7 @@
                 <legend > Inicio de sesión</legend>
                 <div class="row-fluid" style="margin-left: 30px">
                     <h:form>
+                        <p:messages autoUpdate="true" closable="true" showDetail="true" showSummary="false" />
                     <div class="control-group">
                         <label class="control-label">Rut</label>
                         <div class="controls">

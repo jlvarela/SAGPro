@@ -66,9 +66,6 @@ public class ConsultarProduccionManagedBean implements Serializable {
             produccionDiariaList.add(util.MappingFromEntitieToPojo.produccionFromEntityToPojo(produccionDiariaEntity));
         }
 
-        //selectedProduccionDiaria = new pojoclass.ProduccionDiaria();
-        //selectedProduccionDiaria.setCantidad(null);
-
         listaProduccionDiaria = produccionDiariaList;
         
     }

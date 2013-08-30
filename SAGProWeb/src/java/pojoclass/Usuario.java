@@ -11,17 +11,17 @@ import java.io.Serializable;
  * @author Jose
  */
 public class Usuario implements Serializable{
-    private Long rut;
+    private String rut;
     private String nombre;
     private String apellido;
     private String correo;
     private String tipo;
 
-    public Long getRut() {
+    public String getRut() {
         return rut;
     }
 
-    public void setRut(Long rut) {
+    public void setRut(String rut) {
         this.rut = rut;
     }
 

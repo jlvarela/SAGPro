@@ -24,6 +24,58 @@ public class NavigationManagedBean {
     public NavigationManagedBean() {
     }
     
+    public void goToObjetivos(){
+        goToConsultarObjetivos();
+    }
+    
+    public void goToConsultarObjetivos(){
+        goToPage("/faces/gerente/consultarObjetivo.xhtml");
+    }
+    
+    public void goToCrearObjetivo(){
+        goToPage("/faces/gerente/crearObjetivo.xhtml");
+    }
+    
+    public void goToEvolucionProduccion(){
+        goToPage("/faces/gerente/evolucionProduccion.xhtml");
+    }
+        
+    public void goToMaterial(){
+        goToCrearMaterial();
+    }
+    
+    public void goToCrearMaterial(){
+        goToPage("/faces/admin/ingresarMaterial.xhtml");
+    }
+    
+    public void goToConsultarMaterial(){
+        goToPage("/faces/admin/consultarMaterial.xhtml");
+    }
+    
+    public void goToUsuarios(){
+        goToCrearUsuario();
+    }
+    
+    public void goToCrearUsuario(){
+        goToPage("/faces/admin/ingresarUsuario.xhtml");
+    }
+    
+    public void goToConsultarUsuario(){
+        goToPage("/faces/admin/consultarUsuario.xhtml");
+   }
+    
+    public void goToProduccion(){
+        goToCrearProduccion();
+    }
+    
+    public void goToCrearProduccion(){
+        goToPage("/faces/calidad/ingresarProduccion.xhtml");
+    }
+    
+    public void goToConsultarProduccion(){
+        goToPage("/faces/calidad/consultarProduccion.xhtml");
+    }
+    
     /**
      * Redirige al usuario a la página web page.
      * Esta debe ser ingresada

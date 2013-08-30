@@ -7,6 +7,9 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:f="http://java.sun.com/jsf/core">
+    <ui:define name="menu">
+        <ui:include src="/WEB-INF/templates/menuProduccion.xhtml"></ui:include>
+    </ui:define>
     <ui:define name="cuerpo">
         <h:form id="form">
             <div class="span9">
@@ -25,8 +28,11 @@
                                 <div class="span7" style="margin-left: 11px">
                                     <div class="input-append datetimepicker" style="width:100%">
                                         <h:inputText  value="#{consultarProduccionManagedBean.fecha}">
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> c2e867a98a6719879c5ac42b7b941728ead30e1c
                                         </h:inputText>
                                         <span class="add-on">
                                             <i data-time-icon="icon-time" data-date-icon="icon-calendar">
@@ -38,6 +44,7 @@
                                 <div class="span3">
                                     <p:commandButton icon="ui-icon-search" value="Consulta" action="#{consultarProduccionManagedBean.cambiarFecha}"  update=":form:prod">
                                     </p:commandButton>
+<<<<<<< HEAD
                                         
 
                                 </div>
@@ -47,6 +54,13 @@
                             
                             <div class="span12"   >
 
+=======
+                                </div>
+                            </div>
+
+                            
+                            <div class="span12"   >
+>>>>>>> c2e867a98a6719879c5ac42b7b941728ead30e1c
                                 <p:dataTable id="prod" var="produccionDiaria" value="#{consultarProduccionManagedBean.listaProduccionDiaria}" rowKey="#{produccionDiaria.codMaterial}" selection="#{consultarProduccionManagedBean.selectedProduccionDiaria}" selectionMode="single" >
                                     <p:ajax event="rowSelect"  update=":form:muestra" />
                                     <f:facet name="header">
@@ -81,8 +95,9 @@
                                         <h:outputText value="Material: " /> 
                                             <h:outputText value="#{consultarProduccionManagedBean.selectedProduccionDiaria.nombreMaterial}" /> 
                                         <h:outputText value="Cantidad: " />  
+<<<<<<< HEAD
                                         <p:inplace emptyLabel="Sin descripción"> 
-                                            <!--<h:inputText value="#{consultarProduccionManagedBean.selectedProduccionDiaria.cantidad}"/>--> 
+                                            <!--<h:inputText value="#{consultarProduccionManagedBean.selectedProduccionDiaria.cantidad}"/>-->
                                         </p:inplace>
                                         <h:outputText value="Unidad: " />
                                             <h:outputText value="#{consultarProduccionManagedBean.selectedProduccionDiaria.nombreUnidadMaterial}" />

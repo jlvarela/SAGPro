@@ -13,9 +13,11 @@ import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
+import javax.inject.Inject;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -43,9 +45,9 @@ public class LoginBean implements Serializable {
     public void setPassword(String password) {
         this.password = password;
     }
+        
     private String username;
     private String password;
-
     /**
      * Creates a new instance of LoginBean
      */
@@ -57,22 +59,23 @@ public class LoginBean implements Serializable {
      *
      * @return String Página destino
      */
-    public String login() {
+    public void login() {
         FacesContext context = FacesContext.getCurrentInstance();
         HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
+        
+        
         if (request.getUserPrincipal() == null) {
             try {
                 request.login(username, password);
-                return "admin/index?faces-redirect=true";
+                redirectToMainPage(request);
+                
             } catch (ServletException e) {
-                context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error", "Login inválido"));
+                context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Usuario y/o contraseña incorrecta inválido", "Login inválido"));
                 System.out.println("Login Failed: " + e.getMessage());
-                return "";
             }
         } else {
-            System.out.println(request.getUserPrincipal().getName());
+            redirectToMainPage(request);
             context.addMessage(null, new FacesMessage("Logueado"));
-            return "";
         }
     }
 
@@ -92,5 +95,27 @@ public class LoginBean implements Serializable {
             }
         }
         return "";
+    }
+    
+    private void redirectToMainPage(HttpServletRequest request){
+        ExternalContext extcon = FacesContext.getCurrentInstance().getExternalContext();
+        String webpage = "";
+        try{
+            
+            if ( request.isUserInRole("Admin") ){
+                webpage = webpage.concat("/faces/admin/consultarUsuario.xhtml");
+            }
+            else if ( request.isUserInRole("Calidad") ){
+                webpage = webpage.concat("/faces/calidad/ingresarProduccion.xhtml");
+            }
+            else if ( request.isUserInRole("Gerencia") ){
+                webpage = webpage.concat("/faces/gerente/evolucionProduccion.xhtml");
+            }
+            extcon.redirect(extcon.getRequestContextPath() + webpage);
+        }
+        catch(IOException ex){
+            System.out.println("No se ha podido redirigir a la página ".concat(webpage));            
+        }
+        
     }
 }

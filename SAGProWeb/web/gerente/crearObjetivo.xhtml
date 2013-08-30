@@ -7,7 +7,9 @@
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:cc="http://java.sun.com/jsf/composite">
-
+    <ui:define name="menu">
+        <ui:include src="/WEB-INF/templates/menuObjetivo.xhtml"></ui:include>
+    </ui:define>
     <ui:define name="cuerpo">
         <div class="span9">
             <fieldset style="padding: 20px">
@@ -42,7 +44,7 @@
                                 Material
                             </div>
                             <div class="span3">
-                                <h:selectOneMenu value="#{crearObjetivoManagedBean.codMaterialSelected}" 
+                                <h:selectOneMenu value="#{crearObjetivoManagedBean.smSeleccionado.codMaterial}" 
                                                  styleClass="span12" >
                                     <f:selectItems value="#{crearObjetivoManagedBean.listaMateriales}"
                                                    var="material"
@@ -51,12 +53,12 @@
                                 </h:selectOneMenu>
                             </div>
                             <div class="span3">
-                                <p:inputText styleClass="span11" 
-                                             value="#{crearObjetivoManagedBean.cantMaterialSelected}"
+                                <p:spinner   styleClass="span11" 
+                                             value=" #{crearObjetivoManagedBean.smSeleccionado.cantidad}"
                                              title="Cantidad"
-                                             type="number">
-                                    <f:attribute name="min" value="0" />
-                                </p:inputText>
+                                             min="0"
+                                             converterMessage="Debe ingresar un número entero y positivo"
+                                             />
                             </div>
                             <div class="span3">
                                 <p:commandButton action="#{crearObjetivoManagedBean.addMaterialObjetivo}"
@@ -205,29 +207,6 @@
                 </h:form>
             </fieldset>
         </div>
-
-
     </ui:define>
-
-    <ui:define name="menu">
-        <div class="span2"><!--Menú de la pagina-->
-            <div class="accordion" >
-                <div id="menuLateral" class="accordion-group">
-                    <div class="accordion-heading">
-                        <a class="accordion-toggle" data-toggle="collapse" >Objetivos</a>
-
-                        <div class="accordion-body collapse in">
-                            <div class="accordion-inner nav nav-list">
-                                <li class="active"><a>Crear Objetivo</a></li>
-                                <li><a>Ver Objetivo</a></li>
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>		
-        </div>
-    </ui:define>  
-
 </ui:composition>
 

@@ -114,8 +114,8 @@ public class UserFacade extends AbstractFacade<User> implements UserFacadeLocal 
             try {
                 User usuario = new User();
                 usuario.setRutUser(Long.valueOf(rut));
-                usuario.setNombreUser(nombre);
-                usuario.setApellidoUser(apellido);
+                usuario.setNombreUser(nombre.toUpperCase());
+                usuario.setApellidoUser(apellido.toUpperCase());
                 usuario.setEmailUser(correo);
                 usuario.setPasswordUser(md5(rut));
                 usuario.setRoleUser(rol);

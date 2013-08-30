@@ -156,7 +156,7 @@ public class ObjetivoFacade extends AbstractFacade<Objetivo> implements Objetivo
             return false;               // Fecha inválida
         
         Date now = new Date();          // Fecha del momento
-        if(now.before(finicial))        // Si fecha del objetivo es anterior a hoy.
+        if(!now.before(finicial))        // Si fecha del objetivo es anterior a hoy.
             return false;               // Fecha inválida
                 
         return true;                    // Fecha válida
@@ -191,6 +191,10 @@ public class ObjetivoFacade extends AbstractFacade<Objetivo> implements Objetivo
         }
         else if ( !objetivoExists(obj.getNombreObjetivo()) ) {
             return -1;
+        }
+        // Si las fechas no son válidas, retornar -2.
+        else if ( !validarFechas(fecha_inicial, fecha_final) ){
+            return -2;
         }
         else{
             int resp = objetivoMaterialFacade.deleteMaterialOfObjetivo(codigo_obj);
