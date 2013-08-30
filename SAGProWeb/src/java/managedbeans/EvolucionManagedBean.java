@@ -452,4 +452,8 @@ public class EvolucionManagedBean implements Serializable{
         }
         return null;
     }
+    
+    public void doUseless(){
+        System.out.println("Haciendo algo inútil");
+    }
 }

@@ -9,7 +9,24 @@
     <ui:define name="menu">
         <ui:include src="/WEB-INF/templates/menuEstadisticas.xhtml"></ui:include>
     </ui:define>
+    
     <ui:define name="cuerpo">
+        <script type="text/javascript" >
+        //<![CDATA[
+        $(document).ready(function() {
+            $('#form\\:objetivoList input').click(validarLargoObjetivo);
+        });
+        function validarLargoObjetivo(){
+            var listaObjSelec = $('#form\\:objetivoList input:checked');
+            var maxNumero = 2;
+            if (!this.checked && (listaObjSelec.length == maxNumero)){
+                alert('Sólo se pueden seleccionar máximo '+maxNumero+' objetivos. Inhabilite otros para seleccionar uno nuevo');
+                return false;
+            }
+            return true;
+        }
+        //]]>
+        </script>
         <h:form id="form">
         <div class="span9">
             <fieldset style="padding: 20px">
@@ -73,24 +90,48 @@
                         
                         <div class="row-fluid">
                             <div class="span7">
-                                4. Seleccionar Objetivos
+                                4. Seleccionar Objetivos (Máx: 2)
                             </div>
                         </div>
 
                         <div class="row-fluid">
                             <div class="span8">
-                                <p:selectManyCheckbox value="#{evolucionManagedBean.objetivosSeleccionados}" layout="pageDirection">
+                                <p:selectManyCheckbox id='objetivoList' value="#{evolucionManagedBean.objetivosSeleccionados}" layout="pageDirection">
                                     <p:ajax event="change" listener="#{evolucionManagedBean.selectObjetivo}" update="chart"/>
                                     <f:selectItems value="#{evolucionManagedBean.listaObjetivos}" var="objetivo" itemLabel="#{objetivo.nombre}" itemValue="#{objetivo.codObjetivo}"/>
                                 </p:selectManyCheckbox>
                             </div>
                         </div>
                     </div>
-                    
+                    <p:dialog header="Gráfico"
+                              id="graficoModalId"
+                                widgetVar="graficoModal"
+                                visible="false"
+                                draggable="false"
+                                dynamic="true"
+                                modal="true"
+                                resizable="false"
+                                style="position:absolute; left:35%; top: 35%" >
+                          <div>
+                              <f:view contentType="text/html">
+                                 <p:lineChart id="chartModal"
+                                     xaxisLabel="Días"
+                                     yaxisLabel="Cantidad [#{evolucionManagedBean.selectedMaterial.medidaProduccionMaterial}]"
+                                     value="#{evolucionManagedBean.model}"
+                                     legendPosition="e" 
+                                     animate="true"
+                                     zoom="true"
+                                     minY="0"
+                                     styleClass="grafico"
+                                     title="Producción #{evolucionManagedBean.selectedMaterial.nombreMaterial} (#{evolucionManagedBean.nameOfMonth})"/>
+                              </f:view>
+                          </div>
+                      </p:dialog>
                     <div class="span8">
                         <div class="row-fluid">
                             <div class="span7">
                                 Datos Estadísticos
+                                <p:commandButton oncomplete="graficoModal.show();" update="graficoModalId" icon="ui-icon-arrowthick-2-ne-sw"/>
                             </div>
                         </div>
                         <div class="row-fluid">

@@ -48,7 +48,9 @@
                     <div class="control-group">
                         <label class="control-label">Rut</label>
                         <div class="controls">
-                            <h:inputText style="width:200px" value="#{loginBean.username}" maxlength="9" />
+                            <h:inputText style="width:200px" value="#{loginBean.username}" maxlength="9" validatorMessage="Formao de RUT inválido. Ingrese RUT sin puntos ni guión.">
+                                <f:validator validatorId="rutValidator"  />
+                            </h:inputText>
                         </div>
                     </div>
 
