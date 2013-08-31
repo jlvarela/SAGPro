@@ -29,7 +29,7 @@
                                 Nombre 
                             </div>
                             <div class="span8">
-                                <h:inputText class="span12" value="#{crearObjetivoManagedBean.nombreObjetivo}" />
+                                <h:inputText required="true" requiredMessage="Nombre: Campo obligatorio" class="span12" value="#{crearObjetivoManagedBean.nombreObjetivo}" />
                             </div>
                         </div>
 
@@ -54,11 +54,14 @@
                             </div>
                             <div class="span3">
                                 <p:spinner   styleClass="span11" 
-                                             value=" #{crearObjetivoManagedBean.smSeleccionado.cantidad}"
+                                             value="#{crearObjetivoManagedBean.smSeleccionado.cantidad}"
                                              title="Cantidad"
                                              min="0"
+                                             id='prueba3'
                                              converterMessage="Debe ingresar un número entero y positivo"
-                                             />
+                                             >
+                                    <p:watermark for='prueba3' value="Ej: 67" />
+                                </p:spinner>
                             </div>
                             <div class="span3">
                                 <p:commandButton action="#{crearObjetivoManagedBean.addMaterialObjetivo}"
@@ -104,7 +107,9 @@
                             </div>
                             <div class="span8">
                                 <div class="input-append datetimepicker" style="width:100%">
-                                    <h:inputText styleClass="span11"
+                                    <h:inputText required="true"
+                                                 requiredMessage="Fecha inicial: Campo obligatorio"
+                                                 styleClass="span11"
                                                  value="#{crearObjetivoManagedBean.initialDate}">
 <!--                                        <f:attribute name="data-format" value="yyyy-MM-dd" />-->
                                     </h:inputText>
@@ -128,7 +133,9 @@
                             </div>
                             <div class="span8">
                                 <div  class="input-append datetimepicker" style="width:100%">
-                                    <h:inputText styleClass="span11" value="#{crearObjetivoManagedBean.finishDate}">
+                                    <h:inputText required="true"
+                                                 requiredMessage="Fecha final: Campo obligatorio"
+                                                 styleClass="span11" value="#{crearObjetivoManagedBean.finishDate}">
 <!--                                        <f:attribute name="data-format" value="yyyy-MM-dd" />-->
                                     </h:inputText>
                                     <span class="add-on">

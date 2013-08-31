@@ -16,7 +16,6 @@ public class SelectedMaterial implements Serializable{
     private String nombreMaterial;
 
     public SelectedMaterial () {
-
     }
 
     public String getNombreMaterial() {
@@ -35,11 +34,11 @@ public class SelectedMaterial implements Serializable{
         this.codMaterial = idMaterial;
     }
 
-    public int getCantidad() {
+    public Integer getCantidad() {
         return cantidad;
     }
 
-    public void setCantidad(int cantidad) {
+    public void setCantidad(Integer cantidad) {
         this.cantidad = cantidad;
     }
 

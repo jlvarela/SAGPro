@@ -20,6 +20,24 @@
         <ui:include src="/WEB-INF/templates/menuProduccion.xhtml"></ui:include>
     </ui:define>
     <ui:define name="cuerpo">
+        <script type="text/javascript" >
+        //<![CDATA[
+        function validarProduccionEnLista(){
+            var selectedMaterial = $('#form\\:listaMaterial option:selected').text();
+            alert('Busco a: ' + selectedMaterial);
+            var listaObjSelec = $('#form\\:tabla td[role=gridcell]');
+            var i;
+            for(i=0; i<listaObjSelec.length; i=i+3){
+                var nombre = $($('#form\\:tabla td[role=gridcell]')[i].children[0]).html();
+                alert('Encontre: ' + nombre);
+                if ( nombre == selectedMaterial){
+                    editarConfirm.show();
+                    return false;
+                }
+            }
+        }
+        //]]>
+        </script>
         <h:form id="form">
             <div class="span9">
                 <fieldset style="padding: 20px">
@@ -41,7 +59,7 @@
                                 <div class="span7">
                                     <h:selectOneMenu id="listaMaterial" value="#{ingresarProduccionManagedBean.codMaterial}" valueChangeListener="#{ingresarProduccionManagedBean.materialSelectCantidadListener}">
                                         <f:selectItems value="#{ingresarProduccionManagedBean.listaMateriales}" var="varMaterial" itemValue="#{varMaterial.codMaterial}" itemLabel="#{varMaterial.nombreMaterial}" />
-                                        <f:ajax event="change" execute="@form" render="unidadMaterial"/>
+                                        <f:ajax event="change" execute="@form" render="cantidadMaterialSpinner"/>
                                     </h:selectOneMenu>
                                 </div>
                             </div>
@@ -50,24 +68,13 @@
                                 <div class="span5">
                                     Cantidad
                                 </div>
-                                <div class="span7">
-                                    <h:inputText value="#{ingresarProduccionManagedBean.cantidad}" />
+                                <div class="span3 pull-right">
+                                    <p:spinner id="cantidadMaterialSpinner" min="0" suffix=" #{ingresarProduccionManagedBean.materialSelected.medidaProduccionMaterial}" value="#{ingresarProduccionManagedBean.cantidad}" />
                                 </div>
                             </div>
-
-                            <div class="row-fluid">
-                                <div class="span5">
-                                    Unidad
-                                </div>
-                                <div class="span7">
-                                    <h:outputText id="unidadMaterial" value="#{ingresarProduccionManagedBean.materialSelected.medidaProduccionMaterial}" />
-                                </div>
-                            </div>
-
                             <div class="row-fluid">
                                 <div class="controls pull-right">
-                                    <p:commandButton action="#{ingresarProduccionManagedBean.ingresarProduccion}" ajax="false" value="Ingresar" icon="ui-icon-check">
-                                    </p:commandButton>
+                                    <p:commandButton update="tabla" onstart="return validarProduccionEnLista();" action="#{ingresarProduccionManagedBean.ingresarProduccion}" value="Ingresar" icon="ui-icon-check" />
                                 </div>
                             </div>
                         </div>
@@ -80,7 +87,7 @@
 
                             <div class="row-fluid">
                                 <div class="span12">
-                                    <p:dataTable id="tabla" var="produccionDiaria" value="#{ingresarProduccionManagedBean.listaProduccionDiaria}" rowKey="#{produccionDiaria.produccionDiariaPK}" >
+                                    <p:dataTable id="tabla" var="produccionDiaria" value="#{ingresarProduccionManagedBean.listaProduccionDiaria}" rowKey="#{produccionDiaria.produccionDiariaPK.codMaterial}" >
                                         <p:ajax event="rowSelect"  update=":form" />
                                         <f:facet name="header">  
                                             Materiales 
@@ -92,7 +99,6 @@
                                         <p:column headerText="Cantidad">  
                                             <h:outputText value="#{produccionDiaria.produccionMaterial}" />  
                                         </p:column>  
-
                                         <p:column headerText="Unidad">  
                                             <h:outputText value="#{produccionDiaria.material.medidaProduccionMaterial}" />  
                                         </p:column>  
@@ -103,6 +109,12 @@
                     </div>
                 </fieldset>
             </div>
+            <p:confirmDialog  widgetVar="editarConfirm"  header="Reemplazar valor de Producción" message="¿Realmente desea reemplazar la cantidad ingresada?" style="position:absolute; left:35%; top: 35%" >  
+            <div class="controls pull-right">
+                <p:commandButton value="Aceptar" action="#{consultarObjetivoManagedBean.modificarObjetivo()}"  ajax="false" styleClass="ui-confirmdialog-yes" icon="ui-icon-check"/>  
+                <p:commandButton value="Cancelar"  onclick="editarConfirm.hide();" styleClass="ui-confirmdialog-no" icon="ui-icon-close"/> 
+            </div>
+            </p:confirmDialog>
         </h:form>
     </ui:define>
 

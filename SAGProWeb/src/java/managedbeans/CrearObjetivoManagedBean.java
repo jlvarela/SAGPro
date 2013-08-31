@@ -142,7 +142,7 @@ public class CrearObjetivoManagedBean implements Serializable{
     }
     
     public void addMaterialObjetivo(){
-        
+        System.out.println("Fuck you");
         FacesContext context = FacesContext.getCurrentInstance();
         FacesMessage msg;
         if ( smSeleccionado.getCantidad() <= 0 ){

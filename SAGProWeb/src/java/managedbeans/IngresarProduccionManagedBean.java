@@ -35,7 +35,7 @@ public class IngresarProduccionManagedBean implements Serializable{
     @EJB
     private MaterialFacadeLocal materialFacade;                                     //  Para obtener la lista de materiales.
     private List<Material> listaMateriales;                                         // Listado de Materiales
-    private String cantidad;                                                        // Cantidad de producción diaria ingresada
+    private Integer cantidad;                                                        // Cantidad de producción diaria ingresada
     private Material materialSelected;
     private String codMaterial;
     private List<ProduccionDiaria> listaProduccionDiaria;
@@ -72,6 +72,7 @@ public class IngresarProduccionManagedBean implements Serializable{
         listaMateriales = arrayListMaterial;
         
         this.materialSelected = listaMateriales.get(0);
+        cantidad = 0;
     }
 
     public String getCodMaterial() {
@@ -98,11 +99,11 @@ public class IngresarProduccionManagedBean implements Serializable{
         this.listaProduccionDiaria = listaProduccionDiaria;
     }
 
-    public String getCantidad() {
+    public Integer getCantidad() {
         return cantidad;
     }
 
-    public void setCantidad(String cantidad) {
+    public void setCantidad(Integer cantidad) {
         this.cantidad = cantidad;
     }
 
@@ -130,21 +131,29 @@ public class IngresarProduccionManagedBean implements Serializable{
      *
      */
     public void ingresarProduccion() {
-        // Validar entradas
-        // Fin Validar entradas
         FacesContext fcontext = FacesContext.getCurrentInstance();
-        String viewId = fcontext.getViewRoot().getViewId();
-        ViewHandler handler = fcontext.getApplication().getViewHandler();
-        UIViewRoot root = handler.createView(fcontext, viewId);
-        root.setViewId(viewId);
-        fcontext.setViewRoot(root);
-        
+        FacesMessage msg;
+        // Validar entradas
+        if (cantidad <= 0){
+            msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "", "La cantidad a ingresar debe ser un número entero y positivo");
+            fcontext.addMessage(null, msg);
+            return;
+        }
+        // Fin Validar entradas
+
         int resp = produccionDiariaFacade.agregarProduccionDiaria(Integer.parseInt(this.codMaterial)
-                , Integer.parseInt(this.cantidad));
+                , this.cantidad);
         if (resp == 0) {
-            fcontext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "", "Producción agregado con éxito"));
+            String viewId = fcontext.getViewRoot().getViewId();
+            ViewHandler handler = fcontext.getApplication().getViewHandler();
+            UIViewRoot root = handler.createView(fcontext, viewId);
+            root.setViewId(viewId);
+            fcontext.setViewRoot(root);
+            msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "", "Producción agregado con éxito");
+            fcontext.addMessage(null, msg);
         } else if (resp == -1) {
-            fcontext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "", "Ha ocurrido un error"));
+            msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "", "Los datos de entrada no son válidos.");
+            fcontext.addMessage(null, msg);
         }
     }
 }
