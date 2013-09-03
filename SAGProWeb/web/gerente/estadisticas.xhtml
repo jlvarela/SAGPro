@@ -12,25 +12,24 @@
             <fieldset style="padding: 20px">
 
                 <legend>Ver Estadísticas</legend>
-                <h:form>
+                <h:form id="form">
                     <div class="row-fluid">
-                        <div class="span6">
+                        <div class="span5">
                             <div class="row-fluid">
                                 <div class="span7">
                                     1. Seleccionar material
                                 </div>
                             </div>
-
-
                             <div class="row-fluid" style="margin-bottom: 10px">
-                                <div class="span8">
-
-                                    <p:dataTable var="material" rowKey="#{material.codMaterial}" selectionMode="single" value="#{consultarEstadisticasManagedBean.listaMateriales}">
-                                        <p:column headerText="Material" > 
-                                            <h:outputText value="#{material.nombreMaterial}" />  
-                                        </p:column> 
-                                        
-                                    </p:dataTable>    
+                                <div class="span4 pagination-centered">
+                                    <h:selectOneMenu valueChangeListener="#{estadisticasManagedBean.handleMaterialSelectChange}" >
+                                        <f:selectItems var="material"
+                                                       value="#{estadisticasManagedBean.listaMateriales}"
+                                                       itemLabel="#{material.nombreMaterial}"
+                                                       itemValue="#{material.codMaterial}"
+                                                       />
+                                        <f:ajax event="change" execute="@form" render="datos chart"/>
+                                    </h:selectOneMenu>
 
                                 </div>
                             </div>
@@ -47,9 +46,7 @@
                                 </div>
                                 <div class="span3">
                                     <select class="span12">
-                                        <option>Día</option>
                                         <option>Mes</option>
-                                        <option>Año</option>
                                     </select>
                                 </div>
                             </div>
@@ -61,17 +58,15 @@
                             </div>
 
                             <div class="row-fluid">
-                                <div class="span3">
-                                    Fecha
+                                <div class="span2">
+                                Fecha
                                 </div>
-                                <div class="span8">
-                                    <div  class=" datetimepicker input-append " style="width:100%">
-                                        <input  class="span6" data-format="yyyy-MM-dd" type="text"></input>
-                                        <span class="add-on">
-                                            <i data-time-icon="icon-time" data-date-icon="icon-calendar">
-                                            </i>
-                                        </span>
-                                    </div>
+                                <div class="span2">
+                                    <h:inputText styleClass="monthpicker"
+                                                 value="#{estadisticasManagedBean.formattedDate}"
+                                                 valueChangeListener="#{estadisticasManagedBean.handleDateSelectChange}">
+                                        <f:ajax event="change" execute="@form" render="chart datos"/>
+                                    </h:inputText>
                                 </div>
                             </div>
 
@@ -79,23 +74,48 @@
 
 
                         <div class="span6">
-                            
                             <div class="row-fluid">
-                                
-                                    <p:panel header="Datos Estadisticos">
-                                        <h:panelGrid columns="1" columnClasses="column" cellpadding="5">
-                                        <h:outputText  value="Promedio:"/>
-                                        <h:outputText value="Desviación Estandar: " />
-                                        <h:outputText value="Varianza: " />
-                                        <h:outputText value="Normal: " />
-                                    </h:panelGrid>
+                                    <p:panel id="datos" header="Datos Estadisticos #{estadisticasManagedBean.estadisticaDisponible}">
+                                        <h:panelGrid columns="2" columnClasses="column" cellpadding="5">
+                                            <h:outputText value="Producción total: " />
+                                            <h:outputText value="#{estadisticasManagedBean.prodTotal}" />
+                                            <h:outputText value="Promedio:"/>
+                                            <h:outputText value="#{estadisticasManagedBean.promedio}" />
+                                            <h:outputText value="Desviación Estandar: " />
+                                            <h:outputText value="#{estadisticasManagedBean.desvstandr}" />
+                                            <h:outputText value="Máximo: " />
+                                            <h:outputText value="#{estadisticasManagedBean.max}" />
+                                            <h:outputText value="Mínimo: " />
+                                            <h:outputText value="#{estadisticasManagedBean.min}" />
+                                            <p:commandButton value="Gráfico" oncomplete="graficoModal.show();" update="chartModal" />
+                                        </h:panelGrid>
                                     </p:panel>
-                                    
-                                
                             </div>
                         </div>
-
                     </div>
+                    <p:dialog header="Gráfico"
+                              id="chart"
+                                widgetVar="graficoModal"
+                                visible="false"
+                                draggable="false"
+                                dynamic="true"
+                                modal="true"
+                                resizable="false"
+                                style="position:absolute; left:35%; top: 35%" >
+                          <div>
+                              <f:view contentType="text/html">
+                                 <p:barChart id="chartModal"
+                                     xaxisLabel="Días"
+                                     yaxisLabel="Cantidad [#{estadisticasManagedBean.selectedMaterial.medidaProduccionMaterial}]"
+                                     value="#{estadisticasManagedBean.model}"
+                                     legendPosition="e" 
+                                     animate="true"
+                                     zoom="true"
+                                     styleClass="grafico"
+                                     title="Producción #{estadisticasManagedBean.selectedMaterial.nombreMaterial} (#{estadisticasManagedBean.nameOfMonth})"/>
+                              </f:view>
+                          </div>
+                      </p:dialog>
                 </h:form>
             </fieldset>
         </div>

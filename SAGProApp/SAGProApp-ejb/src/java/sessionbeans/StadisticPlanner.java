@@ -46,7 +46,7 @@ public class StadisticPlanner implements StadisticPlannerLocal {
      * Las estadísticas son calculadas para todos los materiales ingresados en el sistema a la hora de ejecutar
      * el timer.
      */
-    @Schedule ( dayOfMonth = "Last", month = "*", hour = "23", minute = "50", second = "0" )
+    @Schedule ( dayOfMonth = "Last", month = "*", hour = "23", minute = "59", second = "59" )
     @Override
     public void doMonthlyStadistic() {
         
@@ -118,33 +118,48 @@ public class StadisticPlanner implements StadisticPlannerLocal {
      * @return  EstadisticaMensual  EntityClass para persistir la estadística creada.
      */
     private EstadisticaMensual calcPromedioMes (List<ProduccionDiaria> result, Date mes){
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(mes);
         float promedio;     // Promedio final de la producción mensual.
         int cantidad;       // Cantidad total de producciones en el mes.
         int suma;           // Acumulador
+        int max = 0;            // Producción Máxima
+        int min = Integer.MAX_VALUE;            // Producción mínima
         
         // Calcular promedio mensual.
         suma = 0;                       // Acumulado se inicia en cero.
-        cantidad = result.size();       // Cantidad de resultados
+        cantidad = cal.getMaximum(Calendar.DAY_OF_MONTH);       // Cantidad de resultados
         
         for ( ProduccionDiaria t : result ){        // Para cada producción diaria.
+            if ( t.getProduccionMaterial() > max )
+                max = t.getProduccionMaterial();
+            if ( t.getProduccionMaterial() < min )
+                min = t.getProduccionMaterial();
             suma += t.getProduccionMaterial();      // Sumar la cantidad de la producción al acumulado.
         }
+        
+        // Si un día no se produjo nada, entonces ese es mínimo
+        if ( result.size() < cal.getMaximum(Calendar.DAY_OF_MONTH) )
+            min = 0;
         
         promedio = suma / (float)cantidad;                 // Promedio mensual es acumulado / cantidad
         
         // Agregar EstadisticaMensual
         EstadisticaMensual estmen;
         
+        float var = calcularVarianza(result, promedio, cantidad);
+        
         // Nueva EstadisticaMensual
         estmen = new EstadisticaMensual();
         estmen.setCodMaterial(result.get(0).getMaterial());     // Setear Código del material
         estmen.setMes(mes);                                     // Setear Mes
         estmen.setPromedioDiario(promedio);                     // Setear Promedio
-        estmen.setDesvEstandar(calcularVarianza(result, promedio));                              // Setear Desviación Estandar.
+        estmen.setDesvEstandar((float)calcularDesv(var));                              // Setear Desviación Estandar.
         estmen.setFechaRealizacion(new Date());                 // Setear fecha de realización
         estmen.setProduccionMensual(suma);                      // Setear producción total
-        estmen.setVarianza(0);                                  // Setear Varianza
-        
+        estmen.setVarianza(var);                                // Setear Varianza
+        estmen.setMax(max);                                     // Setear máximo
+        estmen.setMin(min);                                     // Setear mínimo
         return estmen;                                          // Retornar Estadística
     }
     
@@ -160,27 +175,35 @@ public class StadisticPlanner implements StadisticPlannerLocal {
      * @param promedio  float   Promedio de las cantidades de produccion
      * @return  float   Varianza
      */
-    private float calcularVarianza(List<ProduccionDiaria> result, float promedio){
-        float varianza, diferencia;                         // Varianza final y diferencia
+    private float calcularVarianza(List<ProduccionDiaria> result, float promedio, int n){
+        float desv, diferencia;                         // Varianza final y diferencia
         int cantidad;                                       // Almacena cantidad de elementos
         
-        cantidad = result.size();                           // Cantidad de elementos
-        varianza = 0;                                       // Varianza por defecto es nula
+        cantidad = n;       // Cantidad de resultados
+        desv = 0;                                       // Varianza por defecto es nula
         
         //  Para cada producción diaria en lista
         for(ProduccionDiaria prod: result){
             // Calcular diferencia entre la producción total diaria y el promedio.
             diferencia = prod.getProduccionMaterial() - promedio;
             
-            // Elevar diferencia al cuadrado y sumar a varianza.
-            varianza += Math.pow(diferencia, 2);
+            // Elevar diferencia al cuadrado y sumar a desv.
+            desv += Math.pow(diferencia, 2);
         }
         
+        // Agregar días en que producción fue nula
+        float dias_nulos;
+        dias_nulos = (float)((n - result.size())*Math.pow(promedio, 2)) / cantidad;
+        
         // Finalmente se normaliza la varianza dividiendo por la cantidad de elementos.
-        varianza /= cantidad;
+        desv /= cantidad;
         
         // Retornar varianza.
-        return varianza;
+        return desv+dias_nulos;
+    }
+    
+    private double calcularDesv(float varianza){
+        return Math.sqrt(varianza);
     }
     
 }

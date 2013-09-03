@@ -47,7 +47,7 @@
                                                    itemLabel="#{material.nombreMaterial}"
                                                    itemValue="#{material.codMaterial}"
                                                    />
-                                    <f:ajax event="change" execute="@form" render="chart"/>
+                                    <f:ajax event="change" execute="@form" render="objetivoList chart"/>
                                 </h:selectOneMenu>
                             </div>
                         </div>
@@ -96,7 +96,7 @@
 
                         <div class="row-fluid">
                             <div class="span8">
-                                <p:selectManyCheckbox id='objetivoList' value="#{evolucionManagedBean.objetivosSeleccionados}" layout="pageDirection">
+                                <p:selectManyCheckbox id="objetivoList" value="#{evolucionManagedBean.objetivosSeleccionados}" layout="pageDirection">
                                     <p:ajax event="change" listener="#{evolucionManagedBean.selectObjetivo}" update="chart"/>
                                     <f:selectItems value="#{evolucionManagedBean.listaObjetivos}" var="objetivo" itemLabel="#{objetivo.nombre}" itemValue="#{objetivo.codObjetivo}"/>
                                 </p:selectManyCheckbox>
@@ -130,7 +130,7 @@
                     <div class="span8">
                         <div class="row-fluid">
                             <div class="span7">
-                                Datos Estadísticos
+                                Gráfico
                                 <p:commandButton oncomplete="graficoModal.show();" update="graficoModalId" icon="ui-icon-arrowthick-2-ne-sw"/>
                             </div>
                         </div>

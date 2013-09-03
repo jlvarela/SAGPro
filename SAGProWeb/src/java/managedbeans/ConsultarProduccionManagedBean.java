@@ -21,7 +21,6 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
-import javax.faces.event.ValueChangeEvent;
 import sessionbeans.MaterialFacadeLocal;
 import sessionbeans.ProduccionDiariaFacadeLocal;
 
@@ -38,11 +37,8 @@ public class ConsultarProduccionManagedBean implements Serializable {
     @EJB
     private MaterialFacadeLocal materialFacade;
     private List<Material> listaMateriales;
-    private String cantidad;
-    private Material materialSelected;
-    private String codMaterial;
     private List<ProduccionDiaria> listaProduccionDiaria;
-    private ProduccionDiaria selectedProduccionDiaria;
+    private ProduccionDiaria selectedProduccionDiaria = new ProduccionDiaria();;
     private String fecha;
 
     /**
@@ -67,15 +63,8 @@ public class ConsultarProduccionManagedBean implements Serializable {
         }
 
         listaProduccionDiaria = produccionDiariaList;
+        selectedProduccionDiaria = new ProduccionDiaria();
         
-    }
-
-    public String getCodMaterial() {
-        return codMaterial;
-    }
-
-    public void setCodMaterial(String codMaterial) {
-        this.codMaterial = codMaterial;
     }
 
     public ProduccionDiaria getSelectedProduccionDiaria() {
@@ -102,22 +91,6 @@ public class ConsultarProduccionManagedBean implements Serializable {
         this.listaProduccionDiaria = listaProduccionDiaria;
     }
 
-    public String getCantidad() {
-        return cantidad;
-    }
-
-    public void setCantidad(String cantidad) {
-        this.cantidad = cantidad;
-    }
-
-    public Material getMaterialSelected() {
-        return materialSelected;
-    }
-
-    public void setMaterialSelected(Material materialSelected) {
-        this.materialSelected = materialSelected;
-    }
-
     public String getFecha() {
         return fecha;
     }
@@ -126,17 +99,6 @@ public class ConsultarProduccionManagedBean implements Serializable {
         this.fecha = fecha;
     }
 
-    public void materialSelectCantidadListener(ValueChangeEvent event) {
-        String idMatSelect = (String) event.getNewValue();
-        for (Material material : listaMateriales) {
-            if (material.getCodMaterial().equals(Integer.parseInt(idMatSelect))) {
-                this.materialSelected = material;
-                System.out.println("prueba: " + material.getCodMaterial());
-                codMaterial = idMatSelect;
-                break;
-            }
-        }
-    }
 
     /**
      * Modifica la cantidad 
@@ -181,6 +143,8 @@ public class ConsultarProduccionManagedBean implements Serializable {
         } catch (ParseException ex) {
             Logger.getLogger(ConsultarProduccionManagedBean.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
+        selectedProduccionDiaria = new ProduccionDiaria();;
         
     }
 }

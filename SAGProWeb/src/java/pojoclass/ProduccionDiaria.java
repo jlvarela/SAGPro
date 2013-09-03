@@ -14,7 +14,7 @@ import java.util.Date;
 public class ProduccionDiaria implements Serializable{
     private Date fecha;
     private Integer codMaterial;
-    private Integer cantidad;
+    private int cantidad;
     private String nombreMaterial;
     private String nombreUnidadMaterial;
 

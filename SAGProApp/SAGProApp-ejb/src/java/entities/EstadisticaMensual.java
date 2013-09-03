@@ -39,6 +39,14 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "EstadisticaMensual.findByMes", query = "SELECT e FROM EstadisticaMensual e WHERE e.mes = :mes"),
     @NamedQuery(name = "EstadisticaMensual.findByFechaRealizacion", query = "SELECT e FROM EstadisticaMensual e WHERE e.fechaRealizacion = :fechaRealizacion")})
 public class EstadisticaMensual implements Serializable {
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "MINIMUM")
+    private int min;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "MAXIMUM")
+    private int max;
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -179,6 +187,22 @@ public class EstadisticaMensual implements Serializable {
     @Override
     public String toString() {
         return "entities.EstadisticaMensual[ codEstadisticaMensual=" + codEstadisticaMensual + " ]";
+    }
+
+    public int getMin() {
+        return min;
+    }
+
+    public void setMin(int min) {
+        this.min = min;
+    }
+
+    public int getMax() {
+        return max;
+    }
+
+    public void setMax(int max) {
+        this.max = max;
     }
     
 }

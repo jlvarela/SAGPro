@@ -39,6 +39,10 @@ public class NavigationManagedBean {
     public void goToEvolucionProduccion(){
         goToPage("/faces/gerente/evolucionProduccion.xhtml");
     }
+    
+    public void goToEstadisticas(){
+        goToPage("/faces/gerente/estadisticas.xhtml");
+    }
         
     public void goToMaterial(){
         goToCrearMaterial();

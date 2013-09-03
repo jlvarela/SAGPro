@@ -5,6 +5,7 @@
 package sessionbeans;
 
 import entities.EstadisticaMensual;
+import java.util.Date;
 import java.util.List;
 import javax.ejb.Local;
 
@@ -28,5 +29,7 @@ public interface EstadisticaMensualFacadeLocal {
     List<EstadisticaMensual> findRange(int[] range);
 
     int count();
+
+    EstadisticaMensual buscarPorMes(final Date mes, final int cod_material);
     
 }

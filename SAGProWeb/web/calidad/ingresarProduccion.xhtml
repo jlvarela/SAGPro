@@ -24,12 +24,10 @@
         //<![CDATA[
         function validarProduccionEnLista(){
             var selectedMaterial = $('#form\\:listaMaterial option:selected').text();
-            alert('Busco a: ' + selectedMaterial);
             var listaObjSelec = $('#form\\:tabla td[role=gridcell]');
             var i;
             for(i=0; i<listaObjSelec.length; i=i+3){
                 var nombre = $($('#form\\:tabla td[role=gridcell]')[i].children[0]).html();
-                alert('Encontre: ' + nombre);
                 if ( nombre == selectedMaterial){
                     editarConfirm.show();
                     return false;
@@ -69,12 +67,15 @@
                                     Cantidad
                                 </div>
                                 <div class="span3 pull-right">
-                                    <p:spinner id="cantidadMaterialSpinner" min="0" suffix=" #{ingresarProduccionManagedBean.materialSelected.medidaProduccionMaterial}" value="#{ingresarProduccionManagedBean.cantidad}" />
+                                    <p:spinner id="cantidadMaterialSpinner"
+                                               min="0"
+                                               suffix=" #{ingresarProduccionManagedBean.materialSelected.medidaProduccionMaterial}" value="#{ingresarProduccionManagedBean.cantidad}" 
+                                               converterMessage="El número ingresado debe ser entero  y mayor que 0."/>
                                 </div>
                             </div>
                             <div class="row-fluid">
                                 <div class="controls pull-right">
-                                    <p:commandButton update="tabla" onstart="return validarProduccionEnLista();" action="#{ingresarProduccionManagedBean.ingresarProduccion}" value="Ingresar" icon="ui-icon-check" />
+                                    <p:commandButton update="tabla" onstart="return validarProduccionEnLista();" oncomplete="ingresarConfirm.show()" value="Ingresar" icon="ui-icon-check" />
                                 </div>
                             </div>
                         </div>
@@ -97,7 +98,7 @@
                                         </p:column>  
 
                                         <p:column headerText="Cantidad">  
-                                            <h:outputText value="#{produccionDiaria.produccionMaterial}" />  
+                                            <h:outputText value="#{produccionDiaria.produccionMaterial}"/>  
                                         </p:column>  
                                         <p:column headerText="Unidad">  
                                             <h:outputText value="#{produccionDiaria.material.medidaProduccionMaterial}" />  
@@ -111,10 +112,17 @@
             </div>
             <p:confirmDialog  widgetVar="editarConfirm"  header="Reemplazar valor de Producción" message="¿Realmente desea reemplazar la cantidad ingresada?" style="position:absolute; left:35%; top: 35%" >  
             <div class="controls pull-right">
-                <p:commandButton value="Aceptar" action="#{consultarObjetivoManagedBean.modificarObjetivo()}"  ajax="false" styleClass="ui-confirmdialog-yes" icon="ui-icon-check"/>  
+                <p:commandButton value="Aceptar" action="#{ingresarProduccionManagedBean.ingresarProduccion()}"  ajax="false" styleClass="ui-confirmdialog-yes" icon="ui-icon-check"/>  
                 <p:commandButton value="Cancelar"  onclick="editarConfirm.hide();" styleClass="ui-confirmdialog-no" icon="ui-icon-close"/> 
             </div>
             </p:confirmDialog>
+            <p:confirmDialog  widgetVar="ingresarConfirm"  header="Ingresar Producción" message="¿Realmente desea ingresar esta producción?" style="position:absolute; left:35%; top: 35%" >  
+            <div class="controls pull-right">
+                <p:commandButton value="Aceptar" action="#{ingresarProduccionManagedBean.ingresarProduccion()}"  ajax="false" styleClass="ui-confirmdialog-yes" icon="ui-icon-check"/>  
+                <p:commandButton value="Cancelar"  onclick="ingresarConfirm.hide();" styleClass="ui-confirmdialog-no" icon="ui-icon-close"/> 
+            </div>
+            </p:confirmDialog>
+            
         </h:form>
     </ui:define>
 

@@ -129,13 +129,20 @@ public class ProduccionDiariaFacade extends AbstractFacade<ProduccionDiaria> imp
      */
     @Override
     public int agregarProduccionDiaria(final int codMaterial, final int cantidadMaterial) {
-        if (codMaterial > 0 && cantidadMaterial > 0) {
-            Calendar cal = Calendar.getInstance();
-            cal.set(Calendar.HOUR_OF_DAY, 0);
-            cal.clear(Calendar.MINUTE);
-            cal.clear(Calendar.SECOND);
-            cal.clear(Calendar.MILLISECOND);
-
+        Calendar cal = Calendar.getInstance();
+        cal.set(Calendar.HOUR_OF_DAY, 0);
+        cal.clear(Calendar.MINUTE);
+        cal.clear(Calendar.SECOND);
+        cal.clear(Calendar.MILLISECOND);
+        
+        ProduccionDiaria buscar = null;
+        buscar = buscarProduccion(cal.getTime(), codMaterial);
+        if ( buscar != null ){
+            buscar.setProduccionMaterial(cantidadMaterial);
+            edit(buscar);
+            return 0;
+        }
+        else if (buscar == null && cantidadMaterial > 0) {
             ProduccionDiaria prod = new ProduccionDiaria(cal.getTime(), codMaterial);
             prod.setProduccionMaterial(cantidadMaterial);
             create(prod);
@@ -159,13 +166,19 @@ public class ProduccionDiariaFacade extends AbstractFacade<ProduccionDiaria> imp
     public int editarProduccion(final int codMaterial, final Date produccionFecha, final int cantidad) {
         try {
             ProduccionDiaria produccion = buscarProduccion(produccionFecha, codMaterial);
-            produccion.setProduccionMaterial(cantidad);
-            edit(produccion);
-            System.out.println("edición de produccion realizada con éxito");
-            return 0;
-        } catch (EntityExistsException e) {
+            if (produccion != null){
+                produccion.setProduccionMaterial(cantidad);
+                edit(produccion);
+                System.out.println("edición de produccion realizada con éxito");
+                return 0;
+            }
+            else{
+                return -1;
+            }
+        } catch (java.lang.IllegalArgumentException e) {
             System.out.println("Editando produccion: Error -> " + e.getMessage());
             return -1;
         }
     }
+    
 }
