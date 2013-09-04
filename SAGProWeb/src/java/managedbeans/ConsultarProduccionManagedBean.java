@@ -40,6 +40,8 @@ public class ConsultarProduccionManagedBean implements Serializable {
     private List<ProduccionDiaria> listaProduccionDiaria;
     private ProduccionDiaria selectedProduccionDiaria = new ProduccionDiaria();;
     private String fecha;
+    Date f;
+    SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
 
     /**
      * Creates a new instance of ProduccionManagedBean
@@ -49,8 +51,8 @@ public class ConsultarProduccionManagedBean implements Serializable {
 
     @PostConstruct
     public void init() {
-        Date f = new Date();
-
+        f = new Date();
+        fecha = df.format(f);
         /**
          * Llenando lista de produccion para ser mostrada en tabla*
          */
@@ -124,9 +126,6 @@ public class ConsultarProduccionManagedBean implements Serializable {
     public void cambiarFecha() {
 
         System.out.println("y la fecha es " + fecha);
-
-        Date f;
-        SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
         try {
             f = new Date(df.parse(fecha).getTime());
             List<entities.ProduccionDiaria> listaProduccionDiariaEntities = produccionDiariaFacade.buscarPorFecha(f);
