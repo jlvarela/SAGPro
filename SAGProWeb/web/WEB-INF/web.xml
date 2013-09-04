@@ -35,7 +35,15 @@
     </welcome-file-list>
     <error-page>
         <error-code>403</error-code>
-        <location>/errors/403error.xhtml</location>
+        <location>/faces/Errors/403error.xhtml</location>
+    </error-page>
+    <error-page>
+        <error-code>404</error-code>
+        <location>/faces/Errors/404error.xhtml</location>
+    </error-page>
+    <error-page>
+        <error-code>500</error-code>
+        <location>/faces/Errors/500error.xhtml</location>
     </error-page>
     <security-constraint>
         <display-name>AdminPages</display-name>
@@ -47,8 +55,6 @@
         <auth-constraint>
             <description>Páginas del Administrador</description>
             <role-name>Admin</role-name>
-            <role-name>Gerencia</role-name>
-            <role-name>Calidad</role-name>
         </auth-constraint>
     </security-constraint>
     <security-constraint>
@@ -61,8 +67,6 @@
         <auth-constraint>
             <description/>
             <role-name>Gerencia</role-name>
-            <role-name>Admin</role-name>
-            <role-name>Calidad</role-name>
         </auth-constraint>
     </security-constraint>
     <security-constraint>
@@ -75,8 +79,6 @@
         <auth-constraint>
             <description/>
             <role-name>Calidad</role-name>
-            <role-name>Admin</role-name>
-            <role-name>Gerencia</role-name>
         </auth-constraint>
     </security-constraint>
     <login-config>
