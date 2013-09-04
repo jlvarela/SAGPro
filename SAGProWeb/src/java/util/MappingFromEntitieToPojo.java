@@ -43,6 +43,7 @@ public class MappingFromEntitieToPojo {
         usuarioPojo.setApellido(userEntity.getApellidoUser());
         usuarioPojo.setCorreo(userEntity.getEmailUser());
         usuarioPojo.setTipo(userEntity.getRoleUser());
+        usuarioPojo.setPassword(userEntity.getPasswordUser());
         
         return usuarioPojo;
     }

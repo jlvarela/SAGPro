@@ -16,6 +16,15 @@ public class Usuario implements Serializable{
     private String apellido;
     private String correo;
     private String tipo;
+    private String password;
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
     public String getRut() {
         return rut;

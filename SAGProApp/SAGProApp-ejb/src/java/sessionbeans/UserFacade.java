@@ -88,7 +88,7 @@ public class UserFacade extends AbstractFacade<User> implements UserFacadeLocal 
         }
     }
 
-    public String md5(String password) {
+    private String md5(String password) {
         char[] HEXADECIMAL = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'};
         try {
             MessageDigest md = MessageDigest.getInstance("MD5");
@@ -153,6 +153,8 @@ public class UserFacade extends AbstractFacade<User> implements UserFacadeLocal 
             }
         }
     }
+    
+    
 
     /**
      *
@@ -176,4 +178,37 @@ public class UserFacade extends AbstractFacade<User> implements UserFacadeLocal 
             }
         }
     }
+
+    @Override
+    public int cambiarPassword(final String usuario_rut, final String new_password) {
+        User usuario = buscarPorRut(usuario_rut);
+        if (usuario == null) {
+            return -1;
+
+        } else {
+            try {
+                usuario.setPasswordUser(md5(new_password));
+                edit(usuario);
+                System.out.println("Contraseña cambiada con éxito");
+                return 0;
+            } catch (EntityExistsException e) {
+                System.out.println("Editando Usuario: Error -> " + e.getMessage());
+                return -1;
+            }
+        }
+    }
+
+    @Override
+    public int editarUsuarioPassword(final String user_rut, final String new_pass, final String nombre, final String apellido, final String correo, final String rol) {
+        int resp;
+        resp = cambiarPassword(user_rut, new_pass);
+        if ( resp == 0){
+            return editarUsuario(user_rut, nombre, apellido, correo, rol);
+        }
+        else{
+            return -1;
+        }
+    }
+    
+    
 }

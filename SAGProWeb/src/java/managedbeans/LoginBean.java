@@ -66,7 +66,7 @@ public class LoginBean implements Serializable {
         
         if (request.getUserPrincipal() == null) {
             try {
-                request.login(username, password);
+                request.login(getFormattedRut(username), password);
                 redirectToMainPage(request);
                 
             } catch (ServletException e) {
@@ -116,6 +116,10 @@ public class LoginBean implements Serializable {
         catch(IOException ex){
             System.out.println("No se ha podido redirigir a la página ".concat(webpage));            
         }
-        
+    }
+    
+    private String getFormattedRut(String rut){
+        String total = rut.substring(0,rut.length()-1);
+        return total;
     }
 }

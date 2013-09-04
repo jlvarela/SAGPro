@@ -5,10 +5,14 @@
 package managedbeans;
 
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  *
@@ -57,7 +61,7 @@ public class NavigationManagedBean {
     }
     
     public void goToUsuarios(){
-        goToCrearUsuario();
+        goToConsultarUsuario();
     }
     
     public void goToCrearUsuario(){
@@ -80,6 +84,10 @@ public class NavigationManagedBean {
         goToPage("/faces/calidad/consultarProduccion.xhtml");
     }
     
+    public void goToPerfil(){
+        goToPage("/faces/user/perfil.xhtml");
+    }
+    
     /**
      * Redirige al usuario a la página web page.
      * Esta debe ser ingresada
@@ -94,5 +102,38 @@ public class NavigationManagedBean {
         catch(IOException ex){
             System.out.println("No se ha podido redirigir a la página ".concat(webpage));            
         }
+    }
+    
+    public String getTemplate(){
+        FacesContext context = FacesContext.getCurrentInstance();
+        HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
+        if (request.getUserPrincipal() != null) {
+            if ( request.isUserInRole("Admin") ){
+                return "templateAdmin";
+            }
+            else if ( request.isUserInRole("Calidad") ){
+                return "templateGestorCalidad";
+            }
+            else if ( request.isUserInRole("Gerencia") ){
+                return "templateGerente";
+            }
+        }
+        return "";
+    }
+    
+    public void goToMain(){
+        FacesContext context = FacesContext.getCurrentInstance();
+        HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
+        if (request.getUserPrincipal() != null) {
+            if ( request.isUserInRole("Admin") ){
+                goToUsuarios();
+            }
+            else if ( request.isUserInRole("Calidad") ){
+                goToProduccion();
+            }
+            else if ( request.isUserInRole("Gerencia") ){
+                goToEvolucionProduccion();
+            }
+        }       
     }
 }

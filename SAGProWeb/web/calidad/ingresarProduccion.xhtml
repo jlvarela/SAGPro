@@ -91,9 +91,9 @@
                                     <p:dataTable id="tabla" var="produccionDiaria" value="#{ingresarProduccionManagedBean.listaProduccionDiaria}" rowKey="#{produccionDiaria.produccionDiariaPK.codMaterial}" >
                                         <p:ajax event="rowSelect"  update=":form" />
                                         <f:facet name="header">  
-                                            Materiales 
+                                            Producción (#{ingresarProduccionManagedBean.date})
                                         </f:facet>  
-                                        <p:column headerText="Material">  
+                                        <p:column headerText="Material" >  
                                             <h:outputText value="#{produccionDiaria.material.nombreMaterial}" />  
                                         </p:column>  
 
@@ -110,7 +110,7 @@
                     </div>
                 </fieldset>
             </div>
-            <p:confirmDialog  widgetVar="editarConfirm"  header="Reemplazar valor de Producción" message="¿Realmente desea reemplazar la cantidad ingresada?" style="position:absolute; left:35%; top: 35%" >  
+            <p:confirmDialog  widgetVar="editarConfirm"  header="Sumar valor de Producción" message="¿Realmente desea sumar la cantidad ingresada a la producción actual?" style="position:absolute; left:35%; top: 35%" >  
             <div class="controls pull-right">
                 <p:commandButton value="Aceptar" action="#{ingresarProduccionManagedBean.ingresarProduccion()}"  ajax="false" styleClass="ui-confirmdialog-yes" icon="ui-icon-check"/>  
                 <p:commandButton value="Cancelar"  onclick="editarConfirm.hide();" styleClass="ui-confirmdialog-no" icon="ui-icon-close"/> 

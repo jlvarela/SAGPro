@@ -9,6 +9,9 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import pojoclass.Material;
 import entities.ProduccionDiaria;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -155,5 +158,12 @@ public class IngresarProduccionManagedBean implements Serializable{
             msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "", "Los datos de entrada no son válidos.");
             fcontext.addMessage(null, msg);
         }
+    }
+    
+    public String getDate(){
+        DateFormat monthFormat = new SimpleDateFormat("dd/MM/yyyy");               // DateFormat para mes
+        Date my_date = new Date();
+        String fecha = monthFormat.format(my_date);
+        return fecha;
     }
 }

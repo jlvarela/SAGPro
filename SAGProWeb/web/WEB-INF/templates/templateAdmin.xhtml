@@ -21,17 +21,7 @@
                         <ul class="nav">
                             <li style="margin-top: 9px; color:#777777">Bienvenido(a) #{userManagedBean.username}</li>
                             <li><h:commandLink action="#{loginBean.logout()}"><i class="icon-off"></i> Cerrar Sesión</h:commandLink></li>
-                            <li class="dropdown" id="boton">
-                                
-                                <a class="dropdown-toggle" data-toggle="dropdown" href="#boton">
-                                    <i class="icon-wrench"></i> Cuenta
-                                    <b class="caret"></b>
-                                </a>
-                                <ul class="dropdown-menu">
-                                    <li><a href="#">Modificar Perfil</a></li>
-                                </ul>
-
-                            </li>
+                            <li><h:commandLink action="#{navigationManagedBean.goToPerfil()}"><i class="icon-wrench"></i> Cuenta</h:commandLink></li>
                             <li><a href="#"><i class="icon-question-sign"></i> Ayuda</a></li>
 
                         </ul>

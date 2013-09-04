@@ -138,7 +138,7 @@ public class ProduccionDiariaFacade extends AbstractFacade<ProduccionDiaria> imp
         ProduccionDiaria buscar = null;
         buscar = buscarProduccion(cal.getTime(), codMaterial);
         if ( buscar != null ){
-            buscar.setProduccionMaterial(cantidadMaterial);
+            buscar.setProduccionMaterial(cantidadMaterial + buscar.getProduccionMaterial());
             edit(buscar);
             return 0;
         }

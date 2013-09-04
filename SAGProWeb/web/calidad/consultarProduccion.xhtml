@@ -82,14 +82,6 @@
                                         <h:outputText value="Unidad: " />
                                             <h:outputText value="#{consultarProduccionManagedBean.selectedProduccionDiaria.nombreUnidadMaterial}" />
                                     </h:panelGrid>
-                                    <div class="row-fluid">
-                                        <div class="control-group" >
-                                            <div class="controls pull-right">
-                                                <p:commandButton onclick="editarConfirm.show();" value="Editar" icon="ui-icon-pencil" disabled="#{consultarProduccionManagedBean.selectedProduccionDiaria == null}"/>
-                                                <p:commandButton onclick="eliminarConfirm.show();" value="Eliminar" icon="ui-icon-trash" disabled="#{consultarProduccionManagedBean.selectedProduccionDiaria == null}" />
-                                            </div>
-                                        </div>
-                                    </div>
                                 </p:panel>
                             </div>
                         </div>
