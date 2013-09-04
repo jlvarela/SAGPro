@@ -179,7 +179,18 @@ public class CrearObjetivoManagedBean implements Serializable{
      * Crea el objetivo ingresado a través del EJB ObjetivoFacade
      */
     public void agregarObjetivo(){
+        // Contexto de PrimeFaces.
+        FacesContext context = FacesContext.getCurrentInstance();
+
+        // Nuevo mensaje a usuario.
+        FacesMessage msj = new FacesMessage();
         try{
+            
+            if (!validarDatos()){
+                msj = new FacesMessage(FacesMessage.SEVERITY_ERROR, "", "Debe ingresar un nombre y ambas fechas.");
+                context.addMessage(null, msj);
+            }
+            
             // Obtener tiempo, aplicando formato específico del calendario de jQuery (MM/dd/yyyy)
             SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
             //Fecha inicial
@@ -210,7 +221,7 @@ public class CrearObjetivoManagedBean implements Serializable{
                codMaterialesArray[i] = selectedMateriales.get(i).getCodMaterial().intValue();
                cantMaterialesArray[i] = selectedMateriales.get(i).getCantidad();
            }
-            
+           
             // Solicitar a EJB Objetivo, la función aagregarObjetivo.
             resp = objetivoFacade.agregarObjetivo(nombreObjetivo
                 , descripcionObjetivo
@@ -219,12 +230,6 @@ public class CrearObjetivoManagedBean implements Serializable{
                 , prioridadObjetivo
                 , codMaterialesArray
                 , cantMaterialesArray);
-            System.out.println("respuesta "+resp);
-            // Contexto de PrimeFaces.
-            FacesContext context = FacesContext.getCurrentInstance();
-            
-            // Nuevo mensaje a usuario.
-            FacesMessage msj = new FacesMessage();
             
             /**
              * Si código de respuesta es cero. La operación se ha realizado con
@@ -250,7 +255,7 @@ public class CrearObjetivoManagedBean implements Serializable{
             // Código -1: 
             else if(resp == -1){
                 msj.setSeverity(FacesMessage.SEVERITY_ERROR);
-                msj.setDetail("Objetivo imposible de agregar");
+                msj.setDetail("Ya existe un objetivo con este nombre");
                 context.addMessage(null, msj);
             }
             else if (resp == -2){
@@ -281,6 +286,16 @@ public class CrearObjetivoManagedBean implements Serializable{
             return false;               // Fecha inválida
                 
         return true;                    // Fecha válida
+    }
+
+    private boolean validarDatos() {
+        if (nombreObjetivo == null || nombreObjetivo.isEmpty())
+            return false;
+        if (initialDate == null || initialDate.isEmpty())
+            return false;
+        if (finishDate == null || finishDate.isEmpty())
+            return false;
+        return true;
     }
     
 }

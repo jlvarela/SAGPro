@@ -40,12 +40,16 @@ public class LoginServlet extends HttpServlet {
             if(request.isUserInRole("Admin")){
                 response.sendRedirect("/SAGProWeb/faces/admin/consultarUsuario.xhtml");
             }
-            else if (request.isUserInRole("Gerente")){
+            else if (request.isUserInRole("Gerencia")){
                 response.sendRedirect("/SAGProWeb/faces/gerente/consultarObjetivo.xhtml");
             }
             else if (request.isUserInRole("Calidad")){
                 response.sendRedirect("/SAGProWeb/faces/calidad/ingresarProduccion.xhtml");
             }
+            else{
+                System.out.println(request.getUserPrincipal().getName());
+            }
+            
         }
     }
 

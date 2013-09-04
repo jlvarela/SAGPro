@@ -39,6 +39,8 @@ public interface ProduccionDiariaFacadeLocal {
     public int editarProduccion(final int codMaterial, final Date produccionFecha, final int cantidad);
 
     public List<ProduccionDiaria> buscarPorRango(final int cod_mat, final Date fecha_inicial, final Date fecha_final);
+
+    int eliminarProduccion(final int codMaterial, final Date produccionFecha);
    
     
 }

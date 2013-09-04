@@ -29,7 +29,7 @@
                                 Nombre 
                             </div>
                             <div class="span8">
-                                <h:inputText required="true" requiredMessage="Nombre: Campo obligatorio" class="span12" value="#{crearObjetivoManagedBean.nombreObjetivo}" />
+                                <h:inputText requiredMessage="Nombre: Campo obligatorio" class="span12" value="#{crearObjetivoManagedBean.nombreObjetivo}" />
                             </div>
                         </div>
 
@@ -66,7 +66,7 @@
                             <div class="span3">
                                 <p:commandButton action="#{crearObjetivoManagedBean.addMaterialObjetivo}"
                                                  icon="ui-icon-plus"
-                                                 update="materialObjetivoTabla" />
+                                                 update="materialObjetivoTabla" ajax="true" />
                             </div>
                         </div>
 
@@ -85,8 +85,8 @@
                                         <h:outputText value="#{materialObjetivo.cantidad}" />
                                     </p:column>
                                     <p:column>
-                                        <p:commandButton icon="ui-icon-close"
-                                                         styleClass="btn"
+                                        <p:commandLink
+                                                         styleClass="ui-icon ui-icon-trash"
                                                          title="Borrar"
                                                          actionListener="#{crearObjetivoManagedBean.removeMaterialObjetivo(materialObjetivo)}"
                                                          update="materialObjetivoTabla"/>
@@ -107,7 +107,7 @@
                             </div>
                             <div class="span8">
                                 <div class="input-append datetimepicker" style="width:100%">
-                                    <h:inputText required="true"
+                                    <h:inputText 
                                                  requiredMessage="Fecha inicial: Campo obligatorio"
                                                  styleClass="span11"
                                                  value="#{crearObjetivoManagedBean.initialDate}">
@@ -133,7 +133,7 @@
                             </div>
                             <div class="span8">
                                 <div  class="input-append datetimepicker" style="width:100%">
-                                    <h:inputText required="true"
+                                    <h:inputText 
                                                  requiredMessage="Fecha final: Campo obligatorio"
                                                  styleClass="span11" value="#{crearObjetivoManagedBean.finishDate}">
 <!--                                        <f:attribute name="data-format" value="yyyy-MM-dd" />-->
@@ -204,13 +204,19 @@
                         <div class="row-fluid">
                             <div class="control-group" >
                                 <div class="controls pull-right">
-                                    <p:commandButton ajax="false" styleClass="btn" value="Agregar" action="#{crearObjetivoManagedBean.agregarObjetivo()}"/>
+                                    <p:commandButton onclick="ingresarConfirm.show();" ajax="true" styleClass="btn" value="Agregar"/>
                                     <p:commandButton type="reset" styleClass="btn" value="Cancelar" />
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+                <p:confirmDialog  widgetVar="ingresarConfirm"  header="Crear objetivo" message="¿Realmente desea crear este objetivo?" style="position:absolute; left:35%; top: 35%" >  
+                    <div class="controls pull-right">
+                        <p:commandButton value="Aceptar" action="#{crearObjetivoManagedBean.agregarObjetivo()}"  ajax="false" styleClass="ui-confirmdialog-yes" icon="ui-icon-check"/>  
+                        <p:commandButton value="Cancelar"  onclick="editarConfirm.hide();" styleClass="ui-confirmdialog-no" icon="ui-icon-close"/> 
+                    </div>
+                </p:confirmDialog>
                 </h:form>
             </fieldset>
         </div>

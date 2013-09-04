@@ -180,5 +180,28 @@ public class ProduccionDiariaFacade extends AbstractFacade<ProduccionDiaria> imp
             return -1;
         }
     }
+
+    @Override
+    public int eliminarProduccion(final int codMaterial, final Date produccionFecha) {
+        try {
+            ProduccionDiaria produccion = buscarProduccion(produccionFecha, codMaterial);
+            if (produccion != null){
+                remove(produccion);
+                System.out.println("Eliminación de produccion realizada con éxito");
+                return 0;
+            }
+            else{
+                return -1;
+            }
+        } catch (java.lang.IllegalArgumentException e) {
+            System.out.println("Eliminando produccion: Error -> " + e.getMessage());
+            return -1;
+        }
+    }
+
+    @Override
+    public void remove(ProduccionDiaria entity) {
+        super.remove(entity); //To change body of generated methods, choose Tools | Templates.
+    }
     
 }

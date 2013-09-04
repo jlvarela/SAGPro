@@ -88,21 +88,34 @@
 
                             <div class="row-fluid">
                                 <div class="span12">
-                                    <p:dataTable id="tabla" var="produccionDiaria" value="#{ingresarProduccionManagedBean.listaProduccionDiaria}" rowKey="#{produccionDiaria.produccionDiariaPK.codMaterial}" >
-                                        <p:ajax event="rowSelect"  update=":form" />
+                                    <p:dataTable editable="true" id="tabla" var="produccionDiaria" value="#{ingresarProduccionManagedBean.listaProduccionDiaria}" rowKey="#{produccionDiaria.produccionDiariaPK.codMaterial}" >
+                                        <p:ajax event="rowEdit" listener="#{ingresarProduccionManagedBean.onEdit}" update=":form:tabla" /> 
                                         <f:facet name="header">  
                                             Producción (#{ingresarProduccionManagedBean.date})
                                         </f:facet>  
-                                        <p:column headerText="Material" >  
-                                            <h:outputText value="#{produccionDiaria.material.nombreMaterial}" />  
+                                        <p:column headerText="Material" >
+                                            <h:outputText value="#{produccionDiaria.material.nombreMaterial}" />
                                         </p:column>  
 
-                                        <p:column headerText="Cantidad">  
-                                            <h:outputText value="#{produccionDiaria.produccionMaterial}"/>  
+                                        <p:column headerText="Cantidad">
+                                            <p:cellEditor>
+                                                <f:facet name="output">
+                                                    <h:outputText value="#{produccionDiaria.produccionMaterial}"/>  
+                                                </f:facet>
+                                                <f:facet name="input" >
+                                                    <p:inputText value="#{produccionDiaria.produccionMaterial}" />
+                                                </f:facet>
+                                            </p:cellEditor>
                                         </p:column>  
                                         <p:column headerText="Unidad">  
                                             <h:outputText value="#{produccionDiaria.material.medidaProduccionMaterial}" />  
-                                        </p:column>  
+                                        </p:column>
+                                        <p:column style="width:6%">  
+                                            <p:rowEditor />
+                                            <p:commandLink id="deleteLink"
+                                                           onclick="eliminarConfirm.show();"
+                                                           styleClass="ui-icon ui-icon-trash" update=":form:tabla" />
+                                        </p:column>
                                     </p:dataTable>
                                 </div>
                             </div>
@@ -122,7 +135,12 @@
                 <p:commandButton value="Cancelar"  onclick="ingresarConfirm.hide();" styleClass="ui-confirmdialog-no" icon="ui-icon-close"/> 
             </div>
             </p:confirmDialog>
-            
+            <p:confirmDialog  widgetVar="eliminarConfirm"  header="Eliminar Producción" message="¿Realmente desea eliminar esta producción?" style="position:absolute; left:35%; top: 35%" >  
+            <div class="controls pull-right">
+                <p:commandButton value="Aceptar" update=":form:tabla" action="#{ingresarProduccionManagedBean.onDelete(produccionDiaria)}"  ajax="false" styleClass="ui-confirmdialog-yes" icon="ui-icon-check"/>  
+                <p:commandButton value="Cancelar"  onclick="eliminarConfirm.hide();" styleClass="ui-confirmdialog-no" icon="ui-icon-close"/> 
+            </div>
+            </p:confirmDialog>
         </h:form>
     </ui:define>
 

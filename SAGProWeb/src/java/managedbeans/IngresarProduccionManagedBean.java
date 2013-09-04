@@ -22,6 +22,7 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.component.UIViewRoot;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ValueChangeEvent;
+import org.primefaces.event.RowEditEvent;
 import sessionbeans.MaterialFacadeLocal;
 import sessionbeans.ProduccionDiariaFacadeLocal;
 
@@ -165,5 +166,42 @@ public class IngresarProduccionManagedBean implements Serializable{
         Date my_date = new Date();
         String fecha = monthFormat.format(my_date);
         return fecha;
+    }
+    public void onEdit(RowEditEvent event) {
+        ProduccionDiaria prod = (ProduccionDiaria) event.getObject();
+        int resp = produccionDiariaFacade.editarProduccion(prod.getProduccionDiariaPK().getCodMaterial()
+                , prod.getProduccionDiariaPK().getFechaDiariaEstadistica()
+                ,prod.getProduccionMaterial());
+        FacesContext cont = FacesContext.getCurrentInstance();
+        FacesMessage msg;
+        if (resp == 0){
+            msg = new FacesMessage(FacesMessage.SEVERITY_INFO,"","Producción editada con éxito.");
+            cont.addMessage(null, msg);
+        }
+        else if (resp == -1){
+            msg = new FacesMessage(FacesMessage.SEVERITY_ERROR,"","Producción no se ha encontrado.");
+            cont.addMessage(null, msg);
+        }
+    }
+    
+    public void onDelete(ProduccionDiaria prod){
+        int resp = produccionDiariaFacade.eliminarProduccion(prod.getProduccionDiariaPK().getCodMaterial()
+                , prod.getProduccionDiariaPK().getFechaDiariaEstadistica());
+        FacesContext cont = FacesContext.getCurrentInstance();
+        FacesMessage msg;
+        if (resp == 0){
+            String viewId = cont.getViewRoot().getViewId();
+            ViewHandler handler = cont.getApplication().getViewHandler();
+            UIViewRoot root = handler.createView(cont, viewId);
+            root.setViewId(viewId);
+            cont.setViewRoot(root);
+            msg = new FacesMessage(FacesMessage.SEVERITY_INFO,"","Producción eliminada con éxito.");
+            cont.addMessage(null, msg);
+        }
+        else if (resp == -1){
+            msg = new FacesMessage(FacesMessage.SEVERITY_ERROR,"","Producción no se ha encontrado.");
+            cont.addMessage(null, msg);
+        }
+                
     }
 }
