@@ -44,16 +44,16 @@ public class rutValidator implements Validator {
     }
     
     public static String getUltimoDigito(String cadena){
-        int ultimoDigito= cadena.length()-1;
-        int rut=Integer.parseInt(cadena.substring(0, ultimoDigito));
+        int rut=Integer.parseInt(cadena);
         
         int m = 0, s = 1;
         for (; rut != 0; rut /= 10)
         {
             s = (s + rut % 10 * (9 - m++ % 6)) % 11;
         }
+        char resp = (char)(s != 0 ? s + 47 : 75);
         
-        return String.valueOf((char) (s != 0 ? s + 47 : 75));
+        return String.valueOf(resp);
     }
    
     @Override

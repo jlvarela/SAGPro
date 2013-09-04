@@ -140,7 +140,7 @@ public class UserFacade extends AbstractFacade<User> implements UserFacadeLocal 
 
         } else {
             try {
-                usuario.setNombreUser(nombre);
+                usuario.setNombreUser(nombre.toUpperCase());
                 usuario.setApellidoUser(apellido);
                 usuario.setEmailUser(correo);
                 usuario.setRoleUser(rol);

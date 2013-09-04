@@ -55,10 +55,7 @@
                                 <p:panel header="Datos del Usuario">
                                     <h:panelGrid columns="2" columnClasses="column" cellpadding="5">
                                         <h:outputText value="RUT: " />  
-                                        <p:inplace >  
                                             <h:outputText value="#{consultarUsuarioManagedBean.selectedUser.rut}" />  
-                                        </p:inplace>
-
                                         <h:outputText value="Nombres: " />  
                                         <p:inplace editor="true" >  
                                             <p:inputText  label="Nombre" value="#{consultarUsuarioManagedBean.selectedUser.nombre}" >
