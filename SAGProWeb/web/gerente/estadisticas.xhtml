@@ -6,7 +6,9 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:f="http://java.sun.com/jsf/core">
-
+    <ui:define name="menu">
+        <ui:include src="/WEB-INF/templates/menuEstadisticas.xhtml"></ui:include>
+    </ui:define>
     <ui:define name="cuerpo">
         <div class="span9">
             <fieldset style="padding: 20px">
@@ -120,25 +122,5 @@
             </fieldset>
         </div>
     </ui:define>
-
-    <ui:define name="menu">
-        <div class="span2"><!--Menú de la pagina-->
-            <div class="accordion" >
-                <div id="menuLateral" class="accordion-group">
-                    <div class="accordion-heading">
-                        <a class="accordion-toggle" data-toggle="collapse" >Estadísticas</a>
-
-                        <div class="accordion-body collapse in">
-                            <div class="accordion-inner nav nav-list">
-                                <li><a>Evolución de Producción</a></li>
-                                <li><a>Ver Estadísticas</a></li>
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>		
-        </div>
-    </ui:define> 
 </ui:composition>
 

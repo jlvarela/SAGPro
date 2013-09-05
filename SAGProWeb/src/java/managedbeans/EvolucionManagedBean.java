@@ -413,19 +413,19 @@ public class EvolucionManagedBean implements Serializable{
         SelectedMaterial sm = new SelectedMaterial();
         sm.setCodMaterial(material.getCodMaterial());
         
-        Calendar month = (Calendar) selectedDate.clone();
-        // Final del calendario
-        int lastDay = month.getActualMaximum(Calendar.DAY_OF_MONTH);
-
+        LineChartSeries chart;
         // Agregar objetivos al gráfico.
         for( int j=0; j<objetivosSeleccionados.size(); j++){
+            Calendar month = (Calendar) selectedDate.clone();
+            // Final del calendario
+            int lastDay = month.getActualMaximum(Calendar.DAY_OF_MONTH);
             Objetivo obj = getObjFromSeleccionados(j);
             if (obj == null)
                 continue;
             List<SelectedMaterial> selectMatList = obj.getMaterialList();
             int index = selectMatList.indexOf(sm);
             if ( index >= 0  ){
-                LineChartSeries chart = new LineChartSeries();
+                chart = new LineChartSeries();
                 SelectedMaterial smObj = selectMatList.get(index);
                 month.set(Calendar.DAY_OF_MONTH, 1);
                 month.set(Calendar.HOUR_OF_DAY, 0);
